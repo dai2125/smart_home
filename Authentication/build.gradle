@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.home'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    runtimeOnly 'org.postgresql:postgresql'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.postgresql:postgresql:42.5.1'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
