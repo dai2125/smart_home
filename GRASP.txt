@@ -1,0 +1,62 @@
+ 1. **Information Expert**
+        Lose Kopplung und hohe Kohäsion
+
+2. **Creator**
+        Neue Objekte der Klasse B sollten von A erzeugt werden, wenn:
+            A eine Aggregation von B ist
+            A B-Objekte enthält
+            A B-Objekte mit starker Kopplung verwendent
+            A die Initialisierungsdaten für B hat (A ist Experte bezüglich Erzeugung von B)
+
+3. **Controller**
+        Es gibt hier zwei Möglichkeiten.
+        Die Verwendung von Use-Case-Controllern oder Fassade-Controllern.
+        Bei Use Case-Controllern werden alle Ereignisse eines Use Cases in einer Klasse behandelt.
+        Mini Use Cases können auch in einem Controller behandelt werden, zum Beispiel das Erzeugen und Löschen eines Users.
+        Wichtig ist nur, dass die Kohäsion des Controllers möglichst groß ist.
+        Der Fassade-Controller wird in Message Handling Systemen verwendet, da hier alle Systemereignisse an einem Ort eintreffen.
+        Hier wird ein einziger Controller (MessageHandler) definiert, der alle Ereignisse abfängt.
+        Hierzu wird mit dem Command Pattern gearbeitet.
+
+4. **Low Coupling**
+        Leichte Anpassbarkeit, da Änderungen in einer Klasse keine Änderungen in anderen Klassen nach sich ziehen
+        Verständlichkeit der Klasse, da der Kontext nicht betrachtet werden muss
+        Gute Testbarkeit
+        Hohe Wiederverwendbarkeit
+
+5. **High Cohesion**
+        Hohe Kohäsion ist vor allem wichtig, um die Komplexität von Gesamtsystemen zu begrenzen,
+        indem man Klassen gut überschaubar organisiert.
+        Die Kohäsion ist ein Maß für den inneren Zusammenhalt einer Klasse.
+        Das heißt, sie misst, wie eng die Methoden und Attribute einer Klasse zusammenarbeiten.
+
+        Ein Negativ-Beispiel wäre z. B. eine Klasse, die Methoden aus zwei völlig verschiedenen Gebieten anbietet.
+        Solche Klassen sind meistens schnell durch völlig nichtssagende Namen und viele Methoden/Codezeilen zu orten.
+
+6. **Polymorphismus**
+        Polymorphismus kann verwendet werden, um das Verhalten abhängig vom Typ zu ändern.
+        Somit können viele Fallunterscheidungen vermieden werden. Besser bekannt ist das Pattern als Strategy (GoF).
+
+7. **Pure Fabrication**
+        Eine Pure Fabrication (reine Erfindung), stellt eine Klasse dar, die so nicht in der Problem Domain existiert.
+        Sie stellt eine Methode zur Verfügung, für die sie nicht Experte ist.
+        Normalerweise wird eine Pure Fabrication verwendet, um einen Algorithmus zu kapseln,
+        der in keine Domain-Klasse passt.
+        Sie kann zum Beispiel verwendet werden, um Technologiewissen von Domänenwissen zu trennen.
+        Sie implementiert reines Verhalten und hat somit keinen Zustand.
+        Sollte nicht zu häufig verwendet werden, sonst existieren am Schluss nur noch Klassen,
+        die einzelne Methoden kapseln.
+
+8. **Indirection**
+        Indirection (Umweg) kann verwendet werden, um geringe Kopplung zu erreichen.
+        Sie wird erzielt, indem ein Vermittler zwischen Client und Server eingebaut wird.
+        Sinnvoll wenn sich ein Serverobjekt ständig verändert.
+        Als Nachteil ist die verminderte Leistungsfähigkeit zu berücksichtigen.
+        Beispielhaft für dieses Muster ist die Einführung der Controller-Komponente,
+        die zwischen dem Datenmodell (Model) und dessen Präsentation (View)
+        im Model-View-Controller-Architekturmuster vermittelt.
+
+9. **Protected Variations**
+        Interfaces sollen immer verschiedene konkrete Implementierungen verstecken.
+        Man nutzt also Polymorphismus und Delegation, um zwischen den Implementierungen zu wechseln.
+        Dadurch kann das restliche System vor den Auswirkungen eines Wechsels der Implementierung geschützt werden.

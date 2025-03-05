@@ -1,0 +1,30 @@
+Reading Type Metrics:
+BillCalculation, 	NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=11, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=5
+Customer, 		    NOF=2, NOPF=0, NOM=4, NOPM=4, LOC=16, WMC=4, NC=0, DIT=0, LCOM= 0.5, FANIN=2, FANOUT=0, Line no=3
+DeliveryApp, 		NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=11, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+Main, 		        NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=16, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=5, Line no=3
+OrderDetails, 		NOF=3, NOPF=0, NOM=6, NOPM=6, LOC=25, WMC=6, NC=0, DIT=0, LCOM= 0.3333333333333333, FANIN=3, FANOUT=0, Line no=5
+OrderManagement, 	NOF=2, NOPF=0, NOM=6, NOPM=6, LOC=23, WMC=6, NC=0, DIT=0, LCOM= 0.0, FANIN=2, FANOUT=2, Line no=3
+
+Reading Method Metrics:
+BillCalculation, 	LOC= 3, CC=1, PC=1, Line no= 9, Method Name=BillCalculation
+BillCalculation,    LOC= 5, CC=1, PC=0, Line no=13, Method Name=calculateBill
+Customer, 		    LOC= 3, CC=1, PC=1, Line no= 8, Method Name=setName
+Customer, 		    LOC= 3, CC=1, PC=0, Line no=12, Method Name=getName
+Customer, 		    LOC= 3, CC=1, PC=1, Line no=16, Method Name=setAddress
+Customer, 		    LOC= 3, CC=1, PC=0, Line no=20, Method Name=getAddress
+DeliveryApp, 		LOC= 3, CC=1, PC=1, Line no= 7, Method Name=DeliveryApp
+DeliveryApp, 		LOC= 5, CC=1, PC=0, Line no=11, Method Name=delivery
+Main, 		        LOC=14, CC=1, PC=1, Line no= 5, Method Name=main
+OrderDetails, 		LOC= 3, CC=1, PC=0, Line no=11, Method Name=getOrderId
+OrderDetails, 		LOC= 4, CC=1, PC=1, Line no=15, Method Name=setOrderId
+OrderDetails, 		LOC= 3, CC=1, PC=0, Line no=20, Method Name=getItemName
+OrderDetails, 		LOC= 4, CC=1, PC=1, Line no=24, Method Name=setItemName
+OrderDetails, 		LOC= 3, CC=1, PC=0, Line no=29, Method Name=getQuantity
+OrderDetails, 		LOC= 3, CC=1, PC=1, Line no=33, Method Name=setQuantity
+OrderManagement, 	LOC= 4, CC=1, PC=2, Line no= 8, Method Name=OrderManagement
+OrderManagement, 	LOC= 3, CC=1, PC=0, Line no=13, Method Name=getCustomer
+OrderManagement, 	LOC= 3, CC=1, PC=1, Line no=17, Method Name=setCustomer
+OrderManagement, 	LOC= 3, CC=1, PC=0, Line no=21, Method Name=getOrderDetails
+OrderManagement, 	LOC= 3, CC=1, PC=1, Line no=25, Method Name=setOrderDetails
+OrderManagement, 	LOC= 3, CC=1, PC=0, Line no=29, Method Name=prepareOrder

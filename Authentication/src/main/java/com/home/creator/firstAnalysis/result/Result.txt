@@ -1,0 +1,26 @@
+Engine FANIN=3 wird von 3 anderen Klassen verwendet, das heißt starkte Abhängigkeit und
+auch inkonsistente Nutzung, da mehrere Klassen darauf zugreifen.
+EngineFactory hat keine Felder und nur 1 Methode die zur Objekterstellung dient,
+was die Existenz fragwürdig macht, deshalb auch der LCOM=-1.0.
+
+Bad Example
+Class Name=Car		        NOF=1,NOPF=0,NOM=2,NOPM=2,LOC=9,WMC=2,NC=0,DIT=0,LCOM= 0.0,FANIN=1,FANOUT=1,Line no=3
+Class Name=Engine		    NOF=1,NOPF=0,NOM=2,NOPM=2,LOC=9,WMC=2,NC=0,DIT=0,LCOM= 0.0,FANIN=3,FANOUT=0,Line no=3
+Class Name=EngineFactory	NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=5,WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=1,FANOUT=1,Line no=3
+Class Name=Main		        NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=8,WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=0,FANOUT=3,Line no=3
+
+Good Example
+Class Name=Car		        NOF=1,NOPF=0,NOM=2,NOPM=2,LOC=9,WMC=2,NC=0,DIT=0,LCOM= 0.0,FANIN=1,FANOUT=1,Line no=3
+Class Name=Engine		    NOF=1,NOPF=0,NOM=2,NOPM=2,LOC=9,WMC=2,NC=0,DIT=0,LCOM= 0.0,FANIN=1,FANOUT=0,Line no=3
+Class Name=Main		        NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=6,WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=0,FANOUT=1,Line no=3
+
+Im Good Example hat Engine einen FANIN=1, was die Abhängigkeit reduziert und die Kohäsion fördert.
+Engine hat einen FANIN=1 weil die Klasse nur von der Klasse Car genutzt wird,
+Konsistente Verwendung und leicht nachvollziehbar.
+
+Vergleich der Main Klassen von FANOUT=3 zu FANOUT=1 bedeutet hohe Kopplung im Bad Example,
+stark verbundenes System mit schwer wartbaren Abhängigkeiten,
+im Good Example Main interargiert nur mit Car und Engine wird von Car genutzt,
+dies reduziert Abhängigkeiten und macht das Design modularer.
+Die EngineFactory erhöht unnötig die Komplexität ohne eine Mehrwert,
+übernimmt die triviale Aufgabe.

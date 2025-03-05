@@ -1,0 +1,32 @@
+Reading Type Metrics:
+
+Bad Example:
+BasicPrinter,           NOF=0, NOPF=0, NOM=3, NOPM=3, LOC=11, WMC=3, NC=0, DIT=1, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Machine,                NOF=0, NOPF=0, NOM=3, NOPM=0, LOC= 5, WMC=3, NC=1, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Main,                   NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 8, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=2, Line no=3
+
+Good Example:
+BasicPrinter,           NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Main,                   NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 9, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=3, Line no=3
+MultiFunctionDevice,    NOF=0, NOPF=0, NOM=2, NOPM=2, LOC= 8, WMC=2, NC=0, DIT=1, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Printer,                NOF=0, NOPF=0, NOM=1, NOPM=0, LOC= 3, WMC=1, NC=2, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Scanner,                NOF=0, NOPF=0, NOM=1, NOPM=0, LOC= 3, WMC=1, NC=1, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=0, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+BasicPrinter,           LOC=3, CC=1, PC=1, Line no= 5, Method Name=print
+BasicPrinter,           LOC=3, CC=1, PC=1, Line no=10, Method Name=scan
+BasicPrinter,           LOC=3, CC=1, PC=1, Line no=15, Method Name=fax
+Machine,                LOC=0, CC=1, PC=1, Line no= 5, Method Name=print
+Machine,                LOC=0, CC=1, PC=1, Line no= 6, Method Name=scan
+Machine,                LOC=0, CC=1, PC=1, Line no= 7, Method Name=fax
+Main,                   LOC=6, CC=1, PC=1, Line no= 5, Method Name=main
+
+Good Example:
+BasicPrinter,           LOC=3, CC=1, PC=1, Line no= 5, Method Name=print
+Main,                   LOC=7, CC=1, PC=1, Line no= 5, Method Name=main
+MultiFunctionDevice,    LOC=3, CC=1, PC=1, Line no= 5, Method Name=print
+MultiFunctionDevice,    LOC=3, CC=1, PC=1, Line no=10, Method Name=scan
+Printer,                LOC=0, CC=1, PC=1, Line no= 5, Method Name=print
+Scanner,                LOC=0, CC=1, PC=1, Line no= 5, Method Name=scan

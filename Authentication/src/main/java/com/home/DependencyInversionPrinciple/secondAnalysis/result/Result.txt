@@ -1,0 +1,158 @@
+Reading Type Metrics:
+
+Bad Example:
+Book, 		NOF=3, NOPF=0, NOM=7, NOPM=7, LOC=28, WMC= 7, NC=0, DIT=0, LCOM= 0.0, FANIN=2, FANOUT=0, Line no=3
+Dvd, 		NOF=3, NOPF=0, NOM=7, NOPM=7, LOC=28, WMC= 7, NC=0, DIT=0, LCOM= 0.0, FANIN=2, FANOUT=0, Line no=3
+Main, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=21, WMC= 1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=3, Line no=3
+Shelf, 		NOF=4, NOPF=0, NOM=6, NOPM=6, LOC=44, WMC=14, NC=0, DIT=0, LCOM= 0.3, FANIN=1, FANOUT=2, Line no=5
+
+Good Example:
+Book, 		NOF=3, NOPF=0, NOM=7, NOPM=7, LOC=28, WMC=7, NC=0, DIT=1, LCOM= 0.0, FANIN=1, FANOUT=0, Line no=3
+Dvd, 		NOF=3, NOPF=0, NOM=7, NOPM=7, LOC=28, WMC=7, NC=0, DIT=1, LCOM= 0.0, FANIN=1, FANOUT=0, Line no=3
+Main, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=21, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=3, Line no=3
+Product, 	NOF=0, NOPF=0, NOM=3, NOPM=0, LOC= 5, WMC=3, NC=2, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Shelf, 		NOF=1, NOPF=0, NOM=3, NOPM=3, LOC=22, WMC=7, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=5
+
+Reading Method Metrics:
+
+Bad Example:
+Book, 		LOC= 5, CC=1, PC=3, Line no= 9, Method Name=Book
+Book, 		LOC= 3, CC=1, PC=1, Line no=15, Method Name=setTitle
+Book, 		LOC= 3, CC=1, PC=0, Line no=19, Method Name=getTitle
+Book, 		LOC= 3, CC=1, PC=1, Line no=23, Method Name=setReview
+Book, 		LOC= 3, CC=1, PC=0, Line no=27, Method Name=getReview
+Book, 		LOC= 3, CC=1, PC=1, Line no=31, Method Name=setSample
+Book, 		LOC= 3, CC=1, PC=0, Line no=35, Method Name=getSample
+Dvd, 		LOC= 5, CC=1, PC=3, Line no= 9, Method Name=Dvd
+Dvd, 		LOC= 3, CC=1, PC=1, Line no=15, Method Name=setTitle
+Dvd, 		LOC= 3, CC=1, PC=0, Line no=19, Method Name=getTitle
+Dvd, 		LOC= 3, CC=1, PC=1, Line no=23, Method Name=setReview
+Dvd, 		LOC= 3, CC=1, PC=0, Line no=27, Method Name=getReview
+Dvd, 		LOC= 3, CC=1, PC=1, Line no=31, Method Name=setSample
+Dvd, 		LOC= 3, CC=1, PC=0, Line no=35, Method Name=getSample
+Main, 		LOC=19, CC=1, PC=1, Line no= 5, Method Name=main
+Shelf, 		LOC= 3, CC=1, PC=1, Line no=13, Method Name=addBook
+Shelf, 		LOC= 3, CC=1, PC=1, Line no=17, Method Name=addDvd
+Shelf, 		LOC= 8, CC=3, PC=1, Line no=21, Method Name=getBookReview
+Shelf, 		LOC= 8, CC=3, PC=1, Line no=30, Method Name=getDvdReview
+Shelf, 		LOC= 8, CC=3, PC=1, Line no=39, Method Name=getBookSample
+Shelf, 		LOC= 8, CC=3, PC=1, Line no=48, Method Name=getDvdSample
+
+Good Example:
+Book, 		LOC= 5, CC=1, PC=3, Line no= 9, Method Name=Book
+Book, 		LOC= 3, CC=1, PC=1, Line no=15, Method Name=setTitle
+Book, 		LOC= 3, CC=1, PC=0, Line no=19, Method Name=getTitle
+Book, 		LOC= 3, CC=1, PC=1, Line no=23, Method Name=setReview
+Book, 		LOC= 3, CC=1, PC=1, Line no=27, Method Name=setSample
+Book, 		LOC= 3, CC=1, PC=0, Line no=31, Method Name=getReviews
+Book, 		LOC= 3, CC=1, PC=0, Line no=36, Method Name=getSample
+Dvd, 		LOC= 5, CC=1, PC=3, Line no= 9, Method Name=Dvd
+Dvd, 		LOC= 3, CC=1, PC=1, Line no=15, Method Name=setTitle
+Dvd, 		LOC= 3, CC=1, PC=0, Line no=19, Method Name=getTitle
+Dvd, 		LOC= 3, CC=1, PC=1, Line no=23, Method Name=setReview
+Dvd, 		LOC= 3, CC=1, PC=1, Line no=27, Method Name=setSample
+Dvd, 		LOC= 3, CC=1, PC=0, Line no=31, Method Name=getReviews
+Dvd, 		LOC= 3, CC=1, PC=0, Line no=36, Method Name=getSample
+Main, 		LOC=19, CC=1, PC=1, Line no= 5, Method Name=main
+Product, 	LOC= 0, CC=1, PC=0, Line no= 5, Method Name=getTitle
+Product, 	LOC= 0, CC=1, PC=0, Line no= 6, Method Name=getReviews
+Product,    LOC= 0, CC=1, PC=0, Line no= 7, Method Name=getSample
+Shelf, 		LOC= 3, CC=1, PC=1, Line no= 9, Method Name=addProduct
+Shelf, 		LOC= 8, CC=3, PC=1, Line no=13, Method Name=getProductReview
+Shelf, 		LOC= 8, CC=3, PC=1, Line no=22, Method Name=getProductSample
+
+### Analyse: Dependency Inversion Principle (DIP)
+
+Das **Dependency Inversion Principle (DIP)** besagt, dass:
+
+1. **High-Level-Module** nicht von Low-Level-Modulen abhängig sein sollten. Beide sollten von Abstraktionen abhängen.
+2. Abstraktionen sollten nicht von Details abhängen, sondern Details von Abstraktionen.
+
+Um zu überprüfen, ob das DIP eingehalten wird, können wir aus den angegebenen Metriken Abhängigkeiten,
+Kopplung und Verantwortlichkeiten der Klassen analysieren.
+
+---
+
+### **Analyse der Metriken**
+
+#### **1. FANIN und FANOUT**
+- **FANIN:** Gibt an, wie oft eine Klasse von anderen Klassen genutzt wird. Ein hoher Wert bedeutet,
+             dass diese Klasse stark in das System integriert ist.
+- **FANOUT:** Gibt an, wie viele Abhängigkeiten eine Klasse zu anderen Klassen hat.
+              Ein hoher Wert deutet auf starke Kopplung hin.
+
+##### Beobachtungen:
+- **Bad Example:**
+  - `Main`: FANOUT = 3, FANIN = 0
+    → Die `Main`-Klasse hat viele Abhängigkeiten (3) zu Low-Level-Klassen (`Book`, `Dvd`, `Shelf`),
+      aber selbst keine abstrahierenden Schichten.
+  - `Shelf`: FANOUT = 2, FANIN = 1
+    → `Shelf` ist ebenfalls von mehreren konkreten Klassen (`Book`, `Dvd`) abhängig,
+      was auf eine direkte Abhängigkeit von Low-Level-Modulen hinweist.
+  - **Problem:** Klassen wie `Main` und `Shelf` verstoßen gegen DIP,
+      da sie direkt von konkreten Implementierungen (`Book`, `Dvd`) abhängen.
+
+- **Good Example:**
+  - `Product`: FANOUT = 0, FANIN = 1
+    → `Product` fungiert als Abstraktion, die von `Book` und `Dvd` genutzt wird.
+      Dadurch wird die Abhängigkeit zu konkreten Klassen reduziert.
+  - `Shelf`: FANOUT = 1, FANIN = 1
+    → `Shelf` hängt nur von der abstrakten Klasse `Product` ab. Dadurch wird das Design flexibler
+      und zukünftige Änderungen an `Book` oder `Dvd` haben keine Auswirkungen auf `Shelf`.
+  - **Verbesserung:** Durch die Einführung der Abstraktion `Product` wird das DIP eingehalten.
+      High-Level-Module wie `Shelf` hängen nicht mehr von den Details (`Book`, `Dvd`) ab.
+
+---
+
+#### **2. Lines of Code (LOC) und Methodenanzahl (NOM)**
+- Viele kleine, spezialisierte Klassen mit klar definierten Methoden sind ein Indikator für eine saubere Schichtung.
+- Ein hoher LOC-Wert in Klassen wie `Shelf` deutet auf eine Verletzung von Single Responsibility und DIP hin,
+  da die Klasse zu viele Verantwortlichkeiten hat.
+
+##### Beobachtungen:
+- **Bad Example:**
+  - `Shelf`: LOC = 44, NOM = 6
+    → `Shelf` verwaltet mehrere Low-Level-Details, z. B. das Hinzufügen von Büchern und DVDs
+       und das Abrufen von Rezensionen und Samples. Sie übernimmt direkt Aufgaben,
+       die von Low-Level-Klassen ausgeführt werden sollten.
+  - **Problem:** Direkte Abhängigkeit von Details (`Book`, `Dvd`) und fehlende Abstraktion.
+
+- **Good Example:**
+  - `Shelf`: LOC = 22, NOM = 3
+    → In der guten Variante interagiert `Shelf` nur mit der Abstraktion `Product`,
+      wodurch der Code modularer und weniger anfällig für Änderungen wird.
+  - **Verbesserung:** Reduzierte LOC und Methodenanzahl durch Einführung von Abstraktionen und Verlagerung
+      von Details in Subklassen.
+
+---
+
+#### **3. Lack of Cohesion of Methods (LCOM)**
+- Ein niedriger LCOM-Wert deutet auf eine hohe Kohäsion hin, was bedeutet, dass die Methoden einer Klasse eng zusammenarbeiten.
+- Ein hoher LCOM-Wert zeigt an, dass die Klasse möglicherweise mehrere Verantwortlichkeiten hat.
+
+##### Beobachtungen:
+- **Bad Example:**
+  - `Shelf`: LCOM = 0.333
+    → Die `Shelf`-Klasse zeigt eine geringe Kohäsion. Methoden wie `getBookReview` und `getDvdReview`
+      haben wenig Gemeinsamkeiten und sind stark an Low-Level-Klassen gekoppelt.
+  - **Problem:** Die Klasse `Shelf` verwaltet zu viele Low-Level-Details und ist nicht kohäsiv.
+
+- **Good Example:**
+  - `Shelf`: LCOM = 0.0
+    → Durch die Nutzung der Abstraktion `Product` fokussiert sich die `Shelf`-Klasse nur auf die Verwaltung der Produkte,
+      was die Kohäsion erhöht.
+  - **Verbesserung:** Die Klasse ist kohäsiver, da sie nur mit der Abstraktion `Product` arbeitet.
+
+
+1. **Bad Example:**
+   - Verletzung des DIP, da die High-Level-Klasse `Shelf` direkt von konkreten Klassen (`Book`, `Dvd`) abhängen.
+   - Keine Abstraktionsschicht vorhanden, um Abhängigkeiten zu entkoppeln.
+   - Hohe FANOUT-Werte und geringe Kohäsion (LCOM > 0.0) sind Anzeichen für Designprobleme.
+
+2. **Good Example:**
+   - Einführung der Abstraktion `Product` reduziert die Abhängigkeiten von High-Level-Modulen zu Low-Level-Modulen.
+   - High-Level-Module (`Shelf`) arbeiten nur mit Abstraktionen (`Product`), wodurch die Kopplung verringert
+     und die Kohäsion erhöht wird.
+   - Die FANOUT-Werte sinken, und die LOC wird durch die Modularisierung reduziert.
+
+https://javatechonline.com/solid-principles-the-dependency-inversion-principle/

@@ -1,0 +1,27 @@
+Reading Type Metrics:
+
+Bad Example:
+Bird,           NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=1, DIT=0, LCOM=-1.0, FANIN=2, FANOUT=0, Line no=3
+BirdSanctuary,  NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=1, Line no=3
+Main,           NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=7, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=3, Line no=3
+Penguin,        NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+
+Good Example:
+Bird,           NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=1, DIT=0, LCOM=-1.0, FANIN=2, FANOUT=0, Line no=3
+BirdSanctuary,  NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=1, Line no=3
+Main,           NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=7, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=3, Line no=3
+Sparrow,        NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+Bird,           LOC=3, CC=1, PC=0, Line no=5, Method Name=fly
+BirdSanctuary,  LOC=3, CC=1, PC=1, Line no=5, Method Name=letBirdFly
+Main,           LOC=5, CC=1, PC=1, Line no=5, Method Name=main
+Penguin,        LOC=3, CC=1, PC=0, Line no=5, Method Name=fly
+
+Good Example:
+Bird,           LOC=3, CC=1, PC=0, Line no=4, Method Name=fly
+BirdSanctuary,  LOC=3, CC=1, PC=1, Line no=5, Method Name=letBirdFly
+Main,           LOC=5, CC=1, PC=1, Line no=5, Method Name=main
+Sparrow,        LOC=3, CC=1, PC=0, Line no=5, Method Name=fly

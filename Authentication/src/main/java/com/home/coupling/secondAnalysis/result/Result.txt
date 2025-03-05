@@ -1,0 +1,100 @@
+Reading Type Metrics:
+
+Bad Example:
+Computer, 		NOF=1, NOPF=0, NOM=1, NOPM=1, LOC=6, WMC=1, NC=0, DIT=0, LCOM= 0.0, FANIN=0, FANOUT=1, Line no=3
+Printer, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+
+Good Example:
+Computer, 		NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=9, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=0, FANOUT=1, Line no=3
+Printable, 		NOF=0, NOPF=0, NOM=1, NOPM=0, LOC=3, WMC=1, NC=1, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Printer, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=0, FANOUT=0, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+Computer, 		LOC=3, CC=1, PC=0, Line no= 7, Method Name=startPrintJob
+Printer, 		LOC=3, CC=1, PC=0, Line no= 5, Method Name=print
+
+Good Example:
+Computer, 		LOC=3, CC=1, PC=1, Line no= 7, Method Name=Computer
+Computer, 		LOC=3, CC=1, PC=0, Line no=11, Method Name=startPrintJob
+Printable, 		LOC=0, CC=1, PC=0, Line no= 5, Method Name=print
+Printer, 		LOC=3, CC=1, PC=0, Line no= 5, Method Name=print
+
+### **Analyse der Kopplung anhand der Metriken**
+
+Kopplung (Coupling) misst die Abhängigkeiten zwischen Klassen.
+Eine hohe Kopplung kann zu Problemen wie schwieriger Wartbarkeit und eingeschränkter Wiederverwendbarkeit führen.
+Eine geringe Kopplung wird angestrebt, um die Flexibilität und Modularität des Systems zu verbessern.
+
+---
+
+#### **Bad Example**
+Das schlechte Beispiel zeigt eine hohe Kopplung zwischen den Klassen `Computer` und `Printer`.
+
+1. **Direkte Abhängigkeit:**
+   - Die Klasse `Computer` hat eine direkte Abhängigkeit zur konkreten Implementierung `Printer`.
+     Dies wird durch den `FANOUT=1`-Wert für `Computer` und den `FANIN=1`-Wert für `Printer` bestätigt.
+   - Solche direkten Verbindungen machen es schwierig, neue Druckerklassen hinzuzufügen, ohne die `Computer`-Klasse zu ändern.
+
+2. **Eingeschränkte Erweiterbarkeit:**
+   - `Computer` kann nur mit der Klasse `Printer` arbeiten. Falls ein anderes Gerät hinzugefügt werden soll (z. B. ein Scanner),
+     müssten Änderungen in `Computer` vorgenommen werden, was gegen das **Open/Closed-Prinzip** verstößt.
+
+3. **Fehlende Entkopplung:**
+   - Es gibt keine allgemeine Schnittstelle, die die Interaktion abstrahiert.
+     Das führt zu starker Bindung zwischen den Klassen und erschwert die Erweiterung oder Wiederverwendung.
+
+---
+
+#### **Good Example**
+Das gute Beispiel zeigt eine signifikante Reduktion der Kopplung durch die Einführung der Schnittstelle `Printable`.
+
+1. **Entkopplung durch Interface:**
+   - `Computer` interagiert nicht mehr direkt mit der Klasse `Printer`, sondern mit der Schnittstelle `Printable`.
+     Dadurch ist `Computer` von der konkreten Implementierung entkoppelt.
+   - Dies wird durch den `FANOUT=1`-Wert für `Computer` bestätigt, da `Computer` lediglich
+     von der Schnittstelle `Printable` abhängt und nicht direkt von einer konkreten Klasse.
+
+2. **Erhöhte Flexibilität:**
+   - Durch die Verwendung von `Printable` kann `Computer` mit jeder Klasse arbeiten,
+     die diese Schnittstelle implementiert (z. B. `Printer`, `Scanner`, etc.).
+   - Dies fördert das Open/Closed-Prinzip: Neue Klassen können hinzugefügt werden, ohne die bestehende `Computer`-Klasse zu ändern.
+
+3. **Bessere Modularität:**
+   - Die Klasse `Printer` implementiert die Schnittstelle `Printable`, was durch `DIT=1` bestätigt wird.
+     Dadurch bleibt die Implementierung modular und leicht austauschbar.
+
+---
+
+#### **Vergleich der Metriken**
+| Metrik           | Bad Example (Computer) | Good Example (Computer) | Bad Example (Printer) | Good Example (Printer) |
+|-------------------|-------------------------|--------------------------|------------------------|------------------------|
+| **FANOUT**       | 1                       | 1                        | 0                      | 0                      |
+| **FANIN**        | 0                       | 0                        | 1                      | 0                      |
+| **WMC**          | 1                       | 2                        | 1                      | 1                      |
+| **DIT**          | 0                       | 0                        | 0                      | 1                      |
+| **LOC**          | 6                       | 9                        | 5                      | 5                      |
+
+Die gute Umsetzung zeigt mit der Einführung von `Printable` eine bessere Struktur,
+ohne die Anzahl der Zeilen oder die Komplexität drastisch zu erhöhen.
+
+---
+
+#### **Methodenanalyse**
+| Methode                | Bad Example (LOC/CC) | Good Example (LOC/CC) |
+|-------------------------|----------------------|------------------------|
+| `startPrintJob`        | 3 / 1                | 3 / 1                  |
+| `print` (Printer)      | 3 / 1                | 3 / 1                  |
+
+Die Werte für LOC (Lines of Code) und CC (Cyclomatic Complexity) sind ähnlich,
+jedoch ist die gute Umsetzung durch die Einführung von `Printable` wesentlich flexibler.
+
+---
+
+### **Fazit**
+Im schlechten Beispiel besteht eine direkte Kopplung zwischen `Computer` und `Printer`.
+Dies führt zu einer starren Struktur und erschwert zukünftige Erweiterungen.
+Im guten Beispiel wird diese Kopplung durch die Einführung der Schnittstelle `Printable` reduziert.
+Dadurch wird die Wartbarkeit verbessert, die Modularität erhöht und die Möglichkeit geschaffen,
+neue Klassen hinzuzufügen, ohne bestehende zu ändern. Dies zeigt deutlich die Vorteile einer geringen Kopplung.

@@ -1,0 +1,33 @@
+1. **Single Responsibility Principle (SRP)**
+   - **LCOM (Lack of Cohesion of Methods):** Hohe LCOM-Werte deuten auf mangelnde Kohäsion hin,
+        was darauf hindeuten kann, dass eine Klasse mehrere Verantwortlichkeiten hat und das SRP verletzt.
+        LCOM -1 Klasse kann nicht definiert werden
+        LCOM  0
+        LCOM  1 Klasse hat gute Kohäsion,
+   - **NOM (Number of Methods)** und **LOC (Lines of Code):** Viele Methoden oder eine hohe LOC können darauf hinweisen,
+        dass eine Klasse zu komplex ist und möglicherweise mehr als eine Verantwortung hat.
+
+2. **Open/Closed Principle (OCP)**
+   - **DIT (Depth of Inheritance Tree):** Ein tiefer Vererbungsbaum (hoher DIT-Wert)
+        kann auf eine enge Kopplung und potenzielle Schwierigkeiten bei der Erweiterbarkeit hinweisen.
+        Dies könnte das OCP verletzen, falls Erweiterungen dazu führen, dass bestehende Klassen geändert werden müssen.
+   - **WMC (Weighted Methods per Class):** Hohe WMC-Werte können auf Klassen hindeuten,
+        die komplex und daher schwer erweiterbar sind.
+
+3. **Liskov Substitution Principle (LSP)**
+   - **DIT (Depth of Inheritance Tree):** Ein zu hoher DIT-Wert kann bedeuten, dass Unterklassen möglicherweise
+        nicht LSP-konform sind, da tiefe Vererbungsbäume oft zu Verletzungen dieses Prinzips führen können.
+   - **FANIN / FANOUT:** Eine hohe Abhängigkeit von Unterklassen (Fan-In) oder eine starke Koppelung
+        zu externen Klassen (Fan-Out) kann zu LSP-Verletzungen führen.
+
+4. **Interface Segregation Principle (ISP)**
+   - **NOPM (Number of Public Methods):** Hohe NOPM-Werte können darauf hindeuten,
+        dass eine Schnittstelle zu viele Methoden anbietet, was ISP widerspricht.
+        Es kann sinnvoll sein, Schnittstellen mit zu vielen öffentlichen Methoden zu überdenken.
+   - **LCOM:** Eine geringe Kohäsion deutet darauf hin, dass eine Klasse oder Schnittstelle möglicherweise
+        zu viele Verantwortlichkeiten hat und in kleinere Schnittstellen aufgeteilt werden sollte.
+
+5. **Dependency Inversion Principle (DIP)**
+   - **FANIN / FANOUT:** Ein hoher FANOUT-Wert kann auf viele Abhängigkeiten zu anderen Klassen hinweisen,
+        was ein Anzeichen dafür ist, dass das DIP verletzt wird. Insbesondere sollten hohe Abhängigkeiten
+        zu konkreten Klassen vermieden und eher abstrakte Schnittstellen genutzt werden.

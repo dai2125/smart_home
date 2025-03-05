@@ -1,0 +1,32 @@
+Reading Type Metrics:
+Command,        NOF=2, NOPF=1, NOM=4, NOPM=2, LOC=14, WMC= 4, NC=3, DIT=0, LCOM= 0.5, FANIN=2, FANOUT=1, Line no=3
+CommandHistory, NOF=1, NOPF=0, NOM=3, NOPM=3, LOC=12, WMC= 3, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=5
+CopyCommand,    NOF=0, NOPF=0, NOM=2, NOPM=2, LOC= 9, WMC= 2, NC=0, DIT=1, LCOM=-1.0, FANIN=0, FANOUT=1, Line no=3
+CutCommand,     NOF=0, NOPF=0, NOM=3, NOPM=2, LOC=18, WMC= 4, NC=0, DIT=1, LCOM=-1.0, FANIN=0, FANOUT=1, Line no=3
+Demo,           NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 6, WMC= 1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=1, Line no=3
+Editor,         NOF=3, NOPF=2, NOM=7, NOPM=5, LOC=65, WMC=10, NC=0, DIT=0, LCOM= 0.0, FANIN=5, FANOUT=2, Line no=8
+PasteCommand,   NOF=0, NOPF=0, NOM=2, NOPM=2, LOC=11, WMC= 3, NC=0, DIT=1, LCOM=-1.0, FANIN=0, FANOUT=1, Line no=3
+
+Reading Method Metrics:
+Command,        LOC= 3, CC=1, PC=1, Line no= 8, Method Name=Command
+Command,        LOC= 3, CC=1, PC=0, Line no=12, Method Name=backup
+Command,        LOC= 3, CC=1, PC=0, Line no=16, Method Name=undo
+Command,        LOC= 0, CC=1, PC=0, Line no=20, Method Name=execute
+CommandHistory, LOC= 3, CC=1, PC=1, Line no= 9, Method Name=push
+CommandHistory, LOC= 3, CC=1, PC=0, Line no=13, Method Name=pop
+CommandHistory, LOC= 3, CC=1, PC=0, Line no=17, Method Name=isEmpty
+CopyCommand,    LOC= 3, CC=1, PC=1, Line no= 5, Method Name=CopyCommand
+CopyCommand,    LOC= 4, CC=1, PC=0, Line no= 9, Method Name=execute
+CutCommand,     LOC= 3, CC=1, PC=1, Line no= 5, Method Name=CutCommand
+CutCommand,     LOC= 8, CC=2, PC=0, Line no= 9, Method Name=execute
+CutCommand,     LOC= 5, CC=1, PC=1, Line no=20, Method Name=cutString
+Demo,           LOC= 4, CC=1, PC=1, Line no= 5, Method Name=main
+Editor,         LOC=48, CC=1, PC=0, Line no=14, Method Name=init
+Editor,         LOC= 3, CC=1, PC=1, Line no=30, Method Name=actionPerformed
+Editor,         LOC= 3, CC=1, PC=1, Line no=36, Method Name=actionPerformed
+Editor,         LOC= 3, CC=1, PC=1, Line no=42, Method Name=actionPerformed
+Editor,         LOC= 3, CC=1, PC=1, Line no=48, Method Name=actionPerformed
+Editor,         LOC= 5, CC=2, PC=1, Line no=63, Method Name=executeCommand
+Editor,         LOC= 7, CC=3, PC=0, Line no=69, Method Name=undo
+PasteCommand,   LOC= 3, CC=1, PC=1, Line no= 5, Method Name=PasteCommand
+PasteCommand,   LOC= 6, CC=2, PC=0, Line no= 9, Method Name=execute

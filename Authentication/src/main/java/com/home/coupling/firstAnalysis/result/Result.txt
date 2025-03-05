@@ -1,0 +1,99 @@
+Reading Type Metrics:
+
+Bad Example:
+LightBulb, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Switch, 		NOF=1, NOPF=0, NOM=1, NOPM=1, LOC=6, WMC=1, NC=0, DIT=0, LCOM= 0.0, FANIN=0, FANOUT=1, Line no=3
+
+Good Example:
+LightBulb, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=0, FANOUT=0, Line no=3
+Switch, 		NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=9, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=0, FANOUT=1, Line no=3
+Switchable, 	NOF=0, NOPF=0, NOM=1, NOPM=0, LOC=3, WMC=1, NC=1, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+LightBulb, 		LOC=3, CC=1, PC=0, Line no= 5, Method Name=turnOn
+Switch, 		LOC=3, CC=1, PC=0, Line no= 7, Method Name=operate
+
+Good Example:
+LightBulb, 		LOC=3, CC=1, PC=0, Line no= 5, Method Name=turnOn
+Switch, 		LOC=3, CC=1, PC=1, Line no= 7, Method Name=Switch
+Switch, 		LOC=3, CC=1, PC=0, Line no=11, Method Name=operate
+Switchable, 	LOC=0, CC=1, PC=0, Line no= 5, Method Name=turnOn
+
+### **Analyse der Kopplung anhand der Metriken**
+
+Kopplung (Coupling) bezieht sich auf den Grad der Abhängigkeit zwischen Klassen oder Modulen. Hohe Kopplung bedeutet,
+dass Änderungen in einer Klasse sich stark auf andere Klassen auswirken können,
+was die Wartbarkeit und Erweiterbarkeit des Systems beeinträchtigt.
+Niedrige Kopplung wird bevorzugt, da sie die Modularität und Wiederverwendbarkeit fördert.
+
+---
+
+#### **Bad Example**
+Die schlechte Umsetzung zeigt eine hohe Kopplung zwischen den Klassen `Switch` und `LightBulb`, was problematisch ist.
+
+1. **Direkte Abhängigkeit von Implementierungen:**
+   - `Switch` interagiert direkt mit der konkreten Klasse `LightBulb`. Das bedeutet,
+     dass `Switch` stark an diese spezifische Implementierung gebunden ist.
+     Wenn sich die Logik oder die API von `LightBulb` ändert, müssen auch Änderungen in `Switch` vorgenommen werden.
+   - Dies wird durch den `FANIN`- und `FANOUT`-Wert bestätigt. `LightBulb` hat `FANIN=1`,
+     was zeigt, dass es von `Switch` direkt genutzt wird.
+
+2. **Eingeschränkte Erweiterbarkeit:**
+   - Da `Switch` nur mit `LightBulb` funktioniert, kann das System nicht einfach um andere `Switch`-fähige Geräte erweitert werden,
+     ohne die Klasse `Switch` zu modifizieren.
+   - Dies widerspricht dem Open/Closed-Prinzip, das besagt, dass Klassen für Erweiterungen offen,
+     aber für Modifikationen geschlossen sein sollten.
+
+3. **Einfache Struktur, aber hohe Kopplung:**
+   - Obwohl die Implementierung einfach erscheint (`LOC=6` für `Switch`),
+     macht die direkte Abhängigkeit das System anfällig für Änderungen.
+     Diese scheinbare Einfachheit geht zu Lasten der Flexibilität und Wartbarkeit.
+
+---
+
+#### **Good Example**
+Die gute Umsetzung reduziert die Kopplung deutlich, indem sie die Abhängigkeit
+von konkreten Klassen eliminiert und stattdessen eine Schnittstelle einführt.
+
+1. **Entkopplung durch Interface:**
+   - Eine neue Schnittstelle `Switchable` wurde eingeführt. `Switch` interagiert nicht mehr direkt
+     mit der konkreten Klasse `LightBulb`, sondern nur mit der Schnittstelle `Switchable`.
+   - Dies wird durch den `FANOUT=0`-Wert für `Switchable` bestätigt.
+     `Switch` hat keine direkte Abhängigkeit mehr von spezifischen Implementierungen.
+
+2. **Flexibilität und Erweiterbarkeit:**
+   - Da `Switch` nun mit jeder Klasse arbeiten kann, die `Switchable` implementiert,
+     ist das System leicht erweiterbar. Neue Geräte können hinzugefügt werden, ohne `Switch` zu ändern.
+   - Der `NC=1`-Wert für `Switchable` zeigt, dass es von mindestens einer Klasse (`LightBulb`) implementiert wird,
+     wodurch die Modularität gefördert wird.
+
+3. **Geringe Kopplung, erhöhte Komplexität:**
+   - Obwohl die gute Lösung `WMC=2` für `Switch` und ein höheres `LOC=9` aufweist,
+     ist dies ein akzeptabler Kompromiss für die stark reduzierte Kopplung.
+     Die zusätzliche Komplexität kommt durch die Unterstützung von mehreren Implementierungen
+     und zahlt sich in Wartbarkeit und Erweiterbarkeit aus.
+
+---
+
+#### **Vergleich der Metriken**
+| Metrik           | Bad Example (Switch) | Good Example (Switch) | Bad Example (LightBulb) | Good Example (LightBulb) |
+|-------------------|----------------------|------------------------|--------------------------|--------------------------|
+| **FANOUT**       | 1                    | 1                      | 0                        | 0                        |
+| **FANIN**        | 0                    | 0                      | 1                        | 0                        |
+| **WMC**          | 1                    | 2                      | 1                        | 1                        |
+| **LOC**          | 6                    | 9                      | 5                        | 5                        |
+| **DIT**          | 0                    | 1                      | 0                        | 1                        |
+
+Die Metriken zeigen, dass die gute Umsetzung durch den Einsatz von Interfaces (`DIT=1`) eine geringere Kopplung erreicht,
+ohne die Funktionalität zu beeinträchtigen.
+
+---
+
+### **Fazit**
+Die schlechte Umsetzung weist eine hohe Kopplung auf, da `Switch` direkt von `LightBulb` abhängt.
+Dies macht das System schwer wartbar und unflexibel.
+Die gute Umsetzung adressiert diese Probleme, indem `Switchable` als Schnittstelle eingeführt wird,
+um die Abhängigkeiten zu entkoppeln. Dadurch ist das System modular, leicht erweiterbar und wartbarer.
+Dies ist ein klarer Gewinn, selbst wenn die Implementierung minimal komplexer wird.

@@ -1,0 +1,1 @@
+NOF=2, NOPF=0, NOM=4, NOPM=4, LOC=15, WMC=4, NC=2, DIT=0, LCOM=0.5, FANIN=0, FANOUT=0, Line no=3 Class Name=Animal

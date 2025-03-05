@@ -1,0 +1,123 @@
+Reading Type Metrics:
+
+Bad Example:
+Calculator,         NOF=0, NOPF=0, NOM=2, NOPM=2, LOC= 8, WMC=2, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Main,               NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 6, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=1, Line no=3
+ReportGenerator,    NOF=1, NOPF=0, NOM=1, NOPM=1, LOC=10, WMC=1, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+
+Good Example:
+Calculator,         NOF=0, NOPF=0, NOM=2, NOPM=2, LOC= 8, WMC=2, NC=0, DIT=0, LCOM=-1.0, FANIN=2, FANOUT=0, Line no=3
+Main,               NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 7, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=2, Line no=3
+ReportGenerator,    NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=13, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+Calculator,         LOC=3, CC=1, PC=2, Line no= 5, Method Name=add
+Calculator,         LOC=3, CC=1, PC=2, Line no= 9, Method Name=subtract
+Main,               LOC=4, CC=1, PC=1, Line no= 5, Method Name=main
+ReportGenerator,    LOC=7, CC=1, PC=2, Line no= 7, Method Name=generateReport
+
+Good Example:
+Calculator,         LOC=3, CC=1, PC=2, Line no= 5, Method Name=add
+Calculator,         LOC=3, CC=1, PC=2, Line no= 9, Method Name=subtract
+Main,               LOC=5, CC=1, PC=1, Line no= 5, Method Name=main
+ReportGenerator,    LOC=3, CC=1, PC=1, Line no= 7, Method Name=ReportGenerator
+ReportGenerator,    LOC=7, CC=1, PC=2, Line no=11, Method Name=generateReport
+
+
+
+### Analyse des Creator (B closely uses A) GRASP Patterns anhand der Metriken
+
+Das **Creator**-Pattern ist eines der **GRASP** (General Responsibility Assignment Software Patterns)
+und bezieht sich auf die Zuweisung der Verantwortung, eine Instanz einer Klasse zu erstellen. Das Pattern besagt,
+dass eine Klasse **B** eine Instanz von Klasse **A** erzeugen sollte, wenn:
+
+1. **B** häufig eine Instanz von **A** benötigt,
+2. **B** die Verantwortung für **A** übernehmen soll,
+3. **B** eine enge Verbindung mit **A** hat (z. B. als Aggregat oder Container von **A**).
+
+Die vorliegenden Metriken helfen uns zu überprüfen, ob dieses Prinzip in der gegebenen Software-Architektur eingehalten wird,
+indem wir die **FANIN** und **FANOUT** der Klassen sowie die Methodenbeziehungen analysieren.
+
+---
+
+#### **Bad Example:**
+
+1. **Calculator:**
+   - **FANIN = 1**, **FANOUT = 0**
+   - Der **Calculator** hat einen **FANIN** von 1, was bedeutet, dass er eine Abhängigkeit von einer anderen Klasse hat,
+     aber keine Instanzen anderer Klassen erzeugt. Dies deutet darauf hin, dass der **Calculator** als Konsument
+     und nicht als Ersteller von Objekten fungiert.
+
+2. **Main:**
+   - **FANIN = 0**, **FANOUT = 1**
+   - Der **Main**-Modul hat keinen **FANIN**, was darauf hinweist, dass er keine Instanzen anderer Klassen verwendet oder abhängt.
+     Jedoch hat er einen **FANOUT** von 1, was bedeutet, dass er eine Klasse aufruft oder von einer anderen Klasse abhängig ist.
+     Dies könnte darauf hinweisen, dass **Main** eine Instanz von **ReportGenerator** erstellt oder mit ihr interagiert.
+
+3. **ReportGenerator:**
+   - **FANIN = 1**, **FANOUT = 1**
+   - Der **ReportGenerator** hat sowohl **FANIN = 1** als auch **FANOUT = 1**,
+     was bedeutet, dass er sowohl von einer anderen Klasse abhängt als auch eine Instanz einer anderen Klasse erzeugt oder verwendet.
+     Es wird jedoch nicht klar, ob diese Beziehung die Verantwortung der Instanziierung im Sinne des **Creator**-Patterns widerspiegelt.
+
+In diesem schlechten Beispiel gibt es keinen klaren Hinweis darauf,
+dass eine Klasse eine Instanz einer anderen Klasse aufgrund ihrer engen Beziehungen oder häufigen Nutzung erstellt.
+**Main** könnte theoretisch **ReportGenerator** instanziieren, aber diese Beziehung ist nicht ausreichend stark,
+um das Creator-Pattern zu bestätigen.
+
+---
+
+#### **Good Example:**
+
+1. **Calculator:**
+   - **FANIN = 2**, **FANOUT = 0**
+   - Der **Calculator** hat nun einen **FANIN** von 2, was bedeutet, dass er von anderen Klassen abhängt.
+     Der **FANOUT** bleibt 0, was darauf hindeutet, dass der **Calculator** keine Instanzen anderer Klassen erzeugt.
+     In diesem Fall deutet dies darauf hin, dass der **Calculator** eine **Abhängigkeitsbeziehung** zu anderen Klassen hat,
+     aber nicht als **Creator** agiert.
+
+2. **Main:**
+   - **FANIN = 0**, **FANOUT = 2**
+   - Der **Main**-Modul hat einen **FANOUT** von 2, was bedeutet, dass er zwei andere Klassen verwendet oder instanziiert.
+     Es ist jedoch nicht klar, ob diese Klassen im **Creator**-Pattern eine Rolle spielen, weil es nicht angegeben ist,
+     ob **Main** Instanzen erzeugt.
+
+3. **ReportGenerator:**
+   - **FANIN = 1**, **FANOUT = 1**
+   - Im guten Beispiel hat **ReportGenerator** immer noch einen **FANIN** von 1, was darauf hinweist,
+     dass er von einer Klasse abhängt. Der **FANOUT** von 1 zeigt, dass **ReportGenerator** selbst eine Instanz
+     einer anderen Klasse erzeugt oder verwendet. Dies deutet darauf hin,
+     dass **ReportGenerator** möglicherweise als **Creator** im **Creator-Pattern** agiert,
+     aber die Beziehungen zwischen den Klassen und Methoden sind nicht ausreichend, um dies mit Sicherheit zu bestätigen.
+
+---
+
+#### **Methodenanalyse:**
+
+| Methode                 | Bad Example (LOC/CC/PC) | Good Example (LOC/CC/PC) |
+|-------------------------|-------------------------|--------------------------|
+| `Calculator`            | LOC=3, CC=1, PC=2       | LOC=3, CC=1, PC=2        |
+| `Main`                  | LOC=4, CC=1, PC=1       | LOC=5, CC=1, PC=1        |
+| `ReportGenerator`       | LOC=7, CC=1, PC=2       | LOC=7, CC=1, PC=2        |
+| `ReportGenerator`       | LOC=3, CC=1, PC=1       | LOC=3, CC=1, PC=1        |
+
+Die Methodenmuster zeigen, dass sowohl im schlechten als auch im guten Beispiel **ReportGenerator** eine Methode
+mit komplexeren Parametern und Verantwortlichkeiten hat, die auf eine größere Verantwortlichkeit hinweisen könnte.
+Es ist jedoch nicht explizit ersichtlich, dass **ReportGenerator** Instanzen anderer Klassen basierend auf der Nutzung
+oder Verantwortung erstellt.
+
+---
+
+### **Fazit**
+
+Basierend auf den **FANIN**- und **FANOUT**-Werten und den Methodenbeziehungen lässt sich sagen,
+dass in den gegebenen Beispielen nicht eindeutig das **Creator**-Pattern des GRASP-Musters eingehalten wird.
+Zwar gibt es Anzeichen dafür, dass einige Klassen wie **ReportGenerator** potenziell als Ersteller fungieren könnten
+(durch ihre **FANOUT**-Werte), es gibt jedoch keine klare und starke Verantwortungszuweisung,
+die die Erstellung von Instanzen aufgrund der engen Nutzung oder Aggregation einer anderen Klasse unterstützt.
+
+Im Allgemeinen lässt sich feststellen, dass das Creator-Pattern nicht konsequent umgesetzt wurde.
+Eine stärkere Modularisierung, bei der Klassen explizit für die Erstellung von Instanzen anderer Klassen verantwortlich sind,
+wäre erforderlich, um das Creator-Pattern klar und deutlich umzusetzen.

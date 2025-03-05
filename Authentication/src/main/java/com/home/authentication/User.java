@@ -1,10 +1,18 @@
 package com.home.authentication;
 
+import java.sql.SQLException;
+
 public class User {
 
     private String username;
     private String password;
-    private Long id;
+    UserInput userInput;
+
+    public User(String username, String password) throws SQLException {
+        this.username = username;
+        this.password = password;
+        userInput = new UserInput();
+    }
 
     public String getUsername() {
         return username;
@@ -20,13 +28,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 }

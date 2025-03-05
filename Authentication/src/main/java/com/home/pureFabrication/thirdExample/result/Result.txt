@@ -1,0 +1,20 @@
+Reading Type Metrics:
+Demo,               NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=19, WMC=4, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=4, Line no=5
+RoundHole,          NOF=1, NOPF=0, NOM=3, NOPM=3, LOC=14, WMC=3, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+RoundPeg,           NOF=1, NOPF=0, NOM=3, NOPM=3, LOC=11, WMC=3, NC=1, DIT=0, LCOM= 0.6666666666666666, FANIN=2, FANOUT=0, Line no=3
+SquarePeg,          NOF=1, NOPF=0, NOM=3, NOPM=3, LOC=14, WMC=3, NC=0, DIT=0, LCOM= 0.0, FANIN=2, FANOUT=0, Line no=3
+SquarePegAdapter,   NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=11, WMC=2, NC=0, DIT=1, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+
+Reading Method Metrics:
+Demo,               LOC=17, CC=4, PC=1, Line no= 7, Method Name=main
+RoundHole,          LOC= 3, CC=1, PC=1, Line no= 7, Method Name=RoundHole
+RoundHole,          LOC= 3, CC=1, PC=0, Line no=11, Method Name=getRadius
+RoundHole,          LOC= 5, CC=1, PC=1, Line no=15, Method Name=fits
+RoundPeg,           LOC= 2, CC=1, PC=0, Line no= 7, Method Name=RoundPeg
+RoundPeg,           LOC= 3, CC=1, PC=1, Line no= 9, Method Name=RoundPeg
+RoundPeg,           LOC= 3, CC=1, PC=0, Line no=13, Method Name=getRadius
+SquarePeg,          LOC= 3, CC=1, PC=1, Line no= 7, Method Name=SquarePeg
+SquarePeg,          LOC= 3, CC=1, PC=0, Line no=11, Method Name=getWidth
+SquarePeg,          LOC= 5, CC=1, PC=0, Line no=15, Method Name=getSquare
+SquarePegAdapter,   LOC= 3, CC=1, PC=1, Line no= 7, Method Name=SquarePegAdapter
+SquarePegAdapter,   LOC= 5, CC=1, PC=0, Line no=11, Method Name=getRadius

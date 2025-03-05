@@ -1,0 +1,126 @@
+Reading Type Metrics:
+
+Bad Example:
+Car,        NOF=1, NOPF=1, NOM=2, NOPM=2, LOC=12, WMC=3, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+Engine,     NOF=1, NOPF=0, NOM=2, NOPM=2, LOC= 9, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=2, FANOUT=0, Line no=3
+Main,       NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 8, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=2, Line no=3
+
+Good Example:
+Car,        NOF=1, NOPF=0, NOM=2, NOPM=2, LOC=10, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=3
+Engine,     NOF=1, NOPF=0, NOM=2, NOPM=2, LOC= 9, WMC=2, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=0, Line no=3
+Main,       NOF=0, NOPF=0, NOM=1, NOPM=1, LOC= 6, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=1, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+Car,        LOC=3, CC=1, PC=1, Line no= 7, Method Name=Car
+Car,        LOC=6, CC=2, PC=0, Line no=11, Method Name=startCar
+Engine,     LOC=3, CC=1, PC=1, Line no= 7, Method Name=Engine
+Engine,     LOC=3, CC=1, PC=0, Line no=11, Method Name=start
+Main,       LOC=6, CC=1, PC=1, Line no= 5, Method Name=main
+
+Good Example:
+Car,        LOC=3, CC=1, PC=1, Line no= 7, Method Name=Car
+Car,        LOC=4, CC=1, PC=0, Line no=11, Method Name=startCar
+Engine,     LOC=3, CC=1, PC=1, Line no= 7, Method Name=Engine
+Engine,     LOC=3, CC=1, PC=0, Line no=11, Method Name=start
+Main,       LOC=4, CC=1, PC=1, Line no= 5, Method Name=main
+
+
+
+### Analyse des **Creator (B Contains or Compositely Aggregates A)** GRASP Patterns anhand der Metriken
+
+Das **Creator (B Contains or Compositely Aggregates A)**-Pattern aus der **GRASP**-Musterbibliothek besagt,
+dass eine Klasse **B** die Verantwortung für das Erstellen von Instanzen einer anderen Klasse **A** übernehmen sollte, wenn:
+
+1. **B** eine **Aggregation** oder **Komposition** von **A** ist (d.h., **B** enthält oder verwaltet **A**),
+2. **B** häufig **A** verwendet,
+3. **B** eine starke Assoziation mit **A** hat und **A** nicht anderswo instanziiert werden sollte.
+
+Um zu analysieren, ob dieses Pattern in den gegebenen Beispielen eingehalten wird,
+betrachten wir insbesondere die **FANIN**- und **FANOUT**-Metriken sowie die **Verantwortung** der einzelnen Klassen
+in Bezug auf das Erstellen von Instanzen anderer Klassen.
+
+---
+
+### **Bad Example:**
+
+1. **Car:**
+   - **FANIN = 1**, **FANOUT = 1**
+   - Der **Car** hat eine **FANIN** von 1 und eine **FANOUT** von 1. Dies deutet darauf hin,
+     dass **Car** eine Abhängigkeit von einer anderen Klasse hat (von **Engine**),
+     aber auch eine Instanz einer anderen Klasse (vermutlich **Engine**) erzeugt oder verwendet.
+     Jedoch ist nicht klar, ob **Car** eine **Komposition** oder **Aggregation** von **Engine** darstellt,
+     die eine **Creator-Verantwortung** impliziert.
+
+2. **Engine:**
+   - **FANIN = 2**, **FANOUT = 0**
+   - **Engine** hat einen **FANIN** von 2, was darauf hindeutet, dass es von zwei anderen Klassen abhängt,
+     aber keine Instanzen anderer Klassen erzeugt. Das bedeutet, dass **Engine** keine Verantwortung für die Erstellung
+     von Instanzen einer anderen Klasse übernimmt. Dies spricht gegen die Einhaltung des **Creator-Patterns** für **Engine**.
+
+3. **Main:**
+   - **FANIN = 0**, **FANOUT = 2**
+   - **Main** hat einen **FANOUT** von 2, was bedeutet, dass es Instanzen von zwei anderen Klassen verwendet oder mit ihnen interagiert.
+     Es ist jedoch nicht klar, ob **Main** eine **Komposition** oder **Aggregation** aufweist,
+     die die Verantwortung für die Instanziierung von **Car** oder **Engine** beinhalten würde.
+     Dies weist darauf hin, dass **Main** eher eine **Verwaltung** der Interaktionen übernimmt,
+     ohne eine starke Aggregation oder Komposition zu zeigen.
+
+In diesem schlechten Beispiel gibt es keine klare Aggregation oder Komposition, die darauf hinweist,
+dass eine der Klassen die Verantwortung für das Erstellen von Instanzen der anderen übernimmt.
+**Car** und **Engine** könnten interagieren, aber keine der Klassen zeigt explizit eine Komposition, bei der sie instanziiert werden müsste.
+
+---
+
+### **Good Example:**
+
+1. **Car:**
+   - **FANIN = 1**, **FANOUT = 1**
+   - Der **Car** hat immer noch eine **FANIN** von 1 und eine **FANOUT** von 1. Dies deutet darauf hin, dass **Car** von **Engine** abhängt,
+     aber auch eine Instanz von **Engine** verwendet. Es bleibt jedoch unklar,
+     ob **Car** **Engine** enthält oder als Komposition von **Engine** dient, was für das **Creator-Pattern** entscheidend wäre.
+
+2. **Engine:**
+   - **FANIN = 1**, **FANOUT = 0**
+   - **Engine** hat einen **FANIN** von 1, was darauf hindeutet, dass **Engine** von einer anderen Klasse abhängt,
+     jedoch keine Instanzen anderer Klassen erzeugt. Wie im schlechten Beispiel übernimmt **Engine**
+     keine Verantwortung für die Instanziierung anderer Klassen, was gegen das **Creator-Pattern** spricht.
+
+3. **Main:**
+   - **FANIN = 0**, **FANOUT = 1**
+   - **Main** hat weiterhin einen **FANOUT** von 1, was bedeutet, dass es eine Instanz einer anderen Klasse verwendet,
+     aber keine Instanzen von anderen Klassen selbst erzeugt. In diesem Fall wird die Instanziierung
+     von **Car** oder **Engine** nicht direkt durch **Main** erledigt, und es bleibt unklar,
+     ob eine der Klassen die Verantwortung für die Erstellung einer Instanz der anderen übernimmt.
+
+Im guten Beispiel bleibt das **Creator-Pattern** auch unausgesprochen, da es keine explizite Komposition oder Aggregation
+zwischen **Car** und **Engine** gibt, bei der **Car** die Verantwortung für die Erstellung von **Engine** übernehmen würde.
+**Car** verwendet **Engine**, aber es ist nicht klar, ob es eine **Komposition** oder **Aggregation** ist,
+die eine Instanziierung von **Engine** im Sinne des Creator-Patterns rechtfertigt.
+
+---
+
+### **Methodenanalyse:**
+
+Die Methodenmetriken zeigen, dass in beiden Beispielen die Klassen **Car** und **Engine** jeweils Methoden haben,
+die deren Verantwortung beschreiben. **Car** hat Methoden wie `startCar`,
+die dafür verantwortlich sind, die Instanz von **Engine** zu steuern. **Engine** hat die Methode `start`,
+die die Funktionalität von **Engine** initialisiert. Dennoch lässt sich aus diesen Methodenmuster keine klare Verantwortung
+zur Instanziierung einer anderen Klasse ableiten.
+
+Die **FANIN**- und **FANOUT**-Werte sind zwar sinnvoll, zeigen jedoch nicht die konkrete **Komposition** oder **Aggregation**,
+die für die Einhaltung des Creator-Patterns erforderlich wären.
+
+---
+
+### **Fazit**
+
+Basierend auf den Metriken ist es nicht eindeutig, ob das **Creator (B Contains or Compositely Aggregates A)**-Pattern eingehalten wird.
+Es gibt keine starke **Aggregation** oder **Komposition** zwischen **Car** und **Engine**,
+die darauf hinweist, dass **Car** die Verantwortung für das Erstellen von **Engine**-Instanzen übernimmt.
+Obwohl **Car** und **Engine** miteinander interagieren und voneinander abhängen,
+lässt sich keine klare Verantwortungszuweisung ableiten, die das **Creator-Pattern** bestätigt.
+
+Es wäre erforderlich, dass **Car** die Verantwortung für das Erstellen von **Engine**-Instanzen übernimmt
+oder explizit eine **Komposition** oder **Aggregation** von **Engine** zeigt, um das **Creator**-Pattern korrekt umzusetzen.

@@ -1,0 +1,33 @@
+Im Good Example erben MountainBike und RoadBike korrekt von Bicycle DIT=1.
+Das zeigt das neue Funktionalitäten durch Vererbung erweitert wurden,
+ohne die Basisklasse zu verändern.
+Alle Klassen haben eine LCOM=0.0 was auf gute Kohäsion hinweist.
+Die Basisklasse Bicycle hat einen FANIN=2, das bedeutet das zwei Klassen davon
+abgeleitet werden.
+Die Basisklasse Bicylce hat einen FANOUT=0 das bedeutet das die Klasse Unabhänging ist.
+
+Good Example
+Class Name=Bicycle		NOF=3,NOPF=0,NOM=2,NOPM=2,LOC=13,WMC=2,NC=2,DIT=0,LCOM= 0.0,FANIN=2,FANOUT=0,Line no=3
+Class Name=MountainBike	NOF=1,NOPF=0,NOM=4,NOPM=4,LOC=17,WMC=4,NC=0,DIT=1,LCOM= 0.0,FANIN=1,FANOUT=0,Line no=3
+Class Name=RoadBike		NOF=1,NOPF=0,NOM=4,NOPM=4,LOC=17,WMC=4,NC=0,DIT=1,LCOM= 0.0,FANIN=1,FANOUT=0,Line no=3
+Class Name=TestBikes	NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=12,WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=0,FANOUT=3,Line no=3
+
+Bad Example
+Class Name=Bicycle		NOF=6,NOPF=0,NOM=4,NOPM=4,LOC=33,WMC=8,NC=2,DIT=0,LCOM= 0.0,FANIN=0,FANOUT=0,Line no=3
+Class Name=MountainBike	NOF=0,NOPF=0,NOM=1,NOPM=1,LOC= 6,WMC=1,NC=0,DIT=1,LCOM=-1.0,FANIN=0,FANOUT=0,Line no=3
+Class Name=RoadBike		NOF=0,NOPF=0,NOM=1,NOPM=1,LOC= 6,WMC=1,NC=0,DIT=1,LCOM=-1.0,FANIN=0,FANOUT=0,Line no=3
+Class Name=TestBike		NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=12,WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=0,FANOUT=1,Line no=7
+
+Im Bad Example hat die Basisklasse auch einen DIT=0 und die Unterklassen einen DIT=1,
+gleich wie im Good Example.
+In der Basisklasse Bicycle gibt es 4 Methoden die aber eine WMC=8 haben,
+das deutet auf sehr komplexe Methoden hin, zu beachten ist auch der LOC=33 in der Basisklasse.
+Das zeigt an das alle Funktionalitäten in einer Klasse zentriert wurden.
+Die beiden Unterklassen haben auch eine LCOM=-1.0 der Grund dafür ist das sie keine Felder haben.
+Auch die FANIN=0 zeigt an das keine Abstraktionen oder andere Klassen verwendet wurden.
+Im Bad Example sind die Klassen MountainBike und RoadBike "Dummy-Klassen",
+sie haben keine sinnvolle Logik.
+
+Name,Type Name,Design Smell,Cause of the Smell
+BadExampleMountainBike,Broken Hierarchy,The tool detected a potential instance of the smell because this type does not implement or override any method from it's supertype(s): BadExampleBicycle
+BadExampleRoadBike,Broken Hierarchy,The tool detected a potential instance of the smell because this type does not implement or override any method from it's supertype(s): BadExampleBicycle

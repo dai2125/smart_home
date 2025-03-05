@@ -1,0 +1,115 @@
+Interpretation der LCOM Werte:
+
+LCOM=0.0:   Perfekte Kohäsion; alle Methoden arbeiten zusammen oder greifen auf dieselben Felder zu.
+LCOM > 0.0: Die Klasse ist weniger kohäsiv; Methoden greifen auf unterschiedliche oder keine gemeinsamen Felder zu.
+LCOM=-1.0:  Meist ein Sonderfall (wie in deinem Beispiel LCOM = -1.0), der darauf hinweist,
+            dass entweder keine Felder oder keine Verbindungen vorhanden sind,
+            oder Designite aufgrund einfacher Klassen mit einer alternativen Berechnungsmethode arbeitet.
+            Häufig bei Main Klassen.
+
+Wie wird der LCOM berchnet?
+Designite baut auf dem LCOM4 auf, aber hat diesen vereinfacht.
+Die Berechnung des LCOM wird anhand eines Graphen basierten Ansatz bererchnet.
+Zuerst wird ein Graph erstellt, bei dem Methoden und Felder als Vertices (Knoten) dargestellt werden.
+Kanten werden erstellt zwischen Methoden und Feldern, die sie nutzen addAdjacentFields,
+Methoden die gemeinsame Felder nutzen addAdjacentMethods.
+
+private double computeLCOM() {
+    graph.computeConnectedComponents();
+    List<List<Vertex>> nonSingleElementFieldComponents = getNonSingleElementFieldComponents();
+    if (nonSingleElementFieldComponents.size() > 1) {
+        return ((double) getNonSingleElementFieldComponents().size()) / type.getMethodList().size();
+    }
+    return 0.0;
+}
+
+private List<List<Vertex>> getNonSingleElementFieldComponents() {
+    List<List<Vertex>> cleanComponents = new ArrayList<>();
+    for (List<Vertex> component : graph.getConnectedComponnents()) {
+        if (component.size() != 1 || !(component.get(0) instanceof SM_Field)) {
+            cleanComponents.add(component);
+        }
+    }
+    return cleanComponents;
+}
+
+private void initializeEdges() {
+    for (SM_Method method : type.getMethodList()) {
+        addAdjacentFields(method);
+        addAdjacentMethods(method);
+    }
+}
+
+Wichtig ist dieser Teil des Codes
+if (nonSingleElementFieldComponents.size() > 1) {
+    return ((double) getNonSingleElementFieldComponents().size()) / type.getMethodList().size();
+}
+return 0.0;
+
+public class Example {
+
+    int a = 10;
+    int b = 25;
+    int c = 33;
+    int d = 47;
+    double e = 1020.10;
+    float f = 1202.12f;
+    String g = "String G";
+
+    public int firstFunction() {
+        return a;
+    }
+
+    public int secondFunction() {
+        return a + b;
+    }
+
+    public int thirdFunction() {
+        return b + c;
+    }
+
+    public int fourthFunction() {
+        return d;
+    }
+
+    public int fifthFunction() {
+        return 100;
+    }
+
+    public String sixthFunction() {
+        return "sixthFunction";
+    }
+}
+
+class Example {
+    var a, b, c, d, e, f, g;
+
+    firstFunction()     -> nutzt a
+    secondFunction()    -> nutzt a, b
+    thirdFunction()     -> nutzt b, c
+    fourthFunction()    -> nutzt d
+    fifthFunction()     -> nutzt keine Felder
+    sixthFunction()     -> nutzt keine Felder
+}
+
+Der Graph ist wie folgt:
+Komponente 1: firstFunction <---> a <---> secondFunction <---> b <---> thirdFunction <---> c
+Komponente 2: fourthFunction <---> d
+Komponente 3: fifthFunction
+Komponente 4: sixthFunction
+
+Einzelene Felder werden ignoriert, da sie nicht genutzt werden.
+
+getNonSingleElementFieldComponents() gibt die Komponente zurück, die:
+    mehr als einen Knoten haben
+    einen einzelnen Knoten haben, der keine Field-Instanz ist
+
+In diesem Fall haben wir 4 solche Komponenten:
+    Die große Komponente(firstFunction, secondFunction, thirdFunction, a, b, c)
+    Die Komponente mit fourthFunction und d
+    die Komponente mit fifthFunction
+    die Komponente mit sixtFunction
+
+LCOM    = Anzahl der Komponenenten / Anzahl der Methoden
+        = 4 / 6
+        = 0.66666

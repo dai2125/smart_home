@@ -1,0 +1,19 @@
+Im schlechten Beispiel OrderProcessor ist zu sehen das LCOM Wert -1.0 ist,
+da keine Daten innerhalb der Klasse genutzt werden.
+FANOUT=1 weil OrderProcessor eine Abhängigkeit zur Klasse Order hat.
+Die Klasse Order hat ein normales Verhalten der Methoden NOM=3 und WMC=3,
+allerdings der Wert FANIN=2 verrät das die Klasse von anderen Klassen verwendet wird.
+Schwache Kohäsion und hohe Kopplung durch Verlagerung der Berechnung in den OrderProcessor.
+
+Bad Example
+Class Name=Main		        NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=8, WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=0,FANOUT=2,Line no=3
+Class Name=Order		    NOF=2,NOPF=0,NOM=3,NOPM=3,LOC=14,WMC=3,NC=0,DIT=0,LCOM=0.0, FANIN=2,FANOUT=0,Line no=3
+Class Name=OrderProcessor	NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=5, WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=1,FANOUT=1,Line no=3
+Good Example
+Class Name=Main		        NOF=0,NOPF=0,NOM=1,NOPM=1,LOC=7, WMC=1,NC=0,DIT=0,LCOM=-1.0,FANIN=0,FANOUT=1,Line no=3
+Class Name=Order		    NOF=2,NOPF=0,NOM=2,NOPM=2,LOC=11,WMC=2,NC=0,DIT=0,LCOM=0.0, FANIN=1,FANOUT=0,Line no=3
+
+Im guten Beispiel sehen wir NOM=2 und WMC=2 und LCOM=0.0, das bedeutet das die Klasse direkt mit ihren Felder
+arbeitet. FANIN=1 und FANOUT=0 wegen der geringer Kopplung.
+Klare Verantwortung und minimale Abhängigkeit. Die Klasse verarbeitet ihre eigenen Daten und folgt dem Prinzip
+des Information Expert.

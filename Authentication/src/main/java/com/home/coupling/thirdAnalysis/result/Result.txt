@@ -1,0 +1,111 @@
+Reading Type Metrics:
+
+Bad Example:
+Subject, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=8, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=2, Line no=3
+Topic1, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Topic2, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+
+Good Example:
+Subject, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=6, WMC=1, NC=0, DIT=0, LCOM=-1.0, FANIN=0, FANOUT=2, Line no=3
+Topic, 		    NOF=0, NOPF=0, NOM=1, NOPM=0, LOC=3, WMC=1, NC=2, DIT=0, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Topic1, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=1, FANOUT=0, Line no=3
+Topic2, 		NOF=0, NOPF=0, NOM=1, NOPM=1, LOC=5, WMC=1, NC=0, DIT=1, LCOM=-1.0, FANIN=0, FANOUT=0, Line no=3
+
+Reading Method Metrics:
+
+Bad Example:
+Subject, 		LOC=6, CC=1, PC=1, Line no=5, Method Name=main
+Topic1, 		LOC=3, CC=1, PC=0, Line no=5, Method Name=understand
+Topic2, 		LOC=3, CC=1, PC=0, Line no=5, Method Name=understand
+
+Good Example:
+Subject, 		LOC=4, CC=1, PC=1, Line no=5, Method Name=main
+Topic, 		    LOC=0, CC=1, PC=0, Line no=5, Method Name=understand
+Topic1, 		LOC=3, CC=1, PC=0, Line no=5, Method Name=understand
+Topic2, 		LOC=3, CC=1, PC=0, Line no=5, Method Name=understand
+
+
+
+### **Analyse der Kopplung anhand der Metriken**
+
+Die **Kopplung** (Coupling) ist eine wichtige Metrik im Softwaredesign,
+da sie die Stärke der Abhängigkeiten zwischen Klassen oder Modulen beschreibt.
+Ein System mit niedriger Kopplung ist einfacher zu warten, zu erweitern und zu testen.
+Die vorliegenden Metriken ermöglichen eine detaillierte Untersuchung der Kopplung
+innerhalb des Softwaredesigns anhand von Beispielen für sowohl schlechte als auch gute Implementierungen.
+
+---
+
+#### **Bad Example:**
+Im schlechten Beispiel zeigt sich eine relativ starke Kopplung zwischen den Klassen `Subject`, `Topic1` und `Topic2`.
+
+1. **FANOUT und FANIN:**
+   - **`Subject`** hat einen **FANOUT** von 2, was bedeutet, dass es auf zwei andere Klassen (`Topic1` und `Topic2`) verweist.
+     Dies deutet auf eine starke Kopplung hin, da `Subject` direkt von diesen Klassen abhängt.
+   - **`Topic1`** und **`Topic2`** haben jeweils einen **FANIN** von 1, was bedeutet, dass sie direkt von der Klasse `Subject` abhängen.
+
+2. **Fehlende Abstraktion und Modularität:**
+   - Die enge Kopplung zwischen `Subject` und den beiden `Topic`-Klassen führt dazu,
+     dass Änderungen in einer der `Topic`-Klassen Auswirkungen auf die `Subject`-Klasse haben können, was die Wartbarkeit erschwert.
+   - Es fehlt eine klare Trennung der Verantwortlichkeiten zwischen den Klassen, was die Erweiterbarkeit und Modularität des Designs einschränkt.
+
+3. **Geringe Wiederverwendbarkeit:**
+   - Da `Subject` direkt auf `Topic1` und `Topic2` verweist, ist die Wiederverwendbarkeit der einzelnen Klassen eingeschränkt.
+     Eine Änderung in einer der `Topic`-Klassen könnte eine Änderung an `Subject` erforderlich machen,
+     was zu unnötigen Korrekturen und Tests führt.
+
+---
+
+#### **Good Example:**
+Im guten Beispiel wurde die Kopplung durch eine bessere Organisation der Klassen und Methoden verringert.
+
+1. **FANOUT und FANIN:**
+   - **`Subject`** hat weiterhin einen **FANOUT** von 2, aber der FANIN-Wert der `Topic`-Klassen zeigt eine ausgeglichenere Struktur.
+     **`Topic`** hat einen **FANIN** von 1 und **FANOUT** von 0, was darauf hindeutet,
+     dass diese Klasse nur von `Subject` verwendet wird, aber nicht direkt auf andere Klassen verweist.
+   - Die beiden Klassen **`Topic1`** und **`Topic2`** sind unabhängig und haben keinen direkten **FANOUT** zu anderen Klassen,
+     was die Kopplung reduziert und den Code modularer macht.
+
+2. **Zentralisierte Verantwortung:**
+   - Durch die Einführung der Klasse `Topic` wurde eine zentrale Stelle geschaffen,
+     die die Beziehungen zwischen den `Topic`-Klassen besser verwaltet. **`Topic1`** und **`Topic2`**
+     sind nun weniger abhängig von `Subject`, was das Design flexibler und wartungsfreundlicher macht.
+
+3. **Erhöhte Modularität:**
+   - Im guten Beispiel sind die Abhängigkeiten klarer organisiert. `Subject` bleibt die zentrale Klasse,
+     aber `Topic` verwaltet die spezifischen Themen, was zu einer besseren Modularität führt.
+     Die Trennung von Verantwortlichkeiten fördert die Wiederverwendbarkeit der Klassen,
+     da `Topic` jetzt unabhängig von `Subject` verwendet werden kann.
+
+4. **Vermeidung von Zirkularkopplung:**
+   - Die Kopplung zwischen den Klassen im guten Beispiel ist linear und keine der Klassen hat einen **FANOUT** von mehr als 2,
+     was darauf hinweist, dass die Struktur keinen unnötigen Zirkularitäten unterliegt.
+     Solche zirkulären Abhängigkeiten könnten die Wartung und Erweiterung des Codes erheblich erschweren.
+
+---
+
+#### **Methodenanalyse**
+
+| Methode                 | Bad Example (LOC/CC/PC) | Good Example (LOC/CC/PC) |
+|-------------------------|-------------------------|--------------------------|
+| `Subject`               | 6 / 1 / 1               | 4 / 1 / 1                |
+| `Topic1`                | 3 / 1 / 0               | 3 / 1 / 0                |
+| `Topic2`                | 3 / 1 / 0               | 3 / 1 / 0                |
+| `Topic`                 | N/A                     | 0 / 1 / 0                |
+
+- Im schlechten Beispiel hat `Subject` eine größere Menge an Codezeilen und eine höhere **PC** (Methodenkomplexität)
+  aufgrund der direkteren Kopplung mit den `Topic`-Klassen. Die Methodeninhalte sind komplexer und
+  beinhalten mehr Interaktionen mit anderen Klassen.
+- Im guten Beispiel bleibt `Subject` die zentrale Klasse, aber durch die Einführung von `Topic` wird der Code besser organisiert.
+  Die Methoden sind modularer und einfacher, was zu einer klareren Trennung der Verantwortlichkeiten führt.
+
+---
+
+### **Fazit**
+Das schlechte Beispiel zeigt eine hohe Kopplung zwischen den Klassen,
+was zu einer eingeschränkten Modularität und einer erhöhten Wartungsaufwand führt.
+Es fehlen klare Abstraktionen und eine effektive Trennung der Verantwortlichkeiten,
+was die Erweiterbarkeit und Flexibilität des Systems beeinträchtigt.
+Im guten Beispiel wurde die Kopplung durch die Einführung einer `Topic`-Klasse und eine strukturierte Organisation der Beziehungen
+zwischen den Klassen signifikant reduziert. Dies führt zu einem modulareren, wartungsfreundlicheren und flexibleren Design,
+das besser erweiterbar ist und die Prinzipien der Softwareentwicklung wie die **Trennung der Verantwortlichkeiten** und **Modularität** stärkt.

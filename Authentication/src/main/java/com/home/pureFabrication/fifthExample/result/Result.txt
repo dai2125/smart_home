@@ -1,0 +1,27 @@
+Reading Type Metrics:
+CreditCard,         NOF=4, NOPF=0, NOM=3, NOPM=2, LOC=17, WMC=3, NC=0, DIT=0, LCOM= 0.0, FANIN=1, FANOUT=0, Line no=3
+Demo,               NOF=4, NOPF=0, NOM=1, NOPM=1, LOC=51, WMC=7, NC=0, DIT=0, LCOM= 0.0, FANIN=0, FANOUT=4, Line no=9
+Order,              NOF=2, NOPF=0, NOM=5, NOPM=5, LOC=19, WMC=5, NC=0, DIT=0, LCOM= 0.6, FANIN=1, FANOUT=1, Line no=3
+PayByCreditCard,    NOF=2, NOPF=0, NOM=3, NOPM=2, LOC=31, WMC=4, NC=0, DIT=1, LCOM= 0.0, FANIN=1, FANOUT=1, Line no=7
+PayByPayPal,        NOF=5, NOPF=0, NOM=4, NOPM=2, LOC=46, WMC=7, NC=0, DIT=1, LCOM= 0.0, FANIN=1, FANOUT=0, Line no=9
+PayStrategy,        NOF=0, NOPF=0, NOM=2, NOPM=0, LOC= 4, WMC=2, NC=2, DIT=0, LCOM=-1.0, FANIN=2, FANOUT=0, Line no=3
+
+Reading Method Metrics:
+CreditCard,         LOC= 6, CC=1, PC=3, Line no=10, Method Name=CreditCard
+CreditCard,         LOC= 3, CC=1, PC=1, Line no=17, Method Name=setAmount
+CreditCard,         LOC= 3, CC=1, PC=0, Line no=21, Method Name=getAmount
+Demo,               LOC=39, CC=7, PC=1, Line no=23, Method Name=main
+Order,              LOC= 3, CC=1, PC=1, Line no= 8, Method Name=processOrder
+Order,              LOC= 3, CC=1, PC=1, Line no=12, Method Name=setTotalCost
+Order,              LOC= 3, CC=1, PC=0, Line no=16, Method Name=getTotalCost
+Order,              LOC= 3, CC=1, PC=0, Line no=20, Method Name=isClosed
+Order,              LOC= 3, CC=1, PC=0, Line no=24, Method Name=setClosed
+PayByCreditCard,    LOC=14, CC=1, PC=0, Line no=12, Method Name=collectPaymentDetails
+PayByCreditCard,    LOC=10, CC=2, PC=1, Line no=27, Method Name=pay
+PayByCreditCard,    LOC= 3, CC=1, PC=0, Line no=38, Method Name=cardIsPresent
+PayByPayPal,        LOC=19, CC=3, PC=0, Line no=22, Method Name=collectPaymentDetails
+PayByPayPal,        LOC= 4, CC=1, PC=0, Line no=41, Method Name=verify
+PayByPayPal,        LOC= 9, CC=2, PC=1, Line no=46, Method Name=pay
+PayByPayPal,        LOC= 3, CC=1, PC=1, Line no=56, Method Name=setSignedIn
+PayStrategy,        LOC= 0, CC=1, PC=1, Line no= 5, Method Name=pay
+PayStrategy,        LOC= 0, CC=1, PC=0, Line no= 6, Method Name=collectPaymentDetails
