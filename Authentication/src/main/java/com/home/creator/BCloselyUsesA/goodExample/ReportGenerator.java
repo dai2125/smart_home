@@ -7,6 +7,7 @@ public class ReportGenerator {
     private Event event;
     public String something = "something";
     private Calculator calculator;
+    private Calculator waschmaschine;
     private int esel = 222;
     private int tiger = 333;
 
@@ -60,4 +61,6 @@ public class ReportGenerator {
     }
 
     int DDDDD = 200 * 5000;
+
+
 }

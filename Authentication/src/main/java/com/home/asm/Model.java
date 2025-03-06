@@ -24,6 +24,8 @@ public class Model {
     private String _owner;
     private Hashtable<String, Boolean> ownerMethods = new Hashtable();
     private int ownerTotalMethods;
+    private boolean objectCreated;
+    private String constructorParameterName;
 
     public void setFieldName(String fieldName) {
         _fieldName = fieldName;
@@ -34,9 +36,12 @@ public class Model {
     }
 
     public void setName(String name) {
-//        _name = clazzCleanUp(name);
-        _name = cleanUp(name);
+        _name = name;
+//        _name = cleanUp(name);
         setClazzName(clazzCleanUp(name));
+        setType(name);
+        setConstructorParameterName(name.replaceFirst("L", "").replaceAll("/", ".").replaceAll(";", ""));
+
     }
 
     public String getName() {
@@ -44,8 +49,8 @@ public class Model {
     }
 
     public void setType(String type) {
-        _type = typeCleanUp(type);
-        //        _type = cleanUp(type);
+        _type = type;
+//        _type = typeCleanUp(type);
         setClazzName(clazzCleanUp(type));
     }
 
@@ -191,24 +196,43 @@ public class Model {
         return ans;
     }
 
+    public void setObjectCreated(boolean objectCreated) {
+        this.objectCreated = objectCreated;
+    }
+
+    public boolean getObjectCreated() {
+        return objectCreated;
+    }
+
+    public void setConstructorParameterName(String constructorParameterName) {
+        this.constructorParameterName = constructorParameterName;
+    }
+
+    public String getConstructorParameterName() {
+        return constructorParameterName;
+    }
+
     public String toString() {
         return "Name: " + _name + "\n"
                 + "Type: " + _type + "\n"
-                + "Field: " + _usedAsFieldInClass + "\n"
-                + "ClazzName: " + _clazzName + "\n"
-                + "InvokeSpecial: " + _invokeSpecial + "\n"
-                + "ConstructorParameter: " + constructorParameter + "\n"
-                + "Constructor Initialized: " + constructorInitialized + "\n"
-                + "Class Counter: " + classCounter + "\n"
-                + "Amount of Fields: " + amountOfFields + "\n"
-                + "Amount of Methods: " + amountOfMethods + "\n"
-                + "Field List: " + fields + "\n"
-                + "Method List: " + methods + "\n"
+//                + "Field: " + _usedAsFieldInClass + "\n"
+//                + "ClazzName: " + _clazzName + "\n"
+//                + "InvokeSpecial: " + _invokeSpecial + "\n"
+                + "Constructor Parameter: " + constructorParameter + "\n"
+                + "Constructor Parameter Name: " + constructorParameterName + "\n"
+//                + "Constructor Initialized: " + constructorInitialized + "\n"
+//                + "Class Counter: " + classCounter + "\n"
+//                + "Amount of Fields: " + amountOfFields + "\n"
+//                + "Amount of Methods: " + amountOfMethods + "\n"
+//                + "Field List: " + fields + "\n"
+//                + "Method List: " + methods + "\n"
                 + "Owner: " + _owner + "\n"
                 + "Field Name: " + _fieldName + "\n"
-                + "Field Counter: " + fieldCounter + "\n"
-                + "Method Counter: " + methodCounter + "\n"
-                + "Owner total Methods: " + ownerTotalMethods;
+                + "Owner within <init> Counter: " + fieldCounter + "\n"
+                + "Owner within Method Counter: " + methodCounter + "\n"
+                + "Owner total Methods: " + ownerTotalMethods + "\n"
+                + "Object Created: " + objectCreated + "\n"
+                + "Occurences in owner methods: " + getAllOccurencesInOwnerMethods();
     }
 
     private String cleanUp(String var) {

@@ -3,6 +3,8 @@ package com.home.asm;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.analysis.*;
+import org.objectweb.asm.util.Textifier;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,10 +28,12 @@ public class CustomClassWriter {
     AddInterfaceAdapter addInterfaceAdapter;
     PublicizeMethodAdapter pubMethAdapter;
     //final static String CLASSNAME = "java.lang.Integer";
+    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
 //    final static String CLASSNAME = "com/home/creator/BCloselyUsesA/goodExample/ReportGenerator";
-    final static String CLASSNAME = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
+//    final static String CLASSNAME = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
+    final static String MODELNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Engine/badExample/Engine";
 //    final static String MODELNAME = "com/home/creator/BCloselyUsesA/goodExample/Calculator";
-    final static String MODELNAME = "com/home/creator/BCloselyUsesA/badExample/Calculator";
+//    final static String MODELNAME = "com/home/creator/BCloselyUsesA/badExample/Calculator";
     final static String RETURN = "RETURN\n,";
     final static String IRETURN = "IRETURN\n,";
     final static String ARETURN = "ARETURN\n,";
