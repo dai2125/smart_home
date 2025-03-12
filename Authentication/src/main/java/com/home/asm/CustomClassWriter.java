@@ -27,11 +27,17 @@ public class CustomClassWriter {
     ClassWriter writer;
     AddInterfaceAdapter addInterfaceAdapter;
     PublicizeMethodAdapter pubMethAdapter;
-    //final static String CLASSNAME = "java.lang.Integer";
-    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
+    final static String CLASSNAME = "com/home/indirection/fourthAnalysis/fix/BookRepository";
+//    private final String CLASSNAME = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassB";
+//    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/MovieProduction";
+//    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
 //    final static String CLASSNAME = "com/home/creator/BCloselyUsesA/goodExample/ReportGenerator";
 //    final static String CLASSNAME = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
-    final static String MODELNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Engine/badExample/Engine";
+
+
+    private final String MODELNAME = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassA";
+//    final static String MODELNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/Movie";
+//    final static String MODELNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Engine/badExample/Engine";
 //    final static String MODELNAME = "com/home/creator/BCloselyUsesA/goodExample/Calculator";
 //    final static String MODELNAME = "com/home/creator/BCloselyUsesA/badExample/Calculator";
     final static String RETURN = "RETURN\n,";

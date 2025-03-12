@@ -3,13 +3,10 @@ package com.home.asm;
 import org.objectweb.asm.*;
 import java.io.IOException;
 import static org.objectweb.asm.Opcodes.ASM9;
-import org.objectweb.asm.*;
-import java.io.IOException;
-import static org.objectweb.asm.Opcodes.ASM9;
 
-public class CreatorPrincipleBContainsOrCompositelyAggregatesA extends ClassVisitor {
+public class CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter extends ClassVisitor {
 
-    public CreatorPrincipleBContainsOrCompositelyAggregatesA() {
+    public CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter() {
         super(ASM9);
     }
 
@@ -134,7 +131,7 @@ public class CreatorPrincipleBContainsOrCompositelyAggregatesA extends ClassVisi
         String className = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
 
         ClassReader reader = new ClassReader(className);
-        CreatorPrincipleBContainsOrCompositelyAggregatesA methodPrinter = new CreatorPrincipleBContainsOrCompositelyAggregatesA();
+        CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter methodPrinter = new CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter();
         reader.accept(methodPrinter, 0);
 
         methodPrinter.finish();

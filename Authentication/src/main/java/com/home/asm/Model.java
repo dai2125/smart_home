@@ -2,6 +2,7 @@ package com.home.asm;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 public class Model {
@@ -26,6 +27,8 @@ public class Model {
     private int ownerTotalMethods;
     private boolean objectCreated;
     private String constructorParameterName;
+    private List<NewStatementModel> newStatementModels = new ArrayList();
+    private String createdType;
 
     public void setFieldName(String fieldName) {
         _fieldName = fieldName;
@@ -40,8 +43,11 @@ public class Model {
 //        _name = cleanUp(name);
         setClazzName(clazzCleanUp(name));
         setType(name);
-        setConstructorParameterName(name.replaceFirst("L", "").replaceAll("/", ".").replaceAll(";", ""));
+//        setConstructorParameterName(name.replaceFirst("L", "").replaceAll("/", ".").replaceAll(";", ""));
+    }
 
+    public void setNameExtra(String name) {
+        _name = name.replaceFirst("L", "").replaceAll(";", "");
     }
 
     public String getName() {
@@ -164,6 +170,13 @@ public class Model {
         return _owner;
     }
 
+    public boolean doesOwnerMethodContainsThisMethodAlready(String method) {
+        if(ownerMethods.containsKey(method)) {
+            return true;
+        }
+        return false;
+    }
+
     public void addToOwnerMethods(String methodName, boolean methodUsesObject) {
         ownerMethods.put(methodName, methodUsesObject);
     }
@@ -212,6 +225,22 @@ public class Model {
         return constructorParameterName;
     }
 
+    public void addNewStatementModels(NewStatementModel newStatementModel) {
+        newStatementModels.add(newStatementModel);
+    }
+
+    public List<NewStatementModel> getNewStatementModels() {
+        return newStatementModels;
+    }
+
+    public void setCreatedType(String createdType) {
+        this.createdType = createdType;
+    }
+
+    public String getCreatedType() {
+        return createdType;
+    }
+
     public String toString() {
         return "Name: " + _name + "\n"
                 + "Type: " + _type + "\n"
@@ -232,7 +261,9 @@ public class Model {
                 + "Owner within Method Counter: " + methodCounter + "\n"
                 + "Owner total Methods: " + ownerTotalMethods + "\n"
                 + "Object Created: " + objectCreated + "\n"
-                + "Occurences in owner methods: " + getAllOccurencesInOwnerMethods();
+                + "Occurences in owner methods: " + getAllOccurencesInOwnerMethods() + "\n"
+                + "CreatedType: " + createdType + "\n"
+                + "NewStatementModels: " + newStatementModels;
     }
 
     private String cleanUp(String var) {

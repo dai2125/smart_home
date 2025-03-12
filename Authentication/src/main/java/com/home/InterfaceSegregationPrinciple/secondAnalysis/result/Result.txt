@@ -51,7 +51,9 @@ Payment, 		LOC=0, CC=1, PC=0, Line no= 8, Method Name=getPayments
 
 ### **Analyse des Interface Segregation Principle (ISP) anhand der Metriken**
 
-Das Interface Segregation Principle (ISP) ist ein Grundsatz der SOLID-Prinzipien, der besagt, dass eine Schnittstelle nicht mehr Methoden anbieten sollte, als eine Implementierung tatsächlich benötigt. Dadurch wird verhindert, dass Klassen gezwungen werden, Methoden zu implementieren, die für sie nicht sinnvoll sind.
+Das Interface Segregation Principle (ISP) ist ein Grundsatz der SOLID-Prinzipien,
+der besagt, dass eine Schnittstelle nicht mehr Methoden anbieten sollte, als eine Implementierung tatsächlich benötigt.
+Dadurch wird verhindert, dass Klassen gezwungen werden, Methoden zu implementieren, die für sie nicht sinnvoll sind.
 
 ---
 
@@ -59,31 +61,43 @@ Das Interface Segregation Principle (ISP) ist ein Grundsatz der SOLID-Prinzipien
 In der schlechten Umsetzung zeigt sich eine Verletzung des ISP deutlich anhand der folgenden Beobachtungen:
 
 1. **Zwang zu leeren oder unsinnigen Implementierungen:**
-   - Sowohl `BankPayment` als auch `LoanPayment` implementieren das `Payment`-Interface, das fünf Methoden vorgibt (`initiatePayments`, `status`, `getPayments`, `initialLoanSettlement`, `initiateRePayment`).
-   - Methoden wie `initialLoanSettlement` und `initiateRePayment` sind für `BankPayment` irrelevant, was dazu führt, dass diese Methoden mit `UnsupportedOperationException` gefüllt werden. Dies ist ein typisches Zeichen für eine Verletzung des ISP.
+   - Sowohl `BankPayment` als auch `LoanPayment` implementieren das `Payment`-Interface,
+     das fünf Methoden vorgibt (`initiatePayments`, `status`, `getPayments`, `initialLoanSettlement`, `initiateRePayment`).
+   - Methoden wie `initialLoanSettlement` und `initiateRePayment` sind für `BankPayment` irrelevant,
+     was dazu führt, dass diese Methoden mit `UnsupportedOperationException` gefüllt werden.
+     Dies ist ein typisches Zeichen für eine Verletzung des ISP.
 
 2. **Metadaten bestätigen die Überfrachtung des Interfaces:**
-   - Das `Payment`-Interface hat `NOM=5`, was auf eine umfangreiche Schnittstelle hinweist. Da alle Methoden von den Implementierungen übernommen werden müssen, erhöht dies die Komplexität der Klassen.
-   - In der schlechten Umsetzung haben sowohl `BankPayment` als auch `LoanPayment` `WMC=6`. Die hohe Anzahl an Methodenkomplexität resultiert direkt aus der breiten Schnittstelle.
+   - Das `Payment`-Interface hat `NOM=5`, was auf eine umfangreiche Schnittstelle hinweist.
+     Da alle Methoden von den Implementierungen übernommen werden müssen, erhöht dies die Komplexität der Klassen.
+   - In der schlechten Umsetzung haben sowohl `BankPayment` als auch `LoanPayment` `WMC=6`.
+     Die hohe Anzahl an Methodenkomplexität resultiert direkt aus der breiten Schnittstelle.
 
 3. **Nutzlose Verbindungen:**
-   - Die schlechte LCOM (Lack of Cohesion of Methods) von `0.5` (BankPayment) und `0.333` (LoanPayment) zeigt, dass die Methoden in diesen Klassen nur lose zusammenhängen. Ein Indikator dafür, dass die Klassen unnötig viele Aufgaben übernehmen.
+   - Die schlechte LCOM (Lack of Cohesion of Methods) von `0.5` (BankPayment) und `0.333` (LoanPayment) zeigt,
+     dass die Methoden in diesen Klassen nur lose zusammenhängen. Ein Indikator dafür, dass die Klassen unnötig viele Aufgaben übernehmen.
 
 ---
 
 #### **Good Example**
-In der guten Umsetzung wurde das ISP berücksichtigt, indem die Schnittstellen spezifiziert wurden. Das führt zu einer klareren und kohärenteren Struktur:
+In der guten Umsetzung wurde das ISP berücksichtigt, indem die Schnittstellen spezifiziert wurden.
+Das führt zu einer klareren und kohärenteren Struktur:
 
 1. **Spezifischere Schnittstellen:**
-   - Statt einer einzelnen großen Schnittstelle `Payment` wurden kleinere, aufgabenorientierte Schnittstellen wie `Bank` und `Loan` eingeführt. Diese enthalten jeweils nur die relevanten Methoden (`NOM=1` für `Bank` und `NOM=2` für `Loan`).
-   - `Payment` ist nun eine allgemeine Schnittstelle mit nur `NOM=2` (`status` und `getPayments`), die von allen Implementierungen benötigt werden. Dies verhindert unnötige Methoden in Klassen.
+   - Statt einer einzelnen großen Schnittstelle `Payment` wurden kleinere, aufgabenorientierte Schnittstellen wie `Bank` und `Loan` eingeführt.
+     Diese enthalten jeweils nur die relevanten Methoden (`NOM=1` für `Bank` und `NOM=2` für `Loan`).
+   - `Payment` ist nun eine allgemeine Schnittstelle mit nur `NOM=2` (`status` und `getPayments`),
+     die von allen Implementierungen benötigt werden. Dies verhindert unnötige Methoden in Klassen.
 
 2. **Reduzierte Komplexität:**
-   - Die Workload-Method-Complexity (WMC) von `BankPayment` und `LoanPayment` beträgt in der guten Umsetzung nur `WMC=4` bzw. `WMC=5`. Dies zeigt eine klarere und besser strukturierte Implementierung.
-   - Die LCOM-Werte für `BankPayment` und `LoanPayment` sind `0.0`, was auf eine gute Kohäsion innerhalb der Klassen hinweist. Dies bedeutet, dass die Methoden innerhalb einer Klasse zusammenarbeiten, um ein einziges Ziel zu erreichen.
+   - Die Workload-Method-Complexity (WMC) von `BankPayment` und `LoanPayment` beträgt in der guten Umsetzung nur `WMC=4` bzw.
+     `WMC=5`. Dies zeigt eine klarere und besser strukturierte Implementierung.
+   - Die LCOM-Werte für `BankPayment` und `LoanPayment` sind `0.0`, was auf eine gute Kohäsion innerhalb der Klassen hinweist.
+     Dies bedeutet, dass die Methoden innerhalb einer Klasse zusammenarbeiten, um ein einziges Ziel zu erreichen.
 
 3. **Modularität:**
-   - Die Verwendung spezifischer Schnittstellen macht es einfacher, Klassen unabhängig zu ändern oder zu erweitern. Beispielsweise könnte die `BankPayment`-Klasse nun erweitert werden, ohne Auswirkungen auf `LoanPayment` zu haben.
+   - Die Verwendung spezifischer Schnittstellen macht es einfacher, Klassen unabhängig zu ändern oder zu erweitern.
+     Beispielsweise könnte die `BankPayment`-Klasse nun erweitert werden, ohne Auswirkungen auf `LoanPayment` zu haben.
 
 ---
 
@@ -101,9 +115,12 @@ Die Werte zeigen deutlich, dass die guten Beispiele besser strukturiert und weni
 ---
 
 ### **Fazit**
-Die schlechte Umsetzung verletzt das Interface Segregation Principle, indem Klassen gezwungen werden, irrelevante Methoden zu implementieren. Dies führt zu unnötiger Komplexität, schlechter Kohäsion und einer erhöhten Wahrscheinlichkeit von Fehlern. Die gute Umsetzung löst dieses Problem durch:
+Die schlechte Umsetzung verletzt das Interface Segregation Principle, indem Klassen gezwungen werden,
+irrelevante Methoden zu implementieren. Dies führt zu unnötiger Komplexität,
+schlechter Kohäsion und einer erhöhten Wahrscheinlichkeit von Fehlern. Die gute Umsetzung löst dieses Problem durch:
 - Aufteilung großer Interfaces in kleinere, spezifische Schnittstellen.
 - Fokussierte und kohärente Klassen.
 - Reduzierung der Methodenkomplexität.
 
-Die Metriken belegen, dass die Einhaltung des ISP nicht nur den Code klarer und wartbarer macht, sondern auch die Qualität der Softwareentwicklung erheblich verbessert.
+Die Metriken belegen, dass die Einhaltung des ISP nicht nur den Code klarer und wartbarer macht,
+sondern auch die Qualität der Softwareentwicklung erheblich verbessert.

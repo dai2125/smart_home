@@ -1,4 +1,4 @@
-package com.home.creator.BHasTheInitalizingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA;
+package com.home.creator.BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

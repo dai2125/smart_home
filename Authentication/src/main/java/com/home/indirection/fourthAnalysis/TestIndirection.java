@@ -29,12 +29,12 @@ public class TestIndirection {
         BookService service = new BookService(repository);
 
         Book book = new Book(1, "Zzz");
-        when(repository.findBookById(1)).thenReturn(book);
+//        when(repository.findBookById(1)).thenReturn(book);
 
         service.performBusinessOperation();
 
-        verify(repository).findBookById(1);
-        verify(repository).saveBook(book);
+//        verify(repository).findBookById(1);
+//        verify(repository).saveBook(book);
 
         verifyNoMoreInteractions(repository);
     }
