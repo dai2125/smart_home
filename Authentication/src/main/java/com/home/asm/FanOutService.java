@@ -234,9 +234,9 @@ public class FanOutService {
 //        }
 
         Iterator<String> itr = classUsed.iterator();
-        while(itr.hasNext()) {
-            System.out.println("ITERATOR: " + itr.next());
-        }
+//        while(itr.hasNext()) {
+//            System.out.println("ITERATOR: " + itr.next());
+//        }
 
         return classUsed.size();
 //        return classCallCount.size();

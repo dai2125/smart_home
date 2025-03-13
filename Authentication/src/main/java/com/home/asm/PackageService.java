@@ -24,7 +24,7 @@ public class PackageService {
 
         for (File file : files) {
             if (file.isDirectory()) {
-                System.out.println("file.isDirectory: " + file.getName());
+//                System.out.println("file.isDirectory: " + file.getName());
                 allClasses(file);
             } else if (file.getName().endsWith(".java")) {
                 String fileName = file.getPath().replace(".java", "")

@@ -27,7 +27,7 @@ public class CustomClassWriter {
     ClassWriter writer;
     AddInterfaceAdapter addInterfaceAdapter;
     PublicizeMethodAdapter pubMethAdapter;
-    final static String CLASSNAME = "com/home/indirection/fourthAnalysis/fix/BookRepository";
+    final static String CLASSNAME = "com/home/pureFabrication/fifthExample/PayByPayPal";
 //    private final String CLASSNAME = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassB";
 //    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/MovieProduction";
 //    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
