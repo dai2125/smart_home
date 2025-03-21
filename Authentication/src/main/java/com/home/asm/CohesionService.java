@@ -32,7 +32,7 @@ public class CohesionService {
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
                         methodToFields.get(currentMethod).add(name);
-                        System.out.println("visitFieldInsn: " + currentMethod + " .add " + name);
+//                        System.out.println("visitFieldInsn: " + currentMethod + " .add " + name);
                     }
                 };
             }
@@ -70,14 +70,52 @@ public class CohesionService {
 
         for(String method1 : methodToFields.keySet()) {
             for(String method2 : methodToFields.keySet()) {
-                if(!method1.equals(method2) && methodToFields.get(method2) != null &&
-                        !Collections.disjoint(methodToFields.get(method1), methodToFields.get(method2))) {
-                    graph.addEdge(nodes.get(method1), nodes.get(method2), null);
+                if(!method1.equals(method2) && methodToFields.get(method2) != null) {
+
+                    boolean shareFields = !Collections.disjoint(methodToFields.get(method1), methodToFields.get(method2));
+                    boolean callsMethod = methodToFields.get(method1).contains(method2);
+
+                    if(shareFields || callsMethod) {
+                        graph.addEdge(nodes.get(method1), nodes.get(method2), null);
+                    }
                 }
             }
         }
 //        System.out.println("countConnectedComponentes(graph): " + countConnectedComponents(graph));
+//        System.out.println("GRAPH");
+//        graph.printGraph();
         return countConnectedComponents(graph);
+    }
+
+    public static double calculateLCOM4Designite(Map<String, Set<String>> methodToFields) {
+        Graph graph = new Graph(false, false);
+        Map<String, Vertex> nodes = new HashMap<>();
+
+        for(String method : methodToFields.keySet()) {
+            nodes.put(method, graph.addVertex(method));
+        }
+
+        for(String method1 : methodToFields.keySet()) {
+            for(String method2 : methodToFields.keySet()) {
+                if(!method1.equals(method2) && methodToFields.get(method2) != null) {
+
+                    boolean shareFields = !Collections.disjoint(methodToFields.get(method1), methodToFields.get(method2));
+                    boolean callsMethod = methodToFields.get(method1).contains(method2);
+
+                    if(shareFields || callsMethod) {
+                        graph.addEdge(nodes.get(method1), nodes.get(method2), null);
+                    }
+                }
+            }
+        }
+//        System.out.println("GRAPH");
+//        graph.printGraph();
+//        System.out.println(countConnectedComponents(graph) + " / " + methodToFields.size());
+
+        if(countConnectedComponents(graph) > 1) {
+            return countConnectedComponents(graph) / methodToFields.size();
+        }
+        return 0.0;
     }
 
     private static double countConnectedComponents(Graph graph) {
@@ -107,5 +145,48 @@ public class CohesionService {
         return methodToFields;
     }
 
+    public static String analyzeCohesionOfClass(int initializedFields, int fieldsUsedWithinMethods, double yalcom, double lcom4) {
+        return doesThisClassUseAllItsFields(initializedFields, fieldsUsedWithinMethods) + ", " +
+                analyzeYalcom(yalcom) + ", " +
+                analyzeLcom4(lcom4);
+    }
+
+    private static String doesThisClassUseAllItsFields(int initializedFields, int fieldsUsedWithinMethods) {
+        if(initializedFields == 0) {
+            return "class no initialized fields";
+        } else if(initializedFields > fieldsUsedWithinMethods) {
+            return "not all initialized fields are used";
+        } else if(initializedFields == fieldsUsedWithinMethods) {
+            return "all initialized fields are used";
+        } else {
+            return "ERROR initializedFields < fieldsUsedWithinMethods " + initializedFields + " < " + fieldsUsedWithinMethods;
+        }
+    }
+
+    private static String analyzeYalcom(double yalcom) {
+        if(yalcom < 0) {
+            return "class has a negative yalcom";
+        } else if(yalcom == 0) {
+            return "class has a perfect yalcom value";
+        } else if(yalcom < 0.6) {
+            return "class has a good cohesion";
+        } else if(yalcom < 0.99) {
+            return "class might be redesigned yalcom is very high";
+        } else {
+            return "ERROR";
+        }
+    }
+
+    private static String analyzeLcom4(double lcom4) {
+        if(lcom4 < 0) {
+            return "ERROR";
+        } else if(lcom4 == 1) {
+            return "class has a perfect lcom4 value";
+        } else if(lcom4 == 2 || lcom4 == 3) {
+            return "class has " + String.format("%.0f", lcom4) + " independent components";
+        } else {
+            return "class has " + String.format("%.0f", lcom4) + " independent components you better redesign this class due high lcom4";
+        }
+    }
 
 }

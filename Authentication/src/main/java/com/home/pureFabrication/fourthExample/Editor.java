@@ -30,6 +30,8 @@ public class Editor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 executeCommand(new CopyCommand(editor));
+                String test = "tttttt";
+                System.out.println(test);
             }
         });
         ctrlX.addActionListener(new ActionListener() {

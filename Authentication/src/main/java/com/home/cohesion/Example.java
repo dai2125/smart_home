@@ -1,4 +1,4 @@
-package com.home.cohesion.badExample;
+package com.home.cohesion;
 
 public class Example {
 
@@ -33,5 +33,4 @@ public class Example {
     public String sixthFunction() {
         return "sixthFunction";
     }
-
 }

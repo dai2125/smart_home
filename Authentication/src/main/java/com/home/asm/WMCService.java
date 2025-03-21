@@ -11,6 +11,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class WMCService {
+    // TODO MCCABE.com wmc shouldnt pass the limit of 14
+    /*  TODO https://lionel.kr.hs-niederrhein.de/~rethmann/sof06/sof06.pdf
+    *    1 - 10 einfaches Programm, geringes Risiko
+    *   11 - 20 komplexeres Programm, erträgliches Risiko
+    *   21 - 50 komplexes Programm, hohes Risiko
+    *      > 50 untestbares Programm, extrem hohes Risiko
+    * */
     private ClassLoader classLoader;
     private int wmc = 0;
     private String className;

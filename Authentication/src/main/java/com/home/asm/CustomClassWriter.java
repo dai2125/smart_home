@@ -27,7 +27,7 @@ public class CustomClassWriter {
     ClassWriter writer;
     AddInterfaceAdapter addInterfaceAdapter;
     PublicizeMethodAdapter pubMethAdapter;
-    final static String CLASSNAME = "com/home/pureFabrication/fifthExample/PayByPayPal";
+    final static String CLASSNAME = "com/home/asm/DeleteMe";
 //    private final String CLASSNAME = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassB";
 //    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/MovieProduction";
 //    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
@@ -76,7 +76,7 @@ public class CustomClassWriter {
         PrintWriter pw = new PrintWriter(System.out);
 
         public PublicizeMethodAdapter(ClassVisitor cv) {
-            super(ASM4, cv);
+            super(ASM9, cv);
             this.cv = cv;
             tracer = new TraceClassVisitor(cv, pw);
         }
@@ -335,7 +335,7 @@ public class CustomClassWriter {
     public class AddInterfaceAdapter extends ClassVisitor {
 
         public AddInterfaceAdapter(ClassVisitor cv) {
-            super(ASM4, cv);
+            super(ASM9, cv);
         }
 
         @Override
@@ -426,7 +426,7 @@ public class CustomClassWriter {
         boolean isFieldPresent;
 
         public AddFieldAdapter(String fieldName, int access, ClassVisitor cv) {
-            super(ASM4, cv);
+            super(ASM9, cv);
             this.cv = cv;
             this.access = access;
             this.fieldName = fieldName;

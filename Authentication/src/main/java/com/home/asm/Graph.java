@@ -1,6 +1,7 @@
 package com.home.asm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Graph {
 
@@ -67,5 +68,22 @@ public class Graph {
         for(Vertex v : this.vertices) {
             v.print(isWeighted);
         }
+    }
+
+    public void printGraph() {
+        for(Vertex v : this.vertices) {
+            System.out.println("Vertex: " + v.getData() + " " );//+ v.getEdges().forEach(System.out::println); // + Arrays.toString(new ArrayList[]{v.getEdges()}));
+
+            if(!v.getEdges().isEmpty()) {
+                System.out.println("\tFirst Edge Target: " + v.getEdges().get(0).getEnd().getData());
+
+            }
+
+            System.out.println("\tEdges: ");
+            for(Edge e : v.getEdges()) {
+                System.out.println("\t-> " + e.getEnd().getData() + " (Weight: " + e.getWeight() + ")");
+            }
+        }
+        System.out.println();
     }
 }

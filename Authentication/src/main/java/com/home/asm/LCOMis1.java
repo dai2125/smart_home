@@ -1,6 +1,6 @@
 package com.home.asm;
 
-public class LCOMIs2 {
+public class LCOMis1 {
 
     int x = 47;
     int y = 11;
@@ -14,7 +14,7 @@ public class LCOMIs2 {
     }
 
     public void c() {
-        System.out.println(y);
+        System.out.println(x + y);
     }
 
     public void d() {
