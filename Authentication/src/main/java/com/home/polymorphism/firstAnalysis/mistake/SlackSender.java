@@ -1,4 +1,4 @@
-package com.home.polymorphism.mistake;
+package com.home.polymorphism.firstAnalysis.mistake;
 
 class SlackSender {
 

@@ -158,4 +158,8 @@ public class DepthOfInheritanceTree extends ClassVisitor {
         }
     }
 
+    public boolean checkIfClassIsInterface() {
+        return isInterface;
+    }
+
 }

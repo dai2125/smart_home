@@ -6,10 +6,7 @@ import org.objectweb.asm.ClassReader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Start {
 
@@ -18,8 +15,8 @@ public class Start {
 //        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home\\pureFabrication\\fifthExample";
 //        String analysePath = "com/home/pureFabrication/fifthExample";
         String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-                                "\\informationExpert\\firstAnalysis\\fix";
-        String analysePath = "com/home/informationExpert/firstAnalysis/fix";
+                                "\\polymorphism\\secondAnalysis";
+        String analysePath = "com/home/polymorphism/secondAnalysis";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
         PackageService packageService = new PackageService();
@@ -52,6 +49,7 @@ public class Start {
             int b = depthOfInheritanceTree.calculateDIT();
 //            System.out.println(className + " ,children: " + a + ", DIT: " + b);
             inspectedClass.setDit(b);
+            inspectedClass.setIsInterface(depthOfInheritanceTree.checkIfClassIsInterface());
 
             fanInService = new FanInService(className, packagePath, directory);
 
@@ -112,7 +110,7 @@ public class Start {
 
 
 
-
+            List<String> allMethodsList = numberOfMethodsService.getAllMethodsList(className);
             Set<String> allMethods = numberOfMethodsService.getAllMethods(className);
             Set<String> allFields = numberOfFieldsService.getAllFields(className);
             Set<String> allInitFields = numberOfFieldsService.getAllInitFields(className);
@@ -128,8 +126,24 @@ public class Start {
 //                                                                    inspectedClass.getFanout()));
 
             // TODO INFORMATION EXPERT
-            InformationExpertService informationExpertService = new InformationExpertService();
-            informationExpertService.analyze(className);
+//            InformationExpertService informationExpertService = new InformationExpertService();
+//            informationExpertService.analyze(className);
+
+            // TODO LOOSE COUPLING
+//            System.out.println(className + " " + LooseCouplingService.analyzeLooseCouplingOfClass(className,
+//                                                                                                    numberOfMethodsService.getAllMethodsList(className),
+//                                                                                                    numberOfMethodsService.getAllInterfaceMethods(className),
+//                                                                                                    inspectedClass.getDit(),
+//                                                                                                    inspectedClass.getFanout(),
+//                                                                                                    inspectedClass.getIsInterface()));
+
+            // TODO POLYMORPHISM
+//            System.out.println();
+//            numberOfMethodsService.polymorphism(className);
+
+
+
+
 
 
 

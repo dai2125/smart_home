@@ -14,6 +14,7 @@ public class NumberOfMethodsService {
     private Set<String> classUsed = new HashSet<>();
     private Set<String> listOfAllMethods = new HashSet<>();
     private List<MethodModel> listOfAllSubMethods = new ArrayList<>();
+    private List<String> listOfAllMethodsList = new ArrayList<>();
 
     public NumberOfMethodsService() {
     }
@@ -91,6 +92,31 @@ public class NumberOfMethodsService {
         }, 0);
 //        System.out.println("||||| " + className + " " + listOfAllMethods.size());
         return listOfAllMethods;
+    }
+
+    public List<String> getAllMethodsList(String className) throws IOException {
+        ClassReader classReader = new ClassReader(className);
+        isInterface = false;
+
+        classReader.accept(new ClassVisitor(ASM9) {
+
+            @Override
+            public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+
+            }
+
+            @Override
+            public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+                if(!name.equals("<init>") && !name.equals("<clinit>") && !listOfAllMethodsList.contains(name)) {
+                    listOfAllMethodsList.add(name);
+                } else if(name.equals("<init>")) {
+                    return new MethodVisitor(ASM9) {
+                    };
+                }
+                return null;
+            }
+        }, 0);
+        return listOfAllMethodsList;
     }
 
     public List<String> getAllInterfaceMethods(String className) throws IOException {
@@ -174,4 +200,5 @@ public class NumberOfMethodsService {
         }, 0);
         return ans[0];
     }
+
 }

@@ -7,6 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CountryTest {
 
+    // TODO When extending a class, you can pass subclass objects instead of parent class objects without disrupting client code.
+    // TODO Parent has 4 Methods so do the child needs at least also 4 Methods
+    // TODO check Return Type der Methoden und Parameter
+    // TODO es kann auch über ein Interface das Prinzip erfüllt werden, lies das nochmal nach
+
     @Test
     public void testCountry() {
 

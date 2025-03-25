@@ -27,6 +27,7 @@ public class InspectedClass {
     private int numberOfPossibleConnections;
     private List<MethodModel> methods = new ArrayList<>();
     private List<SubField> subFields = new ArrayList<>();
+    private boolean isInterface = false;
 
     public InspectedClass(String name) {
         this.name = name;
@@ -210,6 +211,14 @@ public class InspectedClass {
 
     public List<SubField> getSubFields() {
         return subFields;
+    }
+
+    public void setIsInterface(boolean isInterface) {
+        this.isInterface = isInterface;
+    }
+
+    public boolean getIsInterface() {
+        return isInterface;
     }
 
     @Override

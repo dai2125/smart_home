@@ -117,7 +117,7 @@ public class WMCCalculator {
     }
 
     public static void main(String[] args) throws Exception {
-        String className = "com/home/polymorphism/fix/Sender";
+        String className = "com/home/polymorphism/firstAnalysis/fix/Sender";
 
         try {
             WMCCalculator wmcCalculator = new WMCCalculator();

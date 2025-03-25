@@ -1,8 +1,7 @@
-package com.home.polymorphism.fix;
+package com.home.polymorphism.firstAnalysis.mistake;
 
-class EmailSender implements Sender {
+class EmailSender {
 
-    @Override
     public void send(String message) {
         System.out.println("Send email message: " + message);
     }

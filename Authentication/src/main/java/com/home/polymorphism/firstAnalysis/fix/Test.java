@@ -1,4 +1,4 @@
-package com.home.polymorphism.fix;
+package com.home.polymorphism.firstAnalysis.fix;
 
 public class Test {
 
