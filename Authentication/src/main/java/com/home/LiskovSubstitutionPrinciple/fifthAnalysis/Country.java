@@ -55,4 +55,5 @@ public class Country {
     public void setGdp(int gdp) {
         this.gdp = gdp;
     }
+
 }

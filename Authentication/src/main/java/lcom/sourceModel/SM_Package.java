@@ -81,7 +81,7 @@ public class SM_Package extends SM_SourceItem {
 
     void extractTypeMetrics() {
         for (SM_Type type : typeList) {
-            type.extractMethodMetrics();
+            type.extractMethodMetrics(targetClass);
 //            System.out.println("SM_PACKAGE: " + type.toString());
             TypeMetrics metrics = new TypeMetrics(type);
             metrics.extractMetrics(targetClass);

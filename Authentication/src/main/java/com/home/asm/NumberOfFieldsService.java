@@ -238,4 +238,67 @@ public class NumberOfFieldsService {
         }, 0);
         return ans[0];
     }
+
+    public CreatorPrincipleField something(String className) throws IOException {
+        ClassReader classReader = new ClassReader(className);
+
+        CreatorPrincipleField cpf = new CreatorPrincipleField();
+
+        classReader.accept(new ClassVisitor(ASM9) {
+
+            @Override
+            public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
+//                CreatorPrincipleField cpf = new CreatorPrincipleField(name, access, descriptor);
+
+                cpf.setAccess(access);
+                cpf.setName(name);
+                cpf.setType(descriptor);
+
+                System.out.println("visitField(): className: " + className + " " + access + ", name: " + name + ", descriptor: " + descriptor);
+
+                return this.cv != null ? this.cv.visitField(access, name, descriptor, signature, value) : null;
+                };
+
+            @Override
+            public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+                System.out.println("visitMethod() name: " + name);
+                cpf.setOwner(name);
+
+                return new MethodVisitor(ASM9) {
+                    @Override
+                    public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
+                        System.out.println("visitFieldInsn() opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
+                        cpf.setOpcode(opcode);
+
+                        super.visitFieldInsn(opcode, owner, name, descriptor);
+                    }
+                };
+
+            }
+        }, 0);
+        System.out.println("cpf:" + cpf);
+        return cpf;
+    }
+
+    public void checkField(String className) throws IOException {
+        CreatorPrincipleField cpf = something(className);
+
+        if(!CreatorPrincipleService.contains(className)) {
+            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
+//            if(cpf.getAccess() != -1) {
+                creatorPrinciple.addToFieldInsnList(cpf);
+//            } else {
+                creatorPrinciple.addToFieldList(cpf);
+//            }
+            CreatorPrincipleService.put(creatorPrinciple);
+        } else {
+            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
+//            if(cpf.getAccess() != -1) {
+                creatorPrinciple.addToFieldInsnList(cpf);
+//            } else {
+                creatorPrinciple.addToFieldList(cpf);
+//            }
+            CreatorPrincipleService.put(creatorPrinciple);
+        }
+    }
 }

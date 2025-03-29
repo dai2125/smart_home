@@ -14,6 +14,23 @@ public class BasicPrinter implements Machine {
 
     @Override
     public void fax(String document) {
+        if(true) {
+            System.out.println(true);
+        }
+        if(111 < 333) {
+            System.out.println(1);
+        } else {
+            System.out.println(2);
+        }
+
         throw new UnsupportedOperationException("Fax not supported");
+    }
+
+    private boolean aaaaa() {
+        return true;
+    }
+
+    protected Integer bbbb() {
+        return null;
     }
 }

@@ -28,6 +28,7 @@ public class InspectedClass {
     private List<MethodModel> methods = new ArrayList<>();
     private List<SubField> subFields = new ArrayList<>();
     private boolean isInterface = false;
+    private List<MethodInformation> methodList = new ArrayList<>();
 
     public InspectedClass(String name) {
         this.name = name;
@@ -221,16 +222,28 @@ public class InspectedClass {
         return isInterface;
     }
 
+    public void addMethodInformation(MethodInformation methodInformation) {
+        methodList.add(methodInformation);
+    }
+
+    public List<MethodInformation> getMethodList() {
+        return methodList;
+    }
+
+    public int getMethodListSize() {
+        return methodList.size();
+    }
+
     @Override
     public String toString() {
         return "InspectedClass{" + "\n" +
-                "name='" + name + '\n' +
-                ", fullName='" + fullName + '\n' +
+                "\tname='" + name + '\n' +
+                "\tfullName='" + fullName + '\n' +
 //                ", wmc=" + wmc +
 //                ", fanin=" + fanin +
 //                ", fanout=" + fanout +
-                ", amountOfMethods=" + amountOfMethods + "\n" +
-                ", amountOfFields=" + amountOfFields + "\n" +
+                "\tamountOfMethods=" + amountOfMethods + "\n" +
+                "\tamountOfFields=" + amountOfFields + "\n" +
 //                ", amountOfConstructors=" + amountOfConstructors +
 //                ", numberOfChildren=" + numberOfChildren +
 //                ", dit=" + dit +
@@ -244,11 +257,12 @@ public class InspectedClass {
 //                ", numberOfIndirectConnections=" + numberOfIndirectConnections +
 //                ", numberOfDirectConnections=" + numberOfDirectConnections +
 //                ", numberOfPossibleConnections=" + numberOfPossibleConnections +
-                "methods size=" + methods.size() + "\n" +
-                "fields size=" + subFields.size() + "\n" +
+                "\tmethods size=" + methods.size() + "\n" +
+                "\tfields size=" + subFields.size() + "\n" +
 
-                ", methods=" + methods.stream().map(MethodModel::toString).toList() + "\n" +
-                ", subFields=" + subFields.stream().map(SubField::toString).toList() + "\n" +
+                "\tmethods=" + methods.stream().map(MethodModel::toString).toList() + "\n" +
+                "\tsubFields=" + subFields.stream().map(SubField::toString).toList() + "\n" +
+                "\t"/*"methodInformation="*/ + methodList.stream().map(MethodInformation::toString).toList() + "\n" +
                 '}';
     }
 }

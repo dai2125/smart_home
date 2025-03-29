@@ -16,7 +16,11 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 	private List<DoStatement> doStatements = new ArrayList<>();
 	private List<EnhancedForStatement> foreachStatements = new ArrayList<>();
 	private List<TryStatement> tryStatements = new ArrayList<>();
-	
+	private List<ReturnStatement> returnStatements = new ArrayList<>();
+	private List<ThrowStatement> throwStatements = new ArrayList<>();
+	private List<ReturnStatement> allReturnStatements = new ArrayList<>();
+	private List<ThrowStatement> allThrowStatements = new ArrayList<>();
+
 	public boolean visit(IfStatement node) {
 		ifStatements.add(node);
 		return true;
@@ -59,7 +63,29 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 		tryStatements.add(node);
 		return true;
 	}
-	
+
+	public boolean visit(ReturnStatement node) {
+		returnStatements.add(node);
+//		System.out.println("FOUND STATEMENT " + node.getExpression());
+		allReturnStatements.add(node);
+		return true;
+	}
+
+	public boolean visit(ThrowStatement node) {
+		throwStatements.add(node);
+//		System.out.println("FOUND STATEMENT " + node.getExpression());
+		allThrowStatements.add(node);
+		return true;
+	}
+
+	public List<ReturnStatement> getAllReturnStatements() {
+		return allReturnStatements;
+	}
+
+	public List<ThrowStatement> getAllThrowStatements() {
+		return allThrowStatements;
+	}
+
 	public List<IfStatement> getIfStatements() {
 		return ifStatements;
 	}
@@ -79,15 +105,23 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 	public List<TryStatement> getTryStatements() {
 		return tryStatements;
 	}
-	
-	public int getNumOfIfStatements() {
-		return ifStatements.size();
-	}
 
 	public List<SwitchStatement> getSwitchStatements() {
 		return switchStatements;
 	}
-	
+
+	public List<ThrowStatement> getThrowStatements() {
+		return throwStatements;
+	}
+
+	public List<ReturnStatement> getReturnStatements() {
+		return returnStatements;
+	}
+
+	public int getNumOfIfStatements() {
+		return ifStatements.size();
+	}
+
 	public int getNumOfSwitchCaseStatementsWitoutDefault() {
 		return switchCasesWitoutDefaults.size();
 	}
@@ -107,5 +141,12 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 	public int getNumOfForeachStatements() {
 		return foreachStatements.size();
 	}
-	
+
+	public int getNumOfThrowStatements() {
+		return throwStatements.size();
+	}
+
+	public int getNumOfReturnStatements() {
+		return returnStatements.size();
+	}
 }

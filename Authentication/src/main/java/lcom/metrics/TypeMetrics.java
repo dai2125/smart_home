@@ -85,6 +85,8 @@ public class TypeMetrics {
                     lcomAlgorithm = new LCOM5();
                     lcom5 = lcomAlgorithm.compute(type);
                     inspectedClass.setLcom5(lcom5);
+//                    System.out.println("TTTinspectedClass: " + inspectedClass + " has LCOM4 of " + lcom4);
+
                 }
             }
 

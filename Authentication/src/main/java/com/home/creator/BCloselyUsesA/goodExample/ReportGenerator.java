@@ -5,6 +5,7 @@ import com.home.creator.BRecordsA.goodExample.Event;
 public class ReportGenerator {
 
     private Event event;
+    private Event event4 = new Event("new Event4");
     public String something = "something";
     private Calculator calculator;
     private Calculator waschmaschine;
@@ -49,6 +50,13 @@ public class ReportGenerator {
 
     protected Event createEvent(Event event) {
         event = new Event("new Event");
+        Event event1 = new Event("new Event1");
+        event.getDescription();
+        event1.getDescription();
+        event1 = new Event("new Event2");
+        event1.getDescription();
+        Event event3 = new Event("new Event3");
+        event3.getDescription();
         return event;
     }
 
@@ -57,7 +65,7 @@ public class ReportGenerator {
     }
 
     public void subtraction(int a, int b) {
-
+        event4.returnTrue();
     }
 
     int DDDDD = 200 * 5000;

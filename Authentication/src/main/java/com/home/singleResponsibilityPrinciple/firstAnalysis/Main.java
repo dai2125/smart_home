@@ -11,7 +11,7 @@ public class Main {
         order1.setQuantity(2);
         order1.setCustomer(customer1);
 
-        order1.prepareOrder();
+//        order1.prepareOrder();
 
         BillCalculation billCalculation = new BillCalculation(order1);
         billCalculation.calculateBill();

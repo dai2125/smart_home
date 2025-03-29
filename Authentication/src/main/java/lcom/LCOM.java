@@ -1,6 +1,8 @@
 package lcom;
 
 import lcom.sourceModel.SM_Project;
+import lcom.sourceModel.TargetClass;
+import lcom.sourceModel.Tc;
 import lcom.utils.Logger;
 import org.apache.commons.cli.*;
 
@@ -16,6 +18,8 @@ import java.util.Calendar;
 public class LCOM {
 
     private String[] args;
+
+    public String targetClass = "";
 
     public static void main(String[] args) {
         if(args == null || args.length == 0) {
@@ -57,6 +61,13 @@ public class LCOM {
     }
 
     private static void analyze(InputArgs argsObj) {
+
+//        Tc tc = new Tc(argsObj.getOutputFolder());
+//        String targetClass = tc.
+//        TargetClass.initialize(argsObj.getOutputFolder());
+//        String targetClass = TargetClass.getInstance().getTargetClass();
+//        System.out.println("targetClass0 " + targetClass);
+
         SM_Project project = new SM_Project(argsObj);
         project.parse();
         project.resolve();

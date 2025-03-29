@@ -1,5 +1,7 @@
 package lcom.sourceModel;
 
+import com.home.asm.CreatorPrinciple;
+import com.home.asm.CreatorPrincipleService;
 import lcom.InputArgs;
 import lcom.utils.CSVUtils;
 import lcom.utils.Logger;
@@ -16,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SM_Project extends SM_SourceItem {
     private InputArgs inputArgs;
@@ -32,7 +35,18 @@ public class SM_Project extends SM_SourceItem {
         packageList = new ArrayList<>();
         setName(this.inputArgs.getProjectName());
         this.targetClass = argsObj.getOutputFolder();
+
+//        TargetClass.initialize(targetClass);
+//        System.out.println("targetClass1 " + targetClass);
+
 //        System.out.println("TARGET CLASS: " + targetClass);
+
+//        System.out.println("SM_PROJECT: " + name ); //+ ", targetClass: " + targetClass);
+//        if(!CreatorPrincipleService.contains(targetClass)) {
+//            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(targetClass);
+//            CreatorPrincipleService.put(creatorPrinciple);
+//        }
+
     }
 
     public void setName(String name) {

@@ -1,10 +1,20 @@
 package lcom.sourceModel;
 
+import com.home.asm.ClassService;
+import com.home.asm.CreatorPrinciple;
+import com.home.asm.CreatorPrincipleService;
+import com.home.asm.InspectedClass;
+import lcom.metrics.MethodMetricExtractor;
+import lcom.metrics.MethodMetrics;
+import lcom.metrics.algorithms.ILCOM;
+import lcom.metrics.algorithms.YALCOM;
 import lcom.visitors.StaticFieldAccessVisitor;
 import org.eclipse.jdt.core.dom.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SM_Type extends SM_SourceItem {
     private boolean isAbstract = false;
@@ -25,6 +35,8 @@ public class SM_Type extends SM_SourceItem {
     private List<Name> staticFieldAccesses = new ArrayList<>();
     private List<SM_Type> staticFieldAccessList = new ArrayList<>();
     private List<SM_Type> staticMethodInvocations = new ArrayList<>();
+    private Map<SM_Method, MethodMetrics> metricsMapping = new HashMap<>();
+    private String name2 = "";
 
     public SM_Type(TypeDeclaration typeDeclaration, CompilationUnit compilationUnit, SM_Package pkg) {
         parentPkg = pkg;
@@ -219,6 +231,34 @@ public class SM_Type extends SM_SourceItem {
         if (mList.size() > 0)
             methodList.addAll(mList);
         parseMethods();
+
+
+        System.out.println("eeeeeeeee:" + name.replace("Type=", ""));
+        if(!CreatorPrincipleService.contains(name.replace("Type=", ""))) {
+            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(name.replace("Type=", ""));
+
+            creatorPrinciple.setFieldListToControl(getFieldList());
+            creatorPrinciple.setMethodListToControl(getMethodList());
+
+            creatorPrinciple.increaseCount();
+
+            CreatorPrincipleService.put(creatorPrinciple);
+				System.out.println(creatorPrinciple);
+        } else {
+            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(name.replace("Type=", ""));
+            creatorPrinciple.setFieldListToControl(getFieldList());
+            creatorPrinciple.setMethodListToControl(getMethodList());
+
+            creatorPrinciple.increaseCount();
+
+            CreatorPrincipleService.put(creatorPrinciple);
+//				System.out.println(creatorPrinciple);
+        }
+
+        System.out.println("SM_TYPE: name " + name);
+        System.out.println(name + " = " + getFieldList().stream().map(SM_Field::getName).toList());
+        System.out.println(name + " = " + getMethodList().stream().map(SM_Method::getName).toList());
+
     }
 
     @Override
@@ -276,7 +316,25 @@ public class SM_Type extends SM_SourceItem {
         }
     }
 
-    void extractMethodMetrics() {
+//    void extractMethodMetrics() {
+//    }
+
+    public void extractMethodMetrics(String targetClass) {
+        InspectedClass inspectedClass = ClassService.get(targetClass);
+
+        if (name.equals(targetClass)) {
+
+
+            for (SM_Method method : methodList) {
+                MethodMetrics metrics = new MethodMetricExtractor(method).extractMetrics(inspectedClass);
+
+//                System.out.println("TARGETCLASS: " + targetClass + " " + metrics.getMethod().getName() + " name: " + name);
+//            System.out.println("METHOD METRICS: " + metrics.getCyclomaticComplexity() + " " + metrics.getNumOfLines() + " " + metrics.getMethod().getName());
+//            System.out.println("METHOD: " + method.getMethodDeclaration().getBody());
+//                System.out.println(metrics.toString());
+                metricsMapping.put(method, metrics);
+            }
+        }
     }
 
     @Override

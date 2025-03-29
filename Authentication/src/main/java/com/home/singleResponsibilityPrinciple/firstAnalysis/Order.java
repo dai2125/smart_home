@@ -10,6 +10,7 @@ public class Order {
     private int quantity;
     private int totalBillAmt;
 
+
     public Customer getCustomer() {
         return customer;
     }
@@ -56,4 +57,6 @@ public class Order {
     public void prepareOrder() {
         System.out.println("preparing order for customer -" + this.getCustomer().getName() + " who has ordered " + this.getItemName());
     }
+
+
 }

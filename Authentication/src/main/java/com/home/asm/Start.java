@@ -15,8 +15,8 @@ public class Start {
 //        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home\\pureFabrication\\fifthExample";
 //        String analysePath = "com/home/pureFabrication/fifthExample";
         String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-                                "\\polymorphism\\secondAnalysis";
-        String analysePath = "com/home/polymorphism/secondAnalysis";
+                                "\\creator\\BCloselyUsesA\\goodExample";
+        String analysePath = "com/home/creator/BCloselyUsesA/goodExample";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
         PackageService packageService = new PackageService();
@@ -141,8 +141,26 @@ public class Start {
 //            System.out.println();
 //            numberOfMethodsService.polymorphism(className);
 
+            // TODO LISKOV SUBSTITUTION PRINCIPLE
+//            System.out.println("TODO LISKOV SUBSTITUTION PRINCIPLE");
+//            numberOfMethodsService.checkLiskov(className);
 
 
+            // TODO INTERFACE SEGREGATION PRINCIPLE
+
+//            numberOfMethodsService.checkInstructions(className);
+
+//            System.out.println("Fields:\tMethods:\tConstructors:\tWMC:" +
+//                                "\tNOC:\tDIT:\tYLCOM:\tLCOM4v1:\tFANIN:\tFANOUT:\tName:");
+//            System.out.println(inspectedClass.getAmountOfFields() + "\t\t" +
+//                    inspectedClass.getAmountOfMethods() + "\t\t\t" + inspectedClass.getAmountOfConstructors() + "\t\t\t\t" +
+//                    inspectedClass.getWmc() + "\t\t" + inspectedClass.getNumberOfChildren() + "\t\t" +
+//                    inspectedClass.getDit() + "\t\t" +
+//                    String.format("%.2f", inspectedClass.getYalcom()) + " \t" + inspectedClass.getLcom4v1() + "\t\t\t" +
+//                    inspectedClass.getFanin() + "\t\t" + inspectedClass.getFanout() + "\t\t" +
+//                    inspectedClass.getName() + "\t\t" +
+//                    "LCOM4 = " + inspectedClass.getLcom4() + "\t\t" + "LCOM5 = " + inspectedClass.getLcom5() + "\t\t"
+//            );
 
 
 
@@ -160,6 +178,7 @@ public class Start {
 
 //        cohesionService.getCohesion("com/home/asm/Fields");
             double lcom4 = CohesionService.calculateLCOM4(methodToFields);
+//            System.out.println("lcom4:" + lcom4);
             double lcom4Designite = CohesionService.calculateLCOM4Designite(methodToFields);
             inspectedClass.setLcom4v1(lcom4);
 
@@ -176,7 +195,22 @@ public class Start {
             ClassService.put(inspectedClass);
 
             String[] args2 = new String[]{"-i", packagePath, "-o", className.replace(analysePath + "/", "")};
-            LCOM.startLcomProcess(args2);
+//            LCOM.startLcomProcess(args2);
+
+            CreatorPrinciple cp = CreatorPrincipleService.get(className.replace(analysePath + "/", ""));
+//            System.out.println(CreatorPrincipleService.printAll());
+
+            // TODO CREATOR PRINCIPLE
+            numberOfMethodsService.getListOfNewStatements(className);
+            numberOfFieldsService.checkField(className);
+            System.out.println(CreatorPrincipleService.printAll());
+
+
+            // TODO INTERFACE SEGREGATION PRINCIPLE
+//            System.out.println(LiskovSubstitutionPrincipleService.liskovSubstitutionPrinciple(inspectedClass));
+
+            // TODO SINGLE RESPONSIBILITY PRINCIPLE
+//            System.out.println(SingleResponsibilityPrincipleService.checkSingleResponsibilityPrinciple(inspectedClass));
 
 //            System.out.println("Fields:\tMethods:\tConstructors:\tWMC:" +
 //                    "\tNOC:\tDIT:\tYLCOM:\tLCOM4v1:\tFANIN:\tFANOUT:\tName:");

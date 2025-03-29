@@ -1,10 +1,16 @@
 package lcom.sourceModel;
 
+import com.home.asm.CreatorPrinciple;
+import com.home.asm.CreatorPrincipleService;
 import lcom.utils.models.Vertex;
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
+import java.lang.annotation.Target;
 import java.lang.reflect.Modifier;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +28,55 @@ public class SM_Field extends SM_EntitiesWithType implements Vertex {
 		setFieldInfo(fieldDeclaration);
 		name = varDecl.getName().toString();
 		assignToNestedTypeIfNecessary();
+
+//		System.out.println("SM_FIELD");
+	// TODO hierher zurück  cccccccccc
+		System.out.println("xxxxxxxxxx:" + parentType.name + ":xxxxxxxxxx");
+		if(!CreatorPrincipleService.contains(parentType.name)) {
+			System.out.println("cccccccccc:" + parentType.name + ":cccccccccc");
+
+			CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
+			System.out.println("bbbbbbb:" + fieldDeclaration);
+			System.out.println("bbbbbbb:" + fieldDeclaration.getType());
+			System.out.println("bbbbbbb:" + fieldDeclaration.getType().toString());
+
+			// TODO hier kommenatr rückgängig machen
+//			creatorPrinciple.addToFieldList(fieldDeclaration + ", " + fieldDeclaration.getType().toString());
+
+			creatorPrinciple.increaseCount();
+
+			CreatorPrincipleService.put(creatorPrinciple);
+//				System.out.println(creatorPrinciple);
+		} else {
+			CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(parentType.name);
+//			CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
+
+			// TODO hier kommenatr rückgängig machen
+//			creatorPrinciple.addToFieldList(fieldDeclaration + ", " + fieldDeclaration.getType().toString());
+
+			creatorPrinciple.increaseCount();
+
+			CreatorPrincipleService.put(creatorPrinciple);
+//				System.out.println(creatorPrinciple);
+
+		}
+
+		System.out.println("SM_FIELD ParentType.name " + parentType.name);
+		System.out.println("fieldDeclaration: " + fieldDeclaration);
+		System.out.println("fieldDeclaration.getType(): " + fieldDeclaration.getType());
+
+		for(Object fragmentObj : fieldDeclaration.fragments()) {
+			if(fragmentObj instanceof VariableDeclarationFragment fragment) {
+				System.out.println("Variablenname: " + fragment.getName());
+
+				if(fragment.getInitializer() != null) {
+					System.out.println("Initialwert: " + fragment.getInitializer());
+				}
+			}
+		}
 	}
-	
+
+
 	private void setFieldInfo(FieldDeclaration field){
 		int modifiers = field.getModifiers();
 		if (Modifier.isFinal(modifiers)) 

@@ -41,5 +41,7 @@ public class SM_Parameter extends SM_EntitiesWithType {
 
     @Override
     public void parse() {
+//        System.out.println("SM_PARAMETER");
+//        System.out.println(name + " " + parentMethod.getName() + ", " + variableDecl.toString());
     }
 }

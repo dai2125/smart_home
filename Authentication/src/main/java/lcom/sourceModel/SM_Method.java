@@ -1,5 +1,7 @@
 package lcom.sourceModel;
 
+import com.home.asm.*;
+import com.home.asm.NewObjectService;
 import lcom.utils.models.Vertex;
 import lcom.visitors.DirectAceessFieldVisitor;
 import lcom.visitors.InstanceOfVisitor;
@@ -8,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SM_Method extends SM_SourceItem implements Vertex {
     private boolean abstractMethod;
@@ -38,6 +41,41 @@ public class SM_Method extends SM_SourceItem implements Vertex {
         this.methodDeclaration = methodDeclaration;
         setMethodInfo(methodDeclaration);
         setAccessModifier(methodDeclaration.getModifiers());
+//        System.out.println("WWWW: " + methodDeclaration.getName() + ", " + methodDeclaration.parameters());
+//        printMethodDetails();
+
+//        String targetClass = TargetClass.getInstance().getTargetClass();
+//        System.out.println("targetClass3 " + targetClass);
+
+        System.out.println("\nSM_METHOD: ParentType.name " + parentType.name);
+
+        if(!CreatorPrincipleService.contains(parentType.name)) {
+            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
+
+            // TODO hier Kommentar rückgängig machen
+//            creatorPrinciple.addFunctionToList(methodDeclaration.getName().toString());
+
+            CreatorPrincipleService.put(creatorPrinciple);
+        } else {
+            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(parentType.name);
+            // TODO hier Kommentar rückgängig machen
+//            creatorPrinciple.addFunctionToList(methodDeclaration.getName().toString());
+
+            CreatorPrincipleService.put(creatorPrinciple);
+        }
+
+
+
+        System.out.println("methode name: " + methodDeclaration.getName());
+        System.out.println("parameter: " + methodDeclaration.parameters().stream().toList());
+        System.out.println("return type: " + methodDeclaration.getReturnType2());
+        System.out.println("called methods: " + calledMethods.stream().map(MethodInvocation::toString).toList());
+
+        //        System.out.println(name + " " + parameterList.stream().map(SM_Parameter::getName).toList());
+//        System.out.println(name + " " + calledMethodsList.stream().map(SM_Method::getName).toList());
+//        System.out.println(name + " " + namesInMethod.stream().map(SimpleName::toString).toList());
+
+
     }
 
     private void setMethodInfo(MethodDeclaration method) {
@@ -73,7 +111,7 @@ public class SM_Method extends SM_SourceItem implements Vertex {
         return parentType;
     }
 
-    List<SM_Parameter> getParameterList() {
+    public List<SM_Parameter> getParameterList() {
         return parameterList;
     }
 
@@ -108,9 +146,57 @@ public class SM_Method extends SM_SourceItem implements Vertex {
     }
 
     private void populateNewStatement() {
+
+        // TODO CREATOR PRINCIPLE
+
+        /*
+        *   in newStatementTypes speicherst du die Objekt Name und die Objekt Typen ab
+        *   die Map soll helfen beim Tracken des Objekts
+        *   du willst überprüfen ob die Klasse die das Objekt erstellt auch die Funktionen des Objekts verwendet
+
+        *   Welche Objekte erstellt die Klasse?
+        *   Werden die Funktionen des Objektes verwendet?
+        *   Kohäsivität?
+        * */
+
+
         NewStatementVisitor newStatementVisitor = new NewStatementVisitor(methodDeclaration);
         methodDeclaration.accept(newStatementVisitor);
         newStatementTypes = newStatementVisitor.getTypeList();
+
+        Map<String, Type> newInstances = newStatementVisitor.getNewInstances();
+
+//        System.out.println(parentType.getName());
+//        System.out.println("\t" + methodDeclaration.getName());
+//        System.out.println("\t\t" + newStatementVisitor.getTypeList().stream().map(Type::toString).toList());
+//        System.out.println("\t\t" + newInstances.stream().map(Type::toString).toList());
+//        System.out.println("\t\t" + newInstances.forEach(key, value), ->System.out.println(););
+        newInstances.forEach((key, value) -> System.out.println(methodDeclaration.getName() + " - new Instances " + key + ":" + value));
+//        System.out.println(methodDeclaration.getName());
+
+
+        MethodInvVisitor methodInvVisitor = new MethodInvVisitor(methodDeclaration);
+        methodDeclaration.accept(methodInvVisitor);
+        List<MethodInvocation> invocations = methodInvVisitor.getCalledMethods();
+
+        for(MethodInvocation invocation : invocations) {
+            Expression expression = invocation.getExpression();
+            if(expression instanceof SimpleName) {
+                String objectName = expression.toString();
+
+                NewObject object = NewObjectService.get(objectName);
+
+                if(object != null) {
+                    object.addFunctionToList(invocation.getName().toString());
+//                    System.out.println(object);
+                }
+
+//                System.out.println("\t\tMethodenaufruf: " + objectName + "." + invocation.getName());
+                if(newInstances.containsKey(objectName)) {
+//                    System.out.println("\t\tMethodenaufruf auf erstelltem Objekt: " + newInstances.get(objectName) + " " + objectName);
+                }
+            }
+        }
     }
 
     private void populateInstanceOf() {
@@ -321,4 +407,68 @@ public class SM_Method extends SM_SourceItem implements Vertex {
     public List<SM_Field> getFieldAccessesFromSuperClass() {
         return superClassFieldAccesses;
     }
+
+    public List<SM_Type> getSMTypesInInstanceOf() {
+        return smTypesInInstanceOf;
+    }
+
+    public MethodDeclaration getMethodDeclaration() {
+        return methodDeclaration;
+    }
+
+    public void printMethodDetails() {
+        System.out.println("=========================================");
+        System.out.println("Methodenname: " + name);
+        System.out.println("Ist abstrakt: " + abstractMethod);
+        System.out.println("Ist final: " + finalMethod);
+        System.out.println("Ist statisch: " + staticMethod);
+        System.out.println("Ist Konstruktor: " + isConstructor);
+        System.out.println("Ist überschrieben (@Override): " + isOverridden);
+        System.out.println("Elternklasse: " + (parentType != null ? parentType.getName() : "Unbekannt"));
+
+        // Parameterliste
+        System.out.println("Parameter:");
+        for (SM_Parameter param : parameterList) {
+            System.out.println("  - " + param.getType().getName() + " " + param.getName());
+        }
+
+        // Lokale Variablen
+        System.out.println("Lokale Variablen:");
+        for (SM_LocalVar localVar : localVarList) {
+            System.out.println("  - " + localVar.getType().getName() + " " + localVar.getName());
+        }
+
+        // Aufgerufene Methoden
+        System.out.println("Aufgerufene Methoden:");
+        for (SM_Method method : calledMethodsList) {
+            System.out.println("  - " + method.getParentType().getName() + "." + method.getName());
+        }
+
+        // Direkte Feldzugriffe
+        System.out.println("Direkte Feldzugriffe:");
+        for (SM_Field field : directFieldAccesses) {
+            System.out.println("  - " + field.getName() + " (Typ: " + field.getType().getName() + ")");
+        }
+
+        // Zugriff auf Superclass-Felder
+        System.out.println("Feldzugriffe auf Superklasse:");
+        for (SM_Field field : superClassFieldAccesses) {
+            System.out.println("  - " + field.getName() + " (Typ: " + field.getType().getName() + ")");
+        }
+
+        // `instanceof`-Verwendungen
+        System.out.println("Verwendete Typen in instanceof:");
+        for (SM_Type type : smTypesInInstanceOf) {
+            System.out.println("  - " + type.getName());
+        }
+
+        // Instanzen von Objekten, die mit `new` erstellt wurden
+        System.out.println("Instanziierte Typen mit 'new':");
+        for (SM_Type type : smTypesInNewStatements) {
+            System.out.println("  - " + type.getName());
+        }
+
+        System.out.println("=========================================");
+    }
+
 }

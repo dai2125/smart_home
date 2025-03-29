@@ -98,11 +98,15 @@ public class FanOutService {
                         Type returnType = Type.getReturnType(desc);
 //                                System.out.println("RRRR: " + returnType.getInternalName());
                         if(targetClass.equals(returnType.getInternalName())) {
+//                            System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
                             classUsed.add(targetClass);
                             if(classCallCount.containsKey(className)) {
                                 classCallCount.put(className, classCallCount.get(className) + 1);
+//                                System.out.println(className + " - " + classCallCount.get(className));
                             } else {
+
                                 classCallCount.put(className, 1);
+//                                System.out.println(className + " - " + classCallCount.get(className));
                             }
                         }
 
@@ -114,6 +118,8 @@ public class FanOutService {
 
                             if(targetClass.equals(arg.getInternalName())) {
                                 classUsed.add(targetClass);
+//                                System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                                 if(classCallCount.containsKey(className)) {
                                     classCallCount.put(className, classCallCount.get(className) + 1);
@@ -129,6 +135,8 @@ public class FanOutService {
 
                         if(targetClass.equals(desc.replaceFirst("\\(\\)L", "").replace(";", ""))) {
                             classUsed.add(targetClass);
+//                            System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                             if(classCallCount.containsKey(className)) {
                                 classCallCount.put(className, classCallCount.get(className) + 1);
@@ -147,6 +155,8 @@ public class FanOutService {
                             }
                             else if (Opcodes.INVOKESPECIAL != opcode && owner.equals(targetClass)) {
                                 classUsed.add(targetClass);
+//                                System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                                 if(classCallCount.containsKey(className)) {
                                     classCallCount.put(className, classCallCount.get(className) + 1);
@@ -161,6 +171,8 @@ public class FanOutService {
 //                                            System.out.println("PARAMETER TYPE: " + arg.getClassName().replaceAll("\\.", "/"));
                                     if(arg.getClassName().replaceAll("\\.", "/").equals(targetClass)) {
                                         classUsed.add(targetClass);
+//                                        System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                                         if(classCallCount.containsKey(className)) {
                                             classCallCount.put(className, classCallCount.get(className) + 1);
@@ -181,6 +193,8 @@ public class FanOutService {
 
                             if(owner.equals(targetClass)) {
                                 classUsed.add(targetClass);
+//                                System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                                 if(classCallCount.containsKey(className)) {
                                     classCallCount.put(className, classCallCount.get(className) + 1);
@@ -196,6 +210,8 @@ public class FanOutService {
                             if(Opcodes.NEW == opcode && type.equals(targetClass)) {
 //                                        System.out.println("NEwww: " + type);
                                 classUsed.add(targetClass);
+//                                System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                                 if(classCallCount.containsKey(className)) {
                                     classCallCount.put(className, classCallCount.get(className) + 1);
@@ -213,6 +229,8 @@ public class FanOutService {
 
                                 if(targetClass.equals(descriptor.replaceFirst("L", "").replace(";", ""))) {
                                     classUsed.add(targetClass);
+//                                    System.out.println(targetClass + " - " + classUsed.stream().map(String::toString).toList());
+
 
                                     if(classCallCount.containsKey(className)) {
                                         classCallCount.put(className, classCallCount.get(className) + 1);

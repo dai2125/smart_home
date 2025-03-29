@@ -11,6 +11,8 @@ public class CountryTest {
     // TODO Parent has 4 Methods so do the child needs at least also 4 Methods
     // TODO check Return Type der Methoden und Parameter
     // TODO es kann auch über ein Interface das Prinzip erfüllt werden, lies das nochmal nach
+    // TODO mit der is a relationship erbt eine Klasse alle Methoden von seinem Parent, die Rückgabetypen können nicht verändert werden
+    // TOOD vielleicht können die Parameter verändert werden, aber eine Überprüfung scheint sinnlos
 
     @Test
     public void testCountry() {
@@ -54,5 +56,6 @@ public class CountryTest {
         assertTrue(country.getGdp() > 0);
         assertTrue(austria.getGdp() > 0);
         assertTrue(vietnam.getGdp() > 0);
+
     }
 }

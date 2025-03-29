@@ -11,6 +11,12 @@ public class SM_LocalVar extends SM_EntitiesWithType {
 		parentMethod = method;
 		name = localVar.getName().toString();
 		localVarDecl = varDecl;
+
+//		String targetClass = TargetClass.getInstance().getTargetClass();
+//		System.out.println("targetClass3 " + targetClass);
+
+//		System.out.println("SM_LOCALVAR");
+//		System.out.println(name + " " + parentMethod.getName() + " " + localVarDecl);
 	}
 
 	@Override
