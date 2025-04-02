@@ -9,6 +9,9 @@ public class Calculator {
     public int wolf = 0;
     Event event7 = new Event(String.valueOf(esel));
     boolean test = event7.returnTrue();
+    Event event9;
+    Event event10;
+    Event event11 = new Event("wow");
 
     public int add(int a, int b) {
         return a + b;

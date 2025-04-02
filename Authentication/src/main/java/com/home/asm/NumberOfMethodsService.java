@@ -298,7 +298,7 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
+//                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
 
                         super.visitFieldInsn(opcode, owner, name, descriptor);
                     }
@@ -436,46 +436,46 @@ public class NumberOfMethodsService {
 //                    return new MethodVisitor(ASM9) {
 //                    };
 //                }
-                System.out.print("CLASSNAME " + className + " method: " + name + ", desc: "+ desc + "\n");
+//                System.out.print("CLASSNAME " + className + " method: " + name + ", desc: "+ desc + "\n");
 
                 return new MethodVisitor(ASM9) {
                     @Override
                     public void visitParameter(String name, int access) {
-                        System.out.println("visitParameter() name: " + name);
+//                        System.out.println("visitParameter() name: " + name);
                         super.visitParameter(name, access);
 
                     }
 
                     @Override
                     public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
-                        System.out.println("descriptor: " + name);
+//                        System.out.println("descriptor: " + name);
 
                         return super.visitAnnotation(descriptor, visible);
                     }
 
                     @Override
                     public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String descriptor, boolean visible) {
-                        System.out.println("descriptor: " + descriptor);
+//                        System.out.println("descriptor: " + descriptor);
 
                         return super.visitTypeAnnotation(typeRef, typePath, descriptor, visible);
                     }
 
                     @Override
                     public void visitAnnotableParameterCount(int parameterCount, boolean visible) {
-                        System.out.println("visible: " + visible);
+//                        System.out.println("visible: " + visible);
                         super.visitAnnotableParameterCount(parameterCount, visible);
                     }
 
                     @Override
                     public AnnotationVisitor visitParameterAnnotation(int parameter, String descriptor, boolean visible) {
-                        System.out.println("descriptor: " + name + "; visible: "+ visible);
+//                        System.out.println("descriptor: " + name + "; visible: "+ visible);
 
                         return super.visitParameterAnnotation(parameter, descriptor, visible);
                     }
 
                     @Override
                     public void visitAttribute(Attribute attribute) {
-                        System.out.println("attribute.type: " + attribute.type);
+//                        System.out.println("attribute.type: " + attribute.type);
 
                         super.visitAttribute(attribute);
                     }
@@ -492,62 +492,62 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitInsn(int opcode) {
-                        System.out.println("visitInsn - opcode: " + opcode);
+//                        System.out.println("visitInsn - opcode: " + opcode);
                         super.visitInsn(opcode);
                     }
 
                     @Override
                     public void visitIntInsn(int opcode, int operand) {
-                        System.out.println("visitIntInsn - opcode: " + opcode + ", operand: " + operand);
+//                        System.out.println("visitIntInsn - opcode: " + opcode + ", operand: " + operand);
                         super.visitIntInsn(opcode, operand);
                     }
 
                     @Override
                     public void visitVarInsn(int opcode, int varIndex) {
-                        System.out.println("visitVarInsn - opcode: " + opcode + ", varIndex: " + varIndex);
+//                        System.out.println("visitVarInsn - opcode: " + opcode + ", varIndex: " + varIndex);
 
                         super.visitVarInsn(opcode, varIndex);
                     }
 
                     @Override
                     public void visitTypeInsn(int opcode, String type) {
-                        System.out.println("visitTypeInsn - opcode: " + opcode + ", type: " + type);
+//                        System.out.println("visitTypeInsn - opcode: " + opcode + ", type: " + type);
 
                         super.visitTypeInsn(opcode, type);
                     }
 
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
+//                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
                         cpm.addFieldToList(opcode, name, descriptor);
                         super.visitFieldInsn(opcode, owner, name, descriptor);
                     }
 
                     @Override
                     public void visitMethodInsn(int opcode, String owner, String name, String descriptor) {
-                        System.out.println("visitMethodInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
-
-                        cpm.addMethodToList(opcode, owner, name, descriptor);
+//                        System.out.println("visitMethodInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
                         super.visitMethodInsn(opcode, owner, name, descriptor);
                     }
 
                     @Override
                     public void visitMethodInsn(int opcode, String owner, String name, String descriptor, boolean isInterface) {
-                        System.out.println("visitMethodInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", isInterface: " + isInterface);
+//                        System.out.println("visitMethodInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", isInterface: " + isInterface);
+//                        System.out.println("zzzzzzzzzzzzzzzzzzzz");
+                        cpm.addMethodToList(opcode, owner, name, descriptor);
 
                         super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
                     }
 
                     @Override
                     public void visitInvokeDynamicInsn(String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments) {
-                        System.out.println("visitInvokeDynamicInsn - name: " + name + ", descriptor: " + descriptor + bootstrapMethodHandle.getName() + " " + bootstrapMethodHandle.getOwner());
+//                        System.out.println("visitInvokeDynamicInsn - name: " + name + ", descriptor: " + descriptor + bootstrapMethodHandle.getName() + " " + bootstrapMethodHandle.getOwner());
 
                         super.visitInvokeDynamicInsn(name, descriptor, bootstrapMethodHandle, bootstrapMethodArguments);
                     }
 
                     @Override
                     public void visitJumpInsn(int opcode, Label label) {
-                        System.out.println("visitJumpInsn - opcode: " + opcode);
+//                        System.out.println("visitJumpInsn - opcode: " + opcode);
                         super.visitJumpInsn(opcode, label);
                     }
 
@@ -563,61 +563,61 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitIincInsn(int varIndex, int increment) {
-                        System.out.println("visitIincInsn - varIndex: " + varIndex + ", increment: " + increment);
+//                        System.out.println("visitIincInsn - varIndex: " + varIndex + ", increment: " + increment);
                         super.visitIincInsn(varIndex, increment);
                     }
 
                     @Override
                     public void visitTableSwitchInsn(int min, int max, Label dflt, Label... labels) {
-                        System.out.println("visitTableSwitchInsn - min: " + min + ", max: " + max + " " + dflt.toString());
+//                        System.out.println("visitTableSwitchInsn - min: " + min + ", max: " + max + " " + dflt.toString());
                         super.visitTableSwitchInsn(min, max, dflt, labels);
                     }
 
                     @Override
                     public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
-                        System.out.println("visitLookupSwitchInsn - dflt: " + dflt.toString());
+//                        System.out.println("visitLookupSwitchInsn - dflt: " + dflt.toString());
                         super.visitLookupSwitchInsn(dflt, keys, labels);
                     }
 
                     @Override
                     public void visitMultiANewArrayInsn(String descriptor, int numDimensions) {
-                        System.out.println("visitMultiANewArrayInsn - descriptor: " + descriptor + ", numDimensions: " + numDimensions);
+//                        System.out.println("visitMultiANewArrayInsn - descriptor: " + descriptor + ", numDimensions: " + numDimensions);
                         super.visitMultiANewArrayInsn(descriptor, numDimensions);
                     }
 
                     @Override
                     public AnnotationVisitor visitInsnAnnotation(int typeRef, TypePath typePath, String descriptor, boolean visible) {
-                        System.out.println("visitInsnAnnotation - typeRef: " + typeRef + ", descriptor: " + descriptor + ", visible: " + visible);
+//                        System.out.println("visitInsnAnnotation - typeRef: " + typeRef + ", descriptor: " + descriptor + ", visible: " + visible);
                         return super.visitInsnAnnotation(typeRef, typePath, descriptor, visible);
                     }
 
                     @Override
                     public void visitTryCatchBlock(Label start, Label end, Label handler, String type) {
-                        System.out.println("visitTryCatchBlock - start: " + start.toString() + " " + end.toString() + ", type: " + type);
+//                        System.out.println("visitTryCatchBlock - start: " + start.toString() + " " + end.toString() + ", type: " + type);
                         super.visitTryCatchBlock(start, end, handler, type);
                     }
 
                     @Override
                     public AnnotationVisitor visitTryCatchAnnotation(int typeRef, TypePath typePath, String descriptor, boolean visible) {
-                        System.out.println("visitTryCatchAnnotation - typeRef: " + typeRef + ", descriptor: " + descriptor + ", visible: " + visible);
+//                        System.out.println("visitTryCatchAnnotation - typeRef: " + typeRef + ", descriptor: " + descriptor + ", visible: " + visible);
                         return super.visitTryCatchAnnotation(typeRef, typePath, descriptor, visible);
                     }
 
                     @Override
                     public void visitLocalVariable(String name, String descriptor, String signature, Label start, Label end, int index) {
-                        System.out.println("visitLocalVariable - name: " + name + ", descriptor: " + descriptor + ", signature: " + signature + ", start: " + start.toString() + ", end: " + end.toString() + ", index: " + index);
+//                        System.out.println("visitLocalVariable - name: " + name + ", descriptor: " + descriptor + ", signature: " + signature + ", start: " + start.toString() + ", end: " + end.toString() + ", index: " + index);
                         super.visitLocalVariable(name, descriptor, signature, start, end, index);
                     }
 
                     @Override
                     public AnnotationVisitor visitLocalVariableAnnotation(int typeRef, TypePath typePath, Label[] start, Label[] end, int[] index, String descriptor, boolean visible) {
-                        System.out.println("visitLocalVariableAnnotation - typeRef: " + typeRef + ", start: " + start.toString() + ", end: " + end.toString() + ", index: " + index + ", descriptor: " + descriptor + ", visible: " + visible);
+//                        System.out.println("visitLocalVariableAnnotation - typeRef: " + typeRef + ", start: " + start.toString() + ", end: " + end.toString() + ", index: " + index + ", descriptor: " + descriptor + ", visible: " + visible);
                         return super.visitLocalVariableAnnotation(typeRef, typePath, start, end, index, descriptor, visible);
                     }
 
                     @Override
                     public void visitLineNumber(int line, Label start) {
-                        System.out.println("visitLineNumber - line: " + line + ", start: " + start.toString() + " " + start.info);
+//                        System.out.println("visitLineNumber - line: " + line + ", start: " + start.toString() + " " + start.info);
                         super.visitLineNumber(line, start);
                     }
 

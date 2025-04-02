@@ -2,6 +2,7 @@ package com.home.asm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CreatorPrincipleMethod {
 
@@ -79,6 +80,10 @@ public class CreatorPrincipleMethod {
         if(!methodList.contains(cpm)) {
             methodList.add(cpm);
         }
+    }
+
+    public List<CreatorPrincipleMethod> getSubMethodList() {
+        return methodList;
     }
 
     @Override

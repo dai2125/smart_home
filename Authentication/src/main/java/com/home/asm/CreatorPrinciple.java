@@ -19,6 +19,19 @@ public class CreatorPrinciple {
     private int counter;
     private List<SM_Field> fieldListToControl = new ArrayList<>();
     private List<SM_Method> methodListToControl = new ArrayList<>();
+    private List<Model> modelList = new ArrayList<>();
+
+    public void addToModelList(Model model) {
+        modelList.add(model);
+    }
+
+    public List<Model> getModelList() {
+        return modelList;
+    }
+
+    public void setModelList(List<Model> modelList) {
+        this.modelList = modelList;
+    }
 
     public CreatorPrinciple(String name) {
 //        System.out.println("88888:" + name);
@@ -186,6 +199,7 @@ public class CreatorPrinciple {
 //                "\tfunctionList.size=" + functionList.size() + " \n" +
                 "\tparameterList=" + parameterList.stream().map(String::toString).toList() +  "\n" +
                 "\tcounter=" + counter + "\n" +
+                "\tmodel=" + modelList.stream().map(Model::getName).toList() + "\n" +
                 '}';
     }
 }

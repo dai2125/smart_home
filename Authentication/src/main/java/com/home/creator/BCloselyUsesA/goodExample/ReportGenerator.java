@@ -57,6 +57,8 @@ public class ReportGenerator {
         event1.getDescription();
         Event event3 = new Event("new Event3");
         event3.getDescription();
+        Event event23 = new Event("new event23");
+
         return event;
     }
 

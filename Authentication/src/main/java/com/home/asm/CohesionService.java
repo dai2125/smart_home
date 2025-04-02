@@ -26,7 +26,7 @@ public class CohesionService {
             public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
                 currentMethod = name;
                 methodToFields.put(currentMethod, new HashSet<>());
-                System.out.println("visitMethod: " + currentMethod);
+//                System.out.println("visitMethod: " + currentMethod);
 
                 return new MethodVisitor(ASM9) {
                     @Override

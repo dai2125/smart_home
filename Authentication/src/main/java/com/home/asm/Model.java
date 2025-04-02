@@ -29,6 +29,12 @@ public class Model {
     private String constructorParameterName;
     private List<NewStatementModel> newStatementModels = new ArrayList();
     private String createdType;
+    private String ownerClass;
+
+
+    public Model() {
+
+    }
 
     public void setFieldName(String fieldName) {
         _fieldName = fieldName;
@@ -52,6 +58,14 @@ public class Model {
 
     public String getName() {
         return _name;
+    }
+
+    public void setOwnerClass(String className) {
+        ownerClass = className;
+    }
+
+    public String getOwnerClass() {
+        return ownerClass;
     }
 
     public void setType(String type) {

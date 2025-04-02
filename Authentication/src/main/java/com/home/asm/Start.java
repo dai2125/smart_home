@@ -202,8 +202,13 @@ public class Start {
 
             // TODO CREATOR PRINCIPLE
             numberOfMethodsService.getListOfNewStatements(className);
-            numberOfFieldsService.checkField(className);
-            System.out.println(CreatorPrincipleService.printAll());
+//            numberOfFieldsService.checkField(className);
+            numberOfFieldsService.something(className);
+            numberOfFieldsService.something2(className);
+//            System.out.println(CreatorPrincipleService.printAll());
+//            CreatorPrincipleService.aaa(2);
+
+            CreatorPrincipleService.checkFirstPrincipleObjectInitializedWithinConstructor(className);
 
 
             // TODO INTERFACE SEGREGATION PRINCIPLE
