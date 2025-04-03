@@ -9,6 +9,10 @@ public class CreatorPrincipleField {
     private String type;
     private String operation;
     private String owner;
+    private String fieldReturnType;
+    private String ownerMethod;
+    private String ownerMethodReturnType;
+    private String signature;
 
     public CreatorPrincipleField() {
     }
@@ -19,10 +23,27 @@ public class CreatorPrincipleField {
         this.type = type;
     }
 
-    public CreatorPrincipleField(String name, int access, String type) {
-        this.name = name;
+    public CreatorPrincipleField(int access, String name, String owner, String descriptor, String ownerMethod) {
         this.access = access;
-        this.type = type;
+        this.name = name;
+        this.owner = owner;
+        this.fieldReturnType = descriptor;
+        this.ownerMethod = ownerMethod;
+        if(ownerMethod.equals("<init>")) {
+            this.ownerMethodReturnType = "<init>";
+        }
+    }
+
+    public CreatorPrincipleField(int access, String name, String owner, String descriptor, String signature, String signature2, String ownerMethod) {
+        this.access = access;
+        this.name = name;
+        this.owner = owner;
+        this.fieldReturnType = descriptor;
+        this.signature = signature;
+        this.ownerMethod = ownerMethod;
+        if(ownerMethod.equals("<init>")) {
+            this.ownerMethodReturnType = "<init>";
+        }
     }
 
     public CreatorPrincipleField(String name, String modifier, String type, String operation) {
@@ -30,6 +51,15 @@ public class CreatorPrincipleField {
         this.modifier = modifier;
         this.type = type;
         this.operation = operation;
+    }
+
+    public CreatorPrincipleField(int opcode, String name, String owner, String fieldReturnType, String ownerMethod, String ownerMethodReturnType) {
+        this.opcode = opcode;
+        this.name = name;
+        this.owner = owner;
+        this.fieldReturnType = fieldReturnType;
+        this.ownerMethod = ownerMethod;
+        this.ownerMethodReturnType = ownerMethodReturnType;
     }
 
     public String getName() {
@@ -88,6 +118,38 @@ public class CreatorPrincipleField {
         this.owner = owner;
     }
 
+    public String getFieldReturnType() {
+        return fieldReturnType;
+    }
+
+    public void setFieldReturnType(String fieldReturnType) {
+        this.fieldReturnType = fieldReturnType;
+    }
+
+    public String getOwnerMethod() {
+        return ownerMethod;
+    }
+
+    public void setOwnerMethod(String ownerMethod) {
+        this.ownerMethod = ownerMethod;
+    }
+
+    public String getOwnerMethodReturnType() {
+        return ownerMethodReturnType;
+    }
+
+    public void setOwnerMethodReturnType(String ownerMethodReturnType) {
+        this.ownerMethodReturnType = ownerMethodReturnType;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
     @Override
     public String toString() {
         return "CreatorPrincipleField{" +
@@ -98,6 +160,24 @@ public class CreatorPrincipleField {
                 ", type='" + type + '\'' +
                 ", operation='" + operation + '\'' +
                 ", owner='" + owner + '\'' +
+                ", fieldReturnType='" + fieldReturnType + '\'' +
+                ", ownerMethod='" + ownerMethod + '\'' +
+                ", ownerMethodReturnType='" + ownerMethodReturnType + '\'' +
+                ", signature='" + signature + '\'' +
+
                 '}';
     }
+
+//    @Override
+//    public String toString() {
+//        return "CreatorPrincipleField{" +
+//                "opcode=" + opcode +
+//                ", access=" + access +
+//                ", name='" + name + '\'' +
+//                ", modifier='" + modifier + '\'' +
+//                ", type='" + type + '\'' +
+//                ", operation='" + operation + '\'' +
+//                ", owner='" + owner + '\'' +
+//                '}';
+//    }
 }

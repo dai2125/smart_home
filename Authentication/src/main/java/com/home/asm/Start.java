@@ -15,8 +15,8 @@ public class Start {
 //        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home\\pureFabrication\\fifthExample";
 //        String analysePath = "com/home/pureFabrication/fifthExample";
         String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-                                "\\creator\\BCloselyUsesA\\goodExample";
-        String analysePath = "com/home/creator/BCloselyUsesA/goodExample";
+                                "\\creator\\BRecordsA\\goodExample";
+        String analysePath = "com/home/creator/BRecordsA/goodExample";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
         PackageService packageService = new PackageService();
@@ -208,8 +208,17 @@ public class Start {
 //            System.out.println(CreatorPrincipleService.printAll());
 //            CreatorPrincipleService.aaa(2);
 
-            CreatorPrincipleService.checkFirstPrincipleObjectInitializedWithinConstructor(className);
+//            CreatorPrincipleService.case1(className);
+            System.out.println(CreatorPrincipleService.fourthPrinciple(className, f));
 
+//            System.out.println(CreatorPrincipleService.firstPrinciple(className, f));
+
+//            CreatorPrincipleService.checkFirstPrinciple(className);
+
+//            CreatorPrincipleService.constructorInitialized(className);
+
+
+//            CreatorPrincipleService.checkAll(className);
 
             // TODO INTERFACE SEGREGATION PRINCIPLE
 //            System.out.println(LiskovSubstitutionPrincipleService.liskovSubstitutionPrinciple(inspectedClass));

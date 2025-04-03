@@ -6,6 +6,7 @@ import java.util.List;
 public class EventLog {
 
     private List<Event> events;
+    private List<Integer> integerList;
 
     public EventLog() {
         this.events = new ArrayList<>();

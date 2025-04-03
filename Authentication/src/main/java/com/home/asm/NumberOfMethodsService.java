@@ -438,6 +438,9 @@ public class NumberOfMethodsService {
 //                }
 //                System.out.print("CLASSNAME " + className + " method: " + name + ", desc: "+ desc + "\n");
 
+                String ownerMethod = name;
+                String ownerMethodReturnType = desc;
+
                 return new MethodVisitor(ASM9) {
                     @Override
                     public void visitParameter(String name, int access) {
@@ -518,8 +521,9 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-//                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
-                        cpm.addFieldToList(opcode, name, descriptor);
+//                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", ownerMethod: " + ownerMethod + ", ownerMethodReturnType: " + ownerMethodReturnType);
+//                        cpm.addFieldToList(opcode, name, descriptor);
+                        cpm.addFieldToList(opcode, name, owner, descriptor, ownerMethod, ownerMethodReturnType);
                         super.visitFieldInsn(opcode, owner, name, descriptor);
                     }
 

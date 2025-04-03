@@ -250,13 +250,18 @@ public class NumberOfFieldsService {
             @Override
             public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
 //                CreatorPrincipleField cpf = new CreatorPrincipleField(name, access, descriptor);
-                cpf[0] = new CreatorPrincipleField();
+//                cpf[0] = new CreatorPrincipleField();
 
-                cpf[0].setAccess(access);
-                cpf[0].setName(name);
-                cpf[0].setType(descriptor);
-                cpf[0].setOwner(className);
-                cpf[0].setOperation("<init>");
+//                cpf[0].setAccess(access);
+//                cpf[0].setName(name);
+//                cpf[0].setType(descriptor);
+//                cpf[0].setOwner(className);
+//                cpf[0].setOperation("<init>");
+
+//                if(signature != null) {
+//                    System.out.println("SIGNATURE: " + signature);
+//                }
+                cpf[0] = new CreatorPrincipleField(access, name, className, descriptor, signature, signature, "<init>");
 
 //                System.out.println("visitField(): className: " + className + " " + access + ", name: " + name + ", descriptor: " + descriptor);
 
@@ -284,18 +289,18 @@ public class NumberOfFieldsService {
 
 //                System.out.println("____visitMethod() name: " + name);
 //                System.out.println("access: " + access + ", name: " + name + ", descriptor: " + descriptor + ", signature: " + signature + ", exceptions.length: "); //+ exceptions.length);
-                String methodName = name;
-                String methodDescriptor = descriptor;
+                String ownerMethod = name;
+                String ownerMethodReturnType = descriptor;
                 return new MethodVisitor(ASM9) {
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-                        cpf[0] = new CreatorPrincipleField();
-                        cpf[0].setAccess(access);
-                        cpf[0].setName(name);
-                        cpf[0].setType(descriptor);
-                        cpf[0].setOwner(owner);
-                        cpf[0].setOpcode(opcode);
-                        cpf[0].setOperation(methodName);
+                        cpf[0] = new CreatorPrincipleField(opcode, name, owner, descriptor, ownerMethod, ownerMethodReturnType);
+//                        cpf[0].setAccess(access);
+//                        cpf[0].setName(name);
+//                        cpf[0].setType(descriptor);
+//                        cpf[0].setOwner(owner);
+//                        cpf[0].setOpcode(opcode);
+//                        cpf[0].setOperation(ownerMethod);
                         CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
                         creatorPrinciple.addToFieldInsnList(cpf[0]);
 
@@ -354,8 +359,9 @@ public class NumberOfFieldsService {
         classReader.accept(new ClassVisitor(ASM9) {
             @Override
             public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-                String methodName = name;
-                String methodParameter = descriptor;
+                String ownerMethod = name;
+                String ownerMethodReturnType = descriptor;
+//                System.out.println(className + ", name: " + name +  ", descriptor: " + descriptor);
                 model[0] = new Model();
 
                 return new MethodVisitor(ASM9) {
@@ -405,13 +411,16 @@ public class NumberOfFieldsService {
                         if (opcode == Opcodes.INVOKESPECIAL && name.equals("<init>")) {
 //                            System.out.println("444: Konstruktor aufgerufen für: " + owner.replace("/", ".") + " in Methode '" + methodName + "'");
 
-                            if(!methodName.equals("<init>")) {
-                                model[0].setName(name);
-                                model[0].setObjectCreated(true);
-                                model[0].setConstructorInitialized(false);
-                                model[0].setOwner(methodName);
-                                model[0].setType(lastNewType);
-                                model[0].setOwnerClass(className);
+//                            System.out.println("ownerMethod: " + ownerMethod + ", ownerMethodReturnType: "+  ownerMethodReturnType + ", owner: " + owner /*.replace("/", ".") */ + ", name: " + name + ", descriptor: " + descriptor + ", lastNewType: " + lastNewType);
+
+                            if(!ownerMethod.equals("<init>")) {
+                                model[0] = new Model(owner.replaceFirst(".*/", "") + "." + name, descriptor, lastNewType, className, ownerMethod, ownerMethodReturnType, true, false);
+//                                model[0].setName(name);
+//                                model[0].setObjectCreated(true);
+//                                model[0].setConstructorInitialized(false);
+//                                model[0].setOwner(methodName);
+//                                model[0].setType(lastNewType);
+//                                model[0].setOwnerClass(className);
 
                                 CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
                                 creatorPrinciple.addToModelList(model[0]);

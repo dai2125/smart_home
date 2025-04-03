@@ -26,5 +26,6 @@ public class Calculator {
 
     public void setWolf(int a) {
         wolf = a;
+        System.out.println(event7.getDescription());
     }
 }
