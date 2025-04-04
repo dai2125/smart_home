@@ -1,12 +1,8 @@
 package com.home.asm;
 
-import org.objectweb.asm.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-
-import static org.objectweb.asm.Opcodes.ASM9;
 
 public class PackageService {
 

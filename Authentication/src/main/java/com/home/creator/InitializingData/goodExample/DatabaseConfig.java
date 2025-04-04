@@ -1,4 +1,4 @@
-package com.home.creator.BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA.goodExample;
+package com.home.creator.InitializingData.goodExample;
 
 public class DatabaseConfig {
 

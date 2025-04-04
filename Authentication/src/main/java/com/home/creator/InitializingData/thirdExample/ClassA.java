@@ -1,4 +1,4 @@
-package com.home.creator.BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA.thirdExample;
+package com.home.creator.InitializingData.thirdExample;
 
 public class ClassA {
 

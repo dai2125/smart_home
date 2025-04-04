@@ -111,7 +111,7 @@ public class CreatorPrincipleService {
     }
 
     public static void checkAll(String className) {
-        System.out.println("CHECKFIRSTPRINCIPLEOBJECTINITIALIZEDWITHINCONSTRUCTOR - className: " + className);
+        System.out.println("CHECK ALL - className: " + className);
         for (int i = 0; i < creatorPrincipleList.size(); i++) {
             if (creatorPrincipleList.get(i).getName().equals(className)) {
 
@@ -412,7 +412,7 @@ public class CreatorPrincipleService {
                                     + " hat eine Liste "
                                     + fields.get(j).getName()
                                     + " vom Typ "
-                                    + fields.get(j).getFieldReturnType()
+                                    + fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "")
                                     + " im Konstruktor und verwendet die Liste in "
                                     + countArrayList(fields.get(j).getName(), fields, fieldsInsn)
                                     + " von " + numberOfMethods + " Methoden\n");

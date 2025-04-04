@@ -5,12 +5,9 @@ import org.objectweb.asm.*;
 import java.io.IOException;
 
 import static org.objectweb.asm.Opcodes.ASM9;
-import org.objectweb.asm.*;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.objectweb.asm.Opcodes.ASM9;
 
 public class BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA extends ClassVisitor {
 
@@ -269,7 +266,7 @@ public class BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBI
     }
 
     public static void main(String[] args) throws IOException {
-        String className = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassB";
+        String className = "com/home/creator/InitializingData/thirdExample/ClassB";
 
         ClassReader reader = new ClassReader(className);
         BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA methodPrinter = new BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA();

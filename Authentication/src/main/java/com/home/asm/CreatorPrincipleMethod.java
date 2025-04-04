@@ -13,8 +13,12 @@ public class CreatorPrincipleMethod {
     private String type;
     private String operation;
     private String owner;
+    // public = 1, private = 2, protected = 4
+    private int modifierInt;
+    private boolean isConstructor;
     private List<CreatorPrincipleField> fieldList = new ArrayList<>();
     private List<CreatorPrincipleMethod> methodList = new ArrayList<>();
+    private List<ParameterField> parameterFieldList = new ArrayList<>();
 
     public CreatorPrincipleMethod(int access, String name, String description) {
         this.access = access;
@@ -35,6 +39,19 @@ public class CreatorPrincipleMethod {
         this.modifier = modifier;
         this.type = type;
         this.operation = operation;
+    }
+
+    public CreatorPrincipleMethod(boolean isConstructor, String name, int modifierInt) {
+        this.isConstructor = isConstructor;
+        this.name = name;
+        this.modifierInt = modifierInt;
+    }
+
+    public CreatorPrincipleMethod(boolean isConstructor, String name, int modifierInt, List<ParameterField> parameterFieldList) {
+        this.isConstructor = isConstructor;
+        this.name = name;
+        this.modifierInt = modifierInt;
+        this.parameterFieldList = parameterFieldList;
     }
 
     public String getName() {
@@ -136,6 +153,26 @@ public class CreatorPrincipleMethod {
         this.methodList = methodList;
     }
 
+    public void setParameterFieldList(List<ParameterField> parameterFieldList) {
+        this.parameterFieldList = parameterFieldList;
+    }
+
+    public List<ParameterField> getParameterList() {
+        return parameterFieldList;
+    }
+
+    public void addToParameterFieldList(String type, String name) {
+        parameterFieldList.add(new ParameterField(type, name));
+    }
+
+    public int getParameterListSize() {
+        return parameterFieldList.size();
+    }
+
+    public boolean isConstructor() {
+        return isConstructor;
+    }
+
     @Override
     public String toString() {
         return "CreatorPrincipleMethod{" +
@@ -151,13 +188,12 @@ public class CreatorPrincipleMethod {
                 '}';
     }
 
-//    @Override
-//    public String toString() {
-//        return "CreatorPrincipleMethod{" +
-//                "name='" + name + '\'' +
-//                ", modifier='" + modifier + '\'' +
-//                ", type='" + type + '\'' +
-//                ", operation='" + operation + '\'' +
-//                '}';
-//    }
+    public String initializingDataToString() {
+        return "CreatorPrincipleMethod{" +
+                "name='" + name + '\'' +
+                ", modifier='" + modifierInt + '\'' +
+                ", isConstructor='" + isConstructor + '\'' +
+                ", parameterList='" + parameterFieldList.stream().map(ParameterField::name).toList() + '\'' +
+                '}';
+    }
 }

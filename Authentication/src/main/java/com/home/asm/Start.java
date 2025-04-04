@@ -1,7 +1,5 @@
 package com.home.asm;
 
-import lcom.LCOM;
-import lcom.metrics.TypeMetrics;
 import org.objectweb.asm.ClassReader;
 
 import java.io.File;
@@ -15,8 +13,8 @@ public class Start {
 //        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home\\pureFabrication\\fifthExample";
 //        String analysePath = "com/home/pureFabrication/fifthExample";
         String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-                                "\\creator\\BRecordsA\\goodExample";
-        String analysePath = "com/home/creator/BRecordsA/goodExample";
+                                "\\creator\\InitializingData\\thirdExample";
+        String analysePath = "com/home/creator/InitializingData/thirdExample";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
         PackageService packageService = new PackageService();
@@ -203,22 +201,39 @@ public class Start {
             // TODO CREATOR PRINCIPLE
             numberOfMethodsService.getListOfNewStatements(className);
 //            numberOfFieldsService.checkField(className);
-            numberOfFieldsService.something(className);
-            numberOfFieldsService.something2(className);
+            numberOfFieldsService.visitField(className);
+            numberOfFieldsService.visitMethod(className);
+//            CreatorPrincipleService.checkAll(className);
+
 //            System.out.println(CreatorPrincipleService.printAll());
 //            CreatorPrincipleService.aaa(2);
 
 //            CreatorPrincipleService.case1(className);
-            System.out.println(CreatorPrincipleService.fourthPrinciple(className, f));
 
+            // TODO CREATOR INITIALIZING DATA
+//            numberOfMethodsService.checkAll(className);
+//            numberOfMethodsService.initializingData2(className);
+
+            ClassFieldTracker.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
+            // TODO CREATOR INITIALIZING DATA
+
+
+
+
+
+            // TODO CREATOR PRINCIPLE B RECORDS A
+//            System.out.println(CreatorPrincipleService.fourthPrinciple(className, f));
+            // TODO CREATOR PRINCIPLE B RECORDS A
+
+            // TODO CREATOR PRINCIPLE B CLOSELY USES A
 //            System.out.println(CreatorPrincipleService.firstPrinciple(className, f));
+            // TODO CREATOR PRINCIPLE B CLOSELY USES A
 
 //            CreatorPrincipleService.checkFirstPrinciple(className);
 
 //            CreatorPrincipleService.constructorInitialized(className);
 
 
-//            CreatorPrincipleService.checkAll(className);
 
             // TODO INTERFACE SEGREGATION PRINCIPLE
 //            System.out.println(LiskovSubstitutionPrincipleService.liskovSubstitutionPrinciple(inspectedClass));

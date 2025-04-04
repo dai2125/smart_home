@@ -239,7 +239,7 @@ public class NumberOfFieldsService {
         return ans[0];
     }
 
-    public void something(String className) throws IOException {
+    public void visitField(String className) throws IOException {
         ClassReader classReader = new ClassReader(className);
 
         final CreatorPrincipleField[] cpf = {new CreatorPrincipleField()};
@@ -331,7 +331,7 @@ public class NumberOfFieldsService {
 //        return cpf;
     }
 
-    public void something2(String className) throws IOException {
+    public void visitMethod(String className) throws IOException {
         ClassReader classReader = new ClassReader(className);
 
         /*

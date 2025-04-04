@@ -1,4 +1,4 @@
-package com.home.creator.BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA.badExample;
+package com.home.creator.InitializingData.badExample;
 
 public class DatabaseConnection {
 

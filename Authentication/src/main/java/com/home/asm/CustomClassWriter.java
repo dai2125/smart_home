@@ -3,8 +3,6 @@ package com.home.asm;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.analysis.*;
-import org.objectweb.asm.util.Textifier;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,7 +25,7 @@ public class CustomClassWriter {
     ClassWriter writer;
     AddInterfaceAdapter addInterfaceAdapter;
     PublicizeMethodAdapter pubMethAdapter;
-    final static String CLASSNAME = "com/home/asm/DeleteMe";
+    final static String CLASSNAME = "com/home/creator/InitializingData/thirdExample/ClassB";
 //    private final String CLASSNAME = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassB";
 //    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/MovieProduction";
 //    final static String CLASSNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
@@ -35,7 +33,7 @@ public class CustomClassWriter {
 //    final static String CLASSNAME = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
 
 
-    private final String MODELNAME = "com/home/creator/BHasTheInitializingDataForAThatWillBePassedToAWhenItIsCreatedThusBIsAnExpertWithRespectToCreatingA/thirdExample/ClassA";
+    private final String MODELNAME = "com/home/creator/InitializingData/thirdExample/ClassA";
 //    final static String MODELNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/Movie";
 //    final static String MODELNAME = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Engine/badExample/Engine";
 //    final static String MODELNAME = "com/home/creator/BCloselyUsesA/goodExample/Calculator";
