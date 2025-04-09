@@ -309,6 +309,7 @@ public class ClassFieldTracker {
                                                             // TODO hier könnte auch ein Fehler sein
                                                             for(int n = 0; n < fieldNames.size(); n++) {
                                                                 if(fieldNames.get(n).equals(argumentName)) {
+                                                                    System.out.println("argName found in fieldName.List: " + argumentName + ", " + fieldNames.get(n));
                                                                     fieldCounter++;
                                                                 }
                                                             }
