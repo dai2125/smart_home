@@ -7,11 +7,16 @@ public class LooseCouplingService {
     // TODO DIT == 1 damit verlangst du das nur Klassen das Prinzip erfüllen die von einer anderen Klassen Methoden implementieren
     public static String analyzeLooseCouplingOfClass(String className, List<String> allMethods, List<String> allInterfaceMethods, int dit, int fanout, boolean isInterface) {
         if(isInterface) {
-            return className + " is an Interface, no loose coupling analysis";
+            return className.replaceFirst(".*/", "") + " is an Interface, no loose coupling analysis";
         }
-        return areAllMethodsFromAnInterface(allMethods.size(), allInterfaceMethods.size()) + " "
-                + amountOfFanout(fanout) + " "
-                + analyzeDit(dit) + "\n"
+        return className.replaceFirst(".*/", "")
+                + " "
+                + areAllMethodsFromAnInterface(allMethods.size(), allInterfaceMethods.size())
+                + " "
+                + amountOfFanout(fanout)
+                + " "
+                + analyzeDit(dit)
+                + "\n"
                 + looseCouplingCheck(className, allMethods.size(), allInterfaceMethods.size(), dit, fanout);
     }
 
@@ -21,7 +26,7 @@ public class LooseCouplingService {
         } else if(methods == interfaceMethods) {
             return "all methods are from an interface";
         } else {
-            return "of " + methods + " methods " + interfaceMethods + " are from an interface";
+            return " (" + interfaceMethods + "/" + methods + ") methods " + " are from an interface";
         }
     }
 
@@ -33,7 +38,7 @@ public class LooseCouplingService {
         } else if(fanout >= 2) {
             return "class has a fanout of " + fanout +" which means class has a strong coupling";
         } else {
-            return "ERROR negaitve fanout value";
+            return "ERROR negative fanout value";
         }
     }
 
@@ -80,11 +85,11 @@ public class LooseCouplingService {
 
     private static String looseCouplingCheck(String className, int methods, int interfaceMethods, int dit, int fanout) {
         if(!methodCheck(methods, interfaceMethods)) {
-            return className + " has no methods";
+            return className.replaceFirst(".*/", "") + " has no methods";
         } else if(!fanoutCheck(fanout) || !ditCheck(dit)) {
-            return className + " hasnt a good coupling behavior";
+            return className.replaceFirst(".*/", "") + " hasnt a good coupling behavior";
         } else if(methodCheck(methods, interfaceMethods) && fanoutCheck(fanout) && ditCheck(dit)) {
-            return className + " fullfills the loose coupling principle";
+            return className.replaceFirst(".*/", "") + " full fills the loose coupling principle";
         }
         return "ERROR in looseCouplingCheck(): ";
     }

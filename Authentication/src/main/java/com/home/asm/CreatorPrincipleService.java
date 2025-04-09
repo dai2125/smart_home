@@ -309,14 +309,17 @@ public class CreatorPrincipleService {
     public static String firstPrinciple(String className, int numberOfMethods) {
         StringBuilder sb = new StringBuilder();
         HashSet<String> hashSet = new HashSet<>();
+//        System.out.println("creatorPrincipleList: " + creatorPrincipleList.size()  + ", search class: " + className + ", " + numberOfMethods);
 
         for (int i = 0; i < creatorPrincipleList.size(); i++) {
-            if (creatorPrincipleList.get(i).getName().equals(className)) {
+//            System.out.println("creatorPrincipleList: " + creatorPrincipleList.get(i) + ", search class: " + className);
+            if (creatorPrincipleList.get(i).getName().replaceFirst(".*/", "").equals(className)) {
+//                System.out.println("FOUND class");
                 CreatorPrinciple principle = creatorPrincipleList.get(i);
 
                 List<CreatorPrincipleField> fieldInsn = principle.getFieldInsnList();
                 for(int y = 0; y < fieldInsn.size(); y++) {
-                    System.out.println("--- " + fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod() + " " + fieldInsn.get(y).getFieldReturnType());
+//                    System.out.println("--- " + fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod() + " " + fieldInsn.get(y).getFieldReturnType());
                     if(fieldInsn.get(y).getOwnerMethod().equals("<init>")
                         && !fieldInsn.get(y).getFieldReturnType().equals("I")
                         && !fieldInsn.get(y).getFieldReturnType().equals("D")
@@ -334,11 +337,21 @@ public class CreatorPrincipleService {
 
                     ) {
                         if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
-                            sb.append(className.replaceFirst(".*/", "") + " erstellt das Objekt "
-                                    + fieldInsn.get(y).getName()
-                                    + " im Konstruktor und verwendet es in "
-                                    + case3(fieldInsn.get(y).getName(), fieldInsn)
-                                    + " von " + numberOfMethods + " Methoden\n");
+                            if(numberOfMethods == 0) {
+                                sb.append(className.replaceFirst(".*/", "") + " hat keine Methoden\n");
+                            } else if(numberOfMethods == case3(fieldInsn.get(y).getName(), fieldInsn)) {
+                                sb.append(className.replaceFirst(".*/", "") + " erstellt das Objekt "
+                                        + fieldInsn.get(y).getName()
+                                        + " im Konstruktor und verwendet es in ("
+                                        + case3(fieldInsn.get(y).getName(), fieldInsn)
+                                        + "/" + numberOfMethods + ") Methoden, Prinzip wird erfüllt\n");
+                            } else {
+                                sb.append(className.replaceFirst(".*/", "") + " erstellt das Objekt "
+                                        + fieldInsn.get(y).getName()
+                                        + " im Konstruktor und verwendet es in ("
+                                        + case3(fieldInsn.get(y).getName(), fieldInsn)
+                                        + "/" + numberOfMethods + ") Methoden, Prinzip wird verletzt\n");
+                            }
                         }
                         hashSet.add(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod());
                     }
@@ -354,6 +367,10 @@ public class CreatorPrincipleService {
     public static String fourthPrinciple(String className, int numberOfMethods) {
         StringBuilder sb = new StringBuilder();
 
+        if(numberOfMethods == 0) {
+            return className.replaceFirst(".*/", "") + " doesnt owns any methods\n";
+        }
+
         for (int i = 0; i < creatorPrincipleList.size(); i++) {
             if (creatorPrincipleList.get(i).getName().equals(className)) {
 
@@ -361,6 +378,7 @@ public class CreatorPrincipleService {
 
                 List<CreatorPrincipleField> fields = principle.getFieldList();
                 List<CreatorPrincipleField> fieldsInsn = principle.getFieldInsnList();
+
 
 
                 for (int j = 0; j < fields.size(); j++) {
@@ -408,14 +426,34 @@ public class CreatorPrincipleService {
 //                            System.out.println(signature);
 //                            System.out.println(fields.get(j).getSignature());
 //                            System.out.println("999");
+                            if(countArrayList(fields.get(j).getName(), fields, fieldsInsn) == 0) {
+                                sb.append(className.replaceFirst(".*/", "")
+                                        + " doesnt use the List " + fields.get(j).getName() + "\n");
+                            } /* else if(numberOfMethods == 0) {
+                                sb.append(className.replaceFirst(".*./", "")
+                                        + " has no Functions\n");
+                            } */ else if(countArrayList(fields.get(j).getName(), fields, fieldsInsn) == numberOfMethods) {
+                                sb.append(className.replaceFirst(".*/", "")
+                                        + " hat eine Liste "
+                                        + fields.get(j).getName()
+                                        + " vom Typ "
+                                        + fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "")
+                                        + " im Konstruktor und verwendet die Liste in ("
+                                        + countArrayList(fields.get(j).getName(), fields, fieldsInsn)
+                                        + "/" + numberOfMethods + ") Methoden, Prinzip wird hier erfüllt\n");
+                            } else {
+                                sb.append(className.replaceFirst(".*/", "")
+                                        + " hat eine Liste "
+                                        + fields.get(j).getName()
+                                        + " vom Typ "
+                                        + fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "")
+                                        + " im Konstruktor und verwendet die Liste in ("
+                                        + countArrayList(fields.get(j).getName(), fields, fieldsInsn)
+                                        + "/" + numberOfMethods + ") Methoden\n");
+                            }
+                        } else {
                             sb.append(className.replaceFirst(".*/", "")
-                                    + " hat eine Liste "
-                                    + fields.get(j).getName()
-                                    + " vom Typ "
-                                    + fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "")
-                                    + " im Konstruktor und verwendet die Liste in "
-                                    + countArrayList(fields.get(j).getName(), fields, fieldsInsn)
-                                    + " von " + numberOfMethods + " Methoden\n");
+                                    + " Lists " + fields.get(j).getName() + " doesnt contain any Objects \n");
                         }
                     }
 

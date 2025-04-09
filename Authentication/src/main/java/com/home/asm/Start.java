@@ -8,27 +8,127 @@ import java.util.*;
 
 public class Start {
 
+    String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
+            "\\coupling\\firstAnalysis\\goodExample";
+    String analysePath = "com/home/coupling/firstAnalysis/goodExample";
+    String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
+
+    List<InspectedClass> inspectedClassList = new ArrayList<>();
+    PackageService packageService = new PackageService();
+    File directory = new File(packagePath);
+    NumberOfChildrenService numberOfChildrenService;
+    DepthOfInheritanceTree depthOfInheritanceTree;
+    FanInService fanInService;
+    FanOutService fanOutService;
+    HashSet<String> test = packageService.allClasses(directory);
+    WMCService wmcService;
+    NumberOfMethodsService numberOfMethodsService;
+    NumberOfConstructorsService numberOfConstructorsService;
+    NumberOfFieldsService numberOfFieldsService;
+
+    public Start() throws IOException {
+    }
+
     public static void main(String[] args) throws IOException {
 
 //        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home\\pureFabrication\\fifthExample";
 //        String analysePath = "com/home/pureFabrication/fifthExample";
+
         String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-                                "\\creator\\InitializingData\\thirdExample";
-        String analysePath = "com/home/creator/InitializingData/thirdExample";
+                                "\\coupling\\firstAnalysis\\goodExample";
+        String analysePath = "com/home/coupling/firstAnalysis/goodExample";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
+        List<InspectedClass> inspectedClassList = new ArrayList<>();
         PackageService packageService = new PackageService();
         File directory = new File(packagePath);
-        NumberOfChildrenService numberOfChildrenService;
-        DepthOfInheritanceTree depthOfInheritanceTree;
-        FanInService fanInService;
-        FanOutService fanOutService;
+        NumberOfChildrenService numberOfChildrenService = null;
+        DepthOfInheritanceTree depthOfInheritanceTree = null;
+        FanInService fanInService = null;
+        FanOutService fanOutService = null;
         HashSet<String> test = packageService.allClasses(directory);
-        WMCService wmcService;
-        NumberOfMethodsService numberOfMethodsService;
-        NumberOfConstructorsService numberOfConstructorsService;
-        NumberOfFieldsService numberOfFieldsService;
+        WMCService wmcService = null;
+        NumberOfMethodsService numberOfMethodsService = new NumberOfMethodsService();
+        NumberOfConstructorsService numberOfConstructorsService = null;
+        NumberOfFieldsService numberOfFieldsService = null;
 
+        inspectedClassList = initializeAllClasses(analysePath, packagePath, directory, numberOfChildrenService, depthOfInheritanceTree, fanInService, fanOutService, test, wmcService, numberOfMethodsService, numberOfConstructorsService, numberOfFieldsService);
+
+        System.out.println(inspectedClassList.size());
+
+        for(int i = 0; i < inspectedClassList.size(); i++) {
+//            System.out.println(inspectedClassList.get(i).getName() + " " + inspectedClassList.get(i).getFanout());
+        }
+
+        System.out.println("System:> Welcome to the GRASP Analyzer");
+        Scanner scanner = new Scanner(System.in);
+        String choosenClass = "";
+
+        while(true) {
+            System.out.print(">");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if(input.equals("exit") || input.equals("quit") || input.equals("q")) {
+                System.out.println("System:> Server shuts down");
+                break;
+            }
+
+            switch(input.toLowerCase()) {
+                case "1": // CREATOR PRINCIPLE
+
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        System.out.println("System:> " + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+                    }
+
+                    System.out.println("System:> choose a class...");
+                    input = scanner.nextLine().trim().toLowerCase();
+
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                            System.out.println("System:> choosen class: " + input);
+                            System.out.println(creator3(inspectedClassList.get(i).getFullName(), inspectedClassList.get(i).getAmountOfMethods()));
+//                            System.out.println(creator1(inspectedClassList.get(i).getName(), inspectedClassList.get(i).getAmountOfMethods()));
+//                            creator4(choosenClass, packagePath);
+                        }
+                    }
+                    break;
+                case "2": // LOOSE COUPLING
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        System.out.println("System:> " + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+                    }
+
+                    System.out.println("System:> choose a class...");
+                    input = scanner.nextLine().trim().toLowerCase();
+
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                            System.out.println("System:> choosen class: " + input);
+
+//                            System.out.println(className + " " + LooseCouplingService.analyzeLooseCouplingOfClass(className,
+//                              numberOfMethodsService.getAllMethodsList(className),
+//                              numberOfMethodsService.getAllInterfaceMethods(className),
+//                              inspectedClass.getDit(),
+//                              inspectedClass.getFanout(),
+//                              inspectedClass.getIsInterface()));
+
+
+//                            System.out.println(inspectedClassList.get(i).getFullName().replaceFirst(".*/", "") + " " +
+                            System.out.println(LooseCouplingService.analyzeLooseCouplingOfClass(inspectedClassList.get(i).getFullName(),
+                                                numberOfMethodsService.getAllMethodsList(inspectedClassList.get(i).getFullName()),
+                                                numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()),
+                                                inspectedClassList.get(i).getDit(),
+                                                inspectedClassList.get(i).getFanout(),
+                                                inspectedClassList.get(i).getIsInterface()));
+                        }
+                    }
+
+
+                default:
+                    System.out.println("unknown input " + input);
+            }
+
+        }
+        scanner.close();
 
         Iterator<String> iterator = test.iterator();
         while(iterator.hasNext()) {
@@ -214,7 +314,7 @@ public class Start {
 //            numberOfMethodsService.checkAll(className);
 //            numberOfMethodsService.initializingData2(className);
 
-            ClassFieldTracker.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
+            Creator4Service.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
             // TODO CREATOR INITIALIZING DATA
 
 
@@ -318,5 +418,116 @@ public class Start {
 //        System.out.println(className.replace(analysePath + "/", "") + " LCOM4 Designite: " + lcom4Designite + " LCOM4: " + lcom4);
 //
 //
+    }
+
+    private static List<InspectedClass> initializeAllClasses(String analysePath, String packagePath, File directory, NumberOfChildrenService numberOfChildrenService, DepthOfInheritanceTree depthOfInheritanceTree, FanInService fanInService, FanOutService fanOutService, HashSet<String> test, WMCService wmcService, NumberOfMethodsService numberOfMethodsService, NumberOfConstructorsService numberOfConstructorsService, NumberOfFieldsService numberOfFieldsService) throws IOException {
+        List<InspectedClass> ans = new ArrayList<>();
+
+        Iterator<String> iterator = test.iterator();
+        while(iterator.hasNext()) {
+            String className = iterator.next();
+
+            InspectedClass inspectedClass = new InspectedClass(className.replace(analysePath + "/", ""));
+            inspectedClass.setFullName(className);
+
+            numberOfChildrenService = new NumberOfChildrenService(className);
+            int a = numberOfChildrenService.calculateNOC(analysePath);
+//            System.out.println(className + " has " + a + " children");
+            inspectedClass.setNumberOfChildren(a);
+
+            depthOfInheritanceTree = new DepthOfInheritanceTree(className);
+            int b = depthOfInheritanceTree.calculateDIT();
+//            System.out.println(className + " ,children: " + a + ", DIT: " + b);
+            inspectedClass.setDit(b);
+            inspectedClass.setIsInterface(depthOfInheritanceTree.checkIfClassIsInterface());
+
+            fanInService = new FanInService(className, packagePath, directory);
+
+            Map<String, Integer> classCallCount = fanInService.analyzePackage(directory, className);
+
+            for(String name : classCallCount.keySet()) {
+//                System.out.println(className + " ,call count: " + name + ", " + classCallCount.get(name));
+            }
+
+            int c = classCallCount.size();
+//            System.out.println(className + " ,children: " + a + ", DIT: " + b + ", FANIN: " + c);
+            inspectedClass.setFanin(c);
+
+            fanOutService = new FanOutService(className, packagePath, directory);
+
+            Iterator<String> itr = test.iterator();
+            int d = 0;
+            Map<String, Integer> classUseCount;
+
+            while(itr.hasNext()) {
+//                classUseCount = fanOutService.analyzePackage(directory, itr.next());
+                d = fanOutService.analyzePackage2(className, itr.next());
+            }
+
+            inspectedClass.setFanout(d);
+
+            wmcService = new WMCService();
+            int e = wmcService.calculateWMC(className);
+            inspectedClass.setWmc(e);
+
+            numberOfMethodsService = new NumberOfMethodsService();
+            int f = numberOfMethodsService.analyzePackage2(className);
+            inspectedClass.setAmountOfMethods(f);
+
+            numberOfConstructorsService = new NumberOfConstructorsService();
+            int g = numberOfConstructorsService.countConstructors(className);
+            inspectedClass.setAmountOfConstructors(g);
+
+            numberOfFieldsService = new NumberOfFieldsService();
+            int h = numberOfFieldsService.countPutFields(className);
+            inspectedClass.setAmountOfFields(h);
+
+            Set<String> iFields = numberOfFieldsService.getAllInitFields(className);
+            Set<String> aFields = numberOfFieldsService.getAllFieldsWithinMethods(className);
+
+//            System.out.println("... " + inspectedClass.toString());
+
+//            System.out.println("INIT FIELDS");
+//            Iterator<String> iterator2 = iFields.iterator();
+//            while(iterator2.hasNext()) {
+//                System.out.print(iterator2.next() + " ");
+//            }
+//
+//            System.out.println("\nALL FIELDS");
+//            iterator2 = aFields.iterator();
+//            while(iterator2.hasNext()) {
+//                System.out.print(iterator2.next() + " ");
+//            }
+//            System.out.println();
+
+
+
+            List<String> allMethodsList = numberOfMethodsService.getAllMethodsList(className);
+            Set<String> allMethods = numberOfMethodsService.getAllMethods(className);
+            Set<String> allFields = numberOfFieldsService.getAllFields(className);
+            Set<String> allInitFields = numberOfFieldsService.getAllInitFields(className);
+
+            numberOfMethodsService.getListOfNewStatements(className);
+//            numberOfFieldsService.checkField(className);
+            numberOfFieldsService.visitField(className);
+            numberOfFieldsService.visitMethod(className);
+
+            ans.add(inspectedClass);
+//            inspectedClassList.add(inspectedClass);
+        }
+        return ans;
+
+    }
+
+    private static String creator1(String className, int nom) {
+        return CreatorPrincipleService.firstPrinciple(className, nom);
+    }
+
+    private static String creator3(String className, int nom) {
+        return CreatorPrincipleService.fourthPrinciple(className, nom);
+    }
+
+    private static void creator4(String className, String packagePath) {
+        Creator4Service.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
     }
 }

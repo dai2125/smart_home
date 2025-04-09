@@ -1,0 +1,7 @@
+6. Keep entities small. This means no more than 50 lines per class and no more than 10 classes
+per package. The 50 lines per class constraint is crucial. Not only does it force concision
+and keep classes focused, but it means most classes can fit on a single screen in any editor/IDE.
+https://binstock.blogspot.com/2008/04/perfecting-oos-small-classes-and-short.html
+
+https://www.aivosto.com/project/help/pm-oo-cohesion.html
+

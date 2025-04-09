@@ -6,9 +6,9 @@ import java.util.HashSet;
 
 public class PackageService {
 
-    private HashSet<String> classes = new HashSet<>();
+    public static HashSet<String> allClasses(File directory) throws IOException {
+        HashSet<String> classes = new HashSet<>();
 
-    public HashSet<String> allClasses(File directory) throws IOException {
         if (!directory.exists() || !directory.isDirectory()) {
             return null;
         }

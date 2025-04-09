@@ -1,0 +1,1 @@
+java -jar DesigniteJava.jar -i C:\Users\aigne\IdeaProjects\smart_home\Authentication\src\main\java\com\home\authentication\ -o C:\Users\aigne\IdeaProjects\smart_home\designiteOutputDatabaseConnection\
