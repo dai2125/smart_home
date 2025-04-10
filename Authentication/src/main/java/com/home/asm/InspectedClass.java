@@ -1,7 +1,11 @@
 package com.home.asm;
 
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class InspectedClass {
 
@@ -28,7 +32,12 @@ public class InspectedClass {
     private List<MethodModel> methods = new ArrayList<>();
     private List<SubField> subFields = new ArrayList<>();
     private boolean isInterface = false;
-    private List<MethodInformation> methodList = new ArrayList<>();
+    private List<MethodInformation> methodInformationList = new ArrayList<>();
+    private List<MethodDeclaration> constructorList = new ArrayList<>();
+    private List<MethodDeclaration> methodList = new ArrayList<>();
+    private List<String> interfaceMethodList = new ArrayList<>();
+    private Set<String> allInitFields = new HashSet<>();
+    private Set<String> allFieldsWithinMethods = new HashSet<>();
 
     public InspectedClass(String name) {
         this.name = name;
@@ -223,15 +232,59 @@ public class InspectedClass {
     }
 
     public void addMethodInformation(MethodInformation methodInformation) {
-        methodList.add(methodInformation);
+        methodInformationList.add(methodInformation);
     }
 
-    public List<MethodInformation> getMethodList() {
+    public List<MethodInformation> getmethodInformationList() {
+        return methodInformationList;
+    }
+
+    public int getmethodInformationListSize() {
+        return methodInformationList.size();
+    }
+
+    public void addConstructor(MethodDeclaration method) {
+        constructorList.add(method);
+    }
+
+    public List<MethodDeclaration> getConstructorList() {
+        return constructorList;
+    }
+
+    public void addMethod(MethodDeclaration method) {
+        methodList.add(method);
+    }
+
+    public List<MethodDeclaration> getMethodList() {
         return methodList;
     }
 
-    public int getMethodListSize() {
-        return methodList.size();
+    public void setInterfaceMethodList(List<String> interfaceMethodList) {
+        this.interfaceMethodList = interfaceMethodList;
+    }
+
+    public void addInterfaceMethodList(String interfaceMethod) {
+        interfaceMethodList.add(interfaceMethod);
+    }
+
+    public List<String> getInterfaceMethodList() {
+        return interfaceMethodList;
+    }
+
+    public void setAllInitFields(Set<String> allInitFields) {
+        this.allInitFields = allInitFields;
+    }
+
+    public Set<String> getAllInitFields() {
+        return allInitFields;
+    }
+
+    public void setAllFieldsWithinMethods(Set<String> allFieldsWithinMethods) {
+        this.allFieldsWithinMethods = allFieldsWithinMethods;
+    }
+
+    public Set<String> getAllFieldsWithinMethods() {
+        return allFieldsWithinMethods;
     }
 
     @Override
@@ -262,7 +315,7 @@ public class InspectedClass {
 
                 "\tmethods=" + methods.stream().map(MethodModel::toString).toList() + "\n" +
                 "\tsubFields=" + subFields.stream().map(SubField::toString).toList() + "\n" +
-                "\t"/*"methodInformation="*/ + methodList.stream().map(MethodInformation::toString).toList() + "\n" +
+                "\t"/*"methodInformation="*/ + methodInformationList.stream().map(MethodInformation::toString).toList() + "\n" +
                 '}';
     }
 }

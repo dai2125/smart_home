@@ -47,7 +47,7 @@ public class SM_Method extends SM_SourceItem implements Vertex {
 //        String targetClass = TargetClass.getInstance().getTargetClass();
 //        System.out.println("targetClass3 " + targetClass);
 
-        System.out.println("\nSM_METHOD: ParentType.name " + parentType.name);
+//        System.out.println("\nSM_METHOD: ParentType.name " + parentType.name);
 
         if(!CreatorPrincipleService.contains(parentType.name)) {
             CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
@@ -66,10 +66,10 @@ public class SM_Method extends SM_SourceItem implements Vertex {
 
 
 
-        System.out.println("methode name: " + methodDeclaration.getName());
-        System.out.println("parameter: " + methodDeclaration.parameters().stream().toList());
-        System.out.println("return type: " + methodDeclaration.getReturnType2());
-        System.out.println("called methods: " + calledMethods.stream().map(MethodInvocation::toString).toList());
+//        System.out.println("methode name: " + methodDeclaration.getName());
+//        System.out.println("parameter: " + methodDeclaration.parameters().stream().toList());
+//        System.out.println("return type: " + methodDeclaration.getReturnType2());
+//        System.out.println("called methods: " + calledMethods.stream().map(MethodInvocation::toString).toList());
 
         //        System.out.println(name + " " + parameterList.stream().map(SM_Parameter::getName).toList());
 //        System.out.println(name + " " + calledMethodsList.stream().map(SM_Method::getName).toList());
@@ -80,6 +80,15 @@ public class SM_Method extends SM_SourceItem implements Vertex {
 
     private void setMethodInfo(MethodDeclaration method) {
         int modifiers = method.getModifiers();
+
+//        System.out.println("MethodDeclaration: " + method.getName());
+//        System.out.println("method.getModifiers(): " + method.getModifiers());
+//        System.out.println("Modifier.isAbstract(modifiers): " + Modifier.isAbstract(modifiers));
+//        System.out.println("Modifier.isFinal(modifiers): " + Modifier.isFinal(modifiers));
+//        System.out.println("Modifier.isStatic(modifiers): " + Modifier.isStatic(modifiers));
+//        System.out.println("method.isConstructor(): "+ method.isConstructor());
+//        System.out.println("method.getParent(): " + method.getParent().toString());
+
         if (Modifier.isAbstract(modifiers))
             abstractMethod = true;
         if (Modifier.isFinal(modifiers))
@@ -171,7 +180,7 @@ public class SM_Method extends SM_SourceItem implements Vertex {
 //        System.out.println("\t\t" + newStatementVisitor.getTypeList().stream().map(Type::toString).toList());
 //        System.out.println("\t\t" + newInstances.stream().map(Type::toString).toList());
 //        System.out.println("\t\t" + newInstances.forEach(key, value), ->System.out.println(););
-        newInstances.forEach((key, value) -> System.out.println(methodDeclaration.getName() + " - new Instances " + key + ":" + value));
+//        newInstances.forEach((key, value) -> System.out.println(methodDeclaration.getName() + " - new Instances " + key + ":" + value));
 //        System.out.println(methodDeclaration.getName());
 
 

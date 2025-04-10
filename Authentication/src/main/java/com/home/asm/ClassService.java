@@ -16,6 +16,7 @@ public class ClassService {
 
     public static InspectedClass get(String className) {
         for(InspectedClass inspectedClass : inspectedClasses) {
+//            System.out.println("ClassService: " + inspectedClass.getFullName() + ", " + inspectedClass.getName());
             if(inspectedClass.getName().equals(className)) {
                 return inspectedClass;
             }

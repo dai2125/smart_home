@@ -152,6 +152,22 @@ class Resolver {
 	SM_Type resolveType(Type type, SM_Project project) {
 		//Rarely, this type.resolveBinding() returns wrong binding when the type name is same.
 		ITypeBinding binding = type.resolveBinding();
+//		System.out.println("binding.toString(): " + binding.toString());
+//		System.out.println("binding.getRank(): "+ binding.getRank());
+//		System.out.println("binding.isClass(): " + binding.isClass());
+//		System.out.println("binding.getName(): " + binding.getName());
+//		System.out.println("binding.getQualifiedName(): " + binding.getQualifiedName());
+//		System.out.println("binding.getDeclaringClass(): " + binding.getDeclaringClass());
+//
+//		for(int i = 0; i < binding.getDeclaredMethods().length; i++) {
+//			System.out.println("binding.getDeclaredMethods()[i]: "+ binding.getDeclaredMethods()[i].getName());
+//		}
+//		for(int i = 0; i < binding.getDeclaredFields().length; i++){
+//			System.out.println("binding.getDeclaredFields()[i]: "+ binding.getDeclaredFields()[i].getName());
+//		}
+//		for(int i = 0; i < binding.getTypeParameters().length; i++) {
+//			System.out.println("binding.getTypeParameters()[i]: " + binding.getTypeParameters()[i]);
+//		}
         return resolveType(binding, project);
 	}
 

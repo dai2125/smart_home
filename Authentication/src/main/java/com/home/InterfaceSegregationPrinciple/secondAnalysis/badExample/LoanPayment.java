@@ -24,7 +24,7 @@ public class LoanPayment implements Payment {
 
     @Override
     public Object status() {
-        return "Loan ID: " + loanId + ", Remaining Amount: " + loanAmount;
+        return null;
     }
 
     @Override

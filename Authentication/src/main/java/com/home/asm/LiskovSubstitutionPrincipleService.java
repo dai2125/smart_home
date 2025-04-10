@@ -25,23 +25,23 @@ public class LiskovSubstitutionPrincipleService {
         if(inspectedClass.getDit() == 1) {
             return "ERROR " + inspectedClass.getName() + " doesnt inherits from another class";
         }
-        for(int i = 0; i < inspectedClass.getMethodListSize(); i++) {
-            for(int j = 0; j < inspectedClass.getMethodList().get(i).getThrowStatements().size(); j++) {
-                if(checkUnsupportedOperationException(inspectedClass.getMethodList().get(i).getThrowStatements().get(j).getExpression().toString())) {
-                    return "ERROR " + inspectedClass.getName() + " contains an UnsupportedOperationException. Interface Segregation Principle most likely not correct" ;
-                }
-            }
-        }
-
-        for(int i = 0; i < inspectedClass.getMethodListSize(); i++) {
-            for(int j = 0; j < inspectedClass.getMethodList().get(i).getReturnStatements().size(); j++) {
-                if(checkReturnNull(inspectedClass.getMethodList().get(i).getReturnStatements().get(j).getExpression().toString())
-                        && checkReturnStatementSize(inspectedClass.getMethodList().get(i).getReturnStatements().size())
-                        && checkLinesOfCode(inspectedClass.getMethodList().get(i).getNumOfLines())) {
-                    return "ERROR " + inspectedClass.getName() + " has only " + inspectedClass.getMethodList().get(i).getReturnStatements().size() + " and the RETURN value is null. Interface Segregation Principle most likely not correct" ;
-                }
-            }
-        }
+//        for(int i = 0; i < inspectedClass.getMethodListSize(); i++) {
+//            for(int j = 0; j < inspectedClass.getMethodList().get(i).getThrowStatements().size(); j++) {
+//                if(checkUnsupportedOperationException(inspectedClass.getMethodList().get(i).getThrowStatements().get(j).getExpression().toString())) {
+//                    return "ERROR " + inspectedClass.getName() + " contains an UnsupportedOperationException. Interface Segregation Principle most likely not correct" ;
+//                }
+//            }
+//        }
+//
+//        for(int i = 0; i < inspectedClass.getMethodListSize(); i++) {
+//            for(int j = 0; j < inspectedClass.getMethodList().get(i).getReturnStatements().size(); j++) {
+//                if(checkReturnNull(inspectedClass.getMethodList().get(i).getReturnStatements().get(j).getExpression().toString())
+//                        && checkReturnStatementSize(inspectedClass.getMethodList().get(i).getReturnStatements().size())
+//                        && checkLinesOfCode(inspectedClass.getMethodList().get(i).getNumOfLines())) {
+//                    return "ERROR " + inspectedClass.getName() + " has only " + inspectedClass.getMethodList().get(i).getReturnStatements().size() + " and the RETURN value is null. Interface Segregation Principle most likely not correct" ;
+//                }
+//            }
+//        }
 
 
         return inspectedClass.getName() + " fullfills the Interface Segregation Principle";

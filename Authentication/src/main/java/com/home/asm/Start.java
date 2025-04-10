@@ -1,5 +1,6 @@
 package com.home.asm;
 
+import lcom.LCOM;
 import org.objectweb.asm.ClassReader;
 
 import java.io.File;
@@ -9,22 +10,14 @@ import java.util.*;
 public class Start {
 
     String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-            "\\coupling\\firstAnalysis\\goodExample";
+            "\\openClosedPrinciple\\firstAnalysisrs\\goodExample"; //\\badExample";
     String analysePath = "com/home/coupling/firstAnalysis/goodExample";
     String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
     List<InspectedClass> inspectedClassList = new ArrayList<>();
     PackageService packageService = new PackageService();
     File directory = new File(packagePath);
-    NumberOfChildrenService numberOfChildrenService;
-    DepthOfInheritanceTree depthOfInheritanceTree;
-    FanInService fanInService;
-    FanOutService fanOutService;
     HashSet<String> test = packageService.allClasses(directory);
-    WMCService wmcService;
-    NumberOfMethodsService numberOfMethodsService;
-    NumberOfConstructorsService numberOfConstructorsService;
-    NumberOfFieldsService numberOfFieldsService;
 
     public Start() throws IOException {
     }
@@ -35,8 +28,8 @@ public class Start {
 //        String analysePath = "com/home/pureFabrication/fifthExample";
 
         String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
-                                "\\coupling\\firstAnalysis\\goodExample";
-        String analysePath = "com/home/coupling/firstAnalysis/goodExample";
+                                "\\openClosedPrinciple\\firstAnalysis\\goodExample"; //\\badExample";
+        String analysePath = "com/home/openClosedPrinciple/firstAnalysis/goodExample";///badExample";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
 
         List<InspectedClass> inspectedClassList = new ArrayList<>();
@@ -50,7 +43,7 @@ public class Start {
         WMCService wmcService = null;
         NumberOfMethodsService numberOfMethodsService = new NumberOfMethodsService();
         NumberOfConstructorsService numberOfConstructorsService = null;
-        NumberOfFieldsService numberOfFieldsService = null;
+        NumberOfFieldsService numberOfFieldsService = new NumberOfFieldsService();
 
         inspectedClassList = initializeAllClasses(analysePath, packagePath, directory, numberOfChildrenService, depthOfInheritanceTree, fanInService, fanOutService, test, wmcService, numberOfMethodsService, numberOfConstructorsService, numberOfFieldsService);
 
@@ -85,7 +78,6 @@ public class Start {
 
                     for(int i = 0; i < inspectedClassList.size(); i++) {
                         if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                            System.out.println("System:> choosen class: " + input);
                             System.out.println(creator3(inspectedClassList.get(i).getFullName(), inspectedClassList.get(i).getAmountOfMethods()));
 //                            System.out.println(creator1(inspectedClassList.get(i).getName(), inspectedClassList.get(i).getAmountOfMethods()));
 //                            creator4(choosenClass, packagePath);
@@ -102,17 +94,6 @@ public class Start {
 
                     for(int i = 0; i < inspectedClassList.size(); i++) {
                         if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                            System.out.println("System:> choosen class: " + input);
-
-//                            System.out.println(className + " " + LooseCouplingService.analyzeLooseCouplingOfClass(className,
-//                              numberOfMethodsService.getAllMethodsList(className),
-//                              numberOfMethodsService.getAllInterfaceMethods(className),
-//                              inspectedClass.getDit(),
-//                              inspectedClass.getFanout(),
-//                              inspectedClass.getIsInterface()));
-
-
-//                            System.out.println(inspectedClassList.get(i).getFullName().replaceFirst(".*/", "") + " " +
                             System.out.println(LooseCouplingService.analyzeLooseCouplingOfClass(inspectedClassList.get(i).getFullName(),
                                                 numberOfMethodsService.getAllMethodsList(inspectedClassList.get(i).getFullName()),
                                                 numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()),
@@ -121,10 +102,95 @@ public class Start {
                                                 inspectedClassList.get(i).getIsInterface()));
                         }
                     }
+                    break;
+                case "3": // INTERFACE SEGREGATION PRINCIPLE
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        System.out.println("System:> " + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+                    }
 
+                    System.out.println("System:> choose a class...");
+                    input = scanner.nextLine().trim().toLowerCase();
 
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
+                            System.out.println(InterfaceSegregationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
+                        }
+                    }
+                    break;
+                case "4": // COHESION
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        System.out.println("System:> " + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+                    }
+
+                    System.out.println("System:> choose a class...");
+                    input = scanner.nextLine().trim().toLowerCase();
+
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+
+                            System.out.println(CohesionService.analyzeCohesionOfClass(
+                                                        inspectedClassList.get(i).getName(),
+                                                        inspectedClassList.get(i).getAllInitFields().size(),
+                                                        inspectedClassList.get(i).getAllFieldsWithinMethods().size(),
+                                                        inspectedClassList.get(i).getYalcom(),
+                                                        inspectedClassList.get(i).getLcom4()));
+                        }
+                    }
+                    break;
+                case "5": // PROTECTED VARIATION
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        System.out.println("System:> " + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+                    }
+
+                    System.out.println("System:> choose a class...");
+                    input = scanner.nextLine().trim().toLowerCase();
+
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+
+                            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
+
+                            System.out.println(ProtectedVariationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
+
+//                            System.out.println(CohesionService.analyzeCohesionOfClass(
+//                                    inspectedClassList.get(i).getName(),
+//                                    inspectedClassList.get(i).getAllInitFields().size(),
+//                                    inspectedClassList.get(i).getAllFieldsWithinMethods().size(),
+//                                    inspectedClassList.get(i).getYalcom(),
+//                                    inspectedClassList.get(i).getLcom4()));
+                        }
+                    }
+                    break;
+                case "6": // SINGLE RESPONSIBILTY PRINCIPLE
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        System.out.println("System:> " + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+                    }
+
+                    System.out.println("System:> choose a class...");
+                    input = scanner.nextLine().trim().toLowerCase();
+
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+
+                            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
+
+                            SingleResponsibilityPrincipleService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java");
+
+//                            System.out.println(SingleResponsibilityPrincipleService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
+
+//                            System.out.println(CohesionService.analyzeCohesionOfClass(
+//                                    inspectedClassList.get(i).getName(),
+//                                    inspectedClassList.get(i).getAllInitFields().size(),
+//                                    inspectedClassList.get(i).getAllFieldsWithinMethods().size(),
+//                                    inspectedClassList.get(i).getYalcom(),
+//                                    inspectedClassList.get(i).getLcom4()));
+                        }
+                    }
+                    break;
                 default:
                     System.out.println("unknown input " + input);
+                    break;
             }
 
         }
@@ -391,33 +457,6 @@ public class Start {
 //
 //        numberOfFieldsService = new NumberOfFieldsService();
 //        System.out.println("numberOfFieldsService.countPutFields(): " + numberOfFieldsService.countPutFields("com/home/pureFabrication/fifthExample/Demo"));
-//
-//
-        System.out.println();
-//        /* TODO */
-//        String className = "com/home/pureFabrication/fifthExample/Demo";
-//        ClassReader classReader = new ClassReader(className);
-//
-//
-//        numberOfMethodsService = new NumberOfMethodsService();
-//        numberOfFieldsService = new NumberOfFieldsService();
-//
-//        Set<String> allMethods = numberOfMethodsService.getAllMethods(className);
-//        Set<String> allFields = numberOfFieldsService.getAllFields(className);
-//
-//        ClassMethodAnalyzer analyzer = new ClassMethodAnalyzer(allFields, allMethods);
-//        classReader.accept(analyzer, 0);
-//
-//
-//        Map<String, Set<String>> methodToFields = analyzer.getMethodToFields();
-
-//        cohesionService.getCohesion("com/home/asm/Fields");
-//        double lcom4 = CohesionService.calculateLCOM4(methodToFields);
-//        double lcom4Designite = CohesionService.calculateLCOM4Designite(methodToFields);
-//
-//        System.out.println(className.replace(analysePath + "/", "") + " LCOM4 Designite: " + lcom4Designite + " LCOM4: " + lcom4);
-//
-//
     }
 
     private static List<InspectedClass> initializeAllClasses(String analysePath, String packagePath, File directory, NumberOfChildrenService numberOfChildrenService, DepthOfInheritanceTree depthOfInheritanceTree, FanInService fanInService, FanOutService fanOutService, HashSet<String> test, WMCService wmcService, NumberOfMethodsService numberOfMethodsService, NumberOfConstructorsService numberOfConstructorsService, NumberOfFieldsService numberOfFieldsService) throws IOException {
@@ -482,8 +521,10 @@ public class Start {
             int h = numberOfFieldsService.countPutFields(className);
             inspectedClass.setAmountOfFields(h);
 
-            Set<String> iFields = numberOfFieldsService.getAllInitFields(className);
-            Set<String> aFields = numberOfFieldsService.getAllFieldsWithinMethods(className);
+            inspectedClass.setAllInitFields(numberOfFieldsService.getAllInitFields(className));
+            inspectedClass.setAllFieldsWithinMethods(numberOfFieldsService.getAllFieldsWithinMethods(className));
+//            Set<String> iFields = numberOfFieldsService.getAllInitFields(className);
+//            Set<String> aFields = numberOfFieldsService.getAllFieldsWithinMethods(className);
 
 //            System.out.println("... " + inspectedClass.toString());
 
@@ -511,6 +552,14 @@ public class Start {
 //            numberOfFieldsService.checkField(className);
             numberOfFieldsService.visitField(className);
             numberOfFieldsService.visitMethod(className);
+
+            ClassService.put(inspectedClass);
+
+//            System.out.println("start: " + inspectedClass.getFullName());
+            String[] args2 = new String[]{"-i", packagePath, "-o", inspectedClass.getFullName().replace(analysePath + "/", "")};
+            LCOM.startLcomProcess(args2);
+
+
 
             ans.add(inspectedClass);
 //            inspectedClassList.add(inspectedClass);

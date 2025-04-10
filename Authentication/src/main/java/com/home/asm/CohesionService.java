@@ -145,19 +145,19 @@ public class CohesionService {
         return methodToFields;
     }
 
-    public static String analyzeCohesionOfClass(int initializedFields, int fieldsUsedWithinMethods, double yalcom, double lcom4) {
-        return doesThisClassUseAllItsFields(initializedFields, fieldsUsedWithinMethods) + ", " +
+    public static String analyzeCohesionOfClass(String name, int initializedFields, int fieldsUsedWithinMethods, double yalcom, double lcom4) {
+        return name + " " + doesThisClassUseAllItsFields(initializedFields, fieldsUsedWithinMethods) + ", " +
                 analyzeYalcom(yalcom) + ", " +
                 analyzeLcom4(lcom4);
     }
 
     private static String doesThisClassUseAllItsFields(int initializedFields, int fieldsUsedWithinMethods) {
         if(initializedFields == 0) {
-            return "class no initialized fields";
+            return "has (" + fieldsUsedWithinMethods + "/" + initializedFields + ") initialized fields";
         } else if(initializedFields > fieldsUsedWithinMethods) {
-            return "not all initialized fields are used";
+            return "unused Fields (" + fieldsUsedWithinMethods + "/" + initializedFields + ")";
         } else if(initializedFields == fieldsUsedWithinMethods) {
-            return "all initialized fields are used";
+            return "all Fields are used (" + fieldsUsedWithinMethods + "/" + initializedFields + ")";
         } else {
             return "ERROR initializedFields < fieldsUsedWithinMethods " + initializedFields + " < " + fieldsUsedWithinMethods;
         }
@@ -165,13 +165,13 @@ public class CohesionService {
 
     private static String analyzeYalcom(double yalcom) {
         if(yalcom < 0) {
-            return "class has a negative yalcom";
+            return "YALCOM is negative = " + String.format("%.0f", yalcom);
         } else if(yalcom == 0) {
-            return "class has a perfect yalcom value";
-        } else if(yalcom < 0.6) {
-            return "class has a good cohesion";
+            return "YALCOM is perfect = " + String.format("%.0f", yalcom);
+        } else if(yalcom < 0.5) {
+            return "YALCOM is good = " + String.format("%.0f", yalcom);
         } else if(yalcom < 0.99) {
-            return "class might be redesigned yalcom is very high";
+            return "YALCOM is very high = " + String.format("%.0f", yalcom);
         } else {
             return "ERROR";
         }
@@ -179,13 +179,13 @@ public class CohesionService {
 
     private static String analyzeLcom4(double lcom4) {
         if(lcom4 < 0) {
-            return "ERROR";
+            return "LCOM4 ERROR";
         } else if(lcom4 == 1) {
-            return "class has a perfect lcom4 value";
+            return "LCOM4 is perfect = " + lcom4;
         } else if(lcom4 == 2 || lcom4 == 3) {
-            return "class has " + String.format("%.0f", lcom4) + " independent components";
+            return "LCOM4 = " + lcom4 + ", " + String.format("%.0f", lcom4) + " you may re-design this class";
         } else {
-            return "class has " + String.format("%.0f", lcom4) + " independent components you better redesign this class due high lcom4";
+            return "LCOM4 = " + lcom4 + ", " + String.format("%.0f", lcom4) + " independent components, Cohesion violation";
         }
     }
 

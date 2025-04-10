@@ -87,6 +87,7 @@ public class SM_Type extends SM_SourceItem {
     }
 
     SM_Type getNestedTypeFromName(String typeName) {
+        System.out.println("typeName: "+ typeName);
         for (SM_Type nestedType : this.nestedTypesList) {
             if (nestedType.name.equals(typeName)) {
                 return nestedType;
@@ -180,12 +181,14 @@ public class SM_Type extends SM_SourceItem {
                 inferredType.addThisAsChildToSuperType(this);
             }
         }
+        System.out.println("superInterface: " + superInterface);
     }
 
     private void addThisAsChildToSuperType(SM_Type child) {
         if (!subTypes.contains(child)) {
             subTypes.add(child);
         }
+        System.out.println("child: "+  child.name);
     }
 
     public List<SM_Method> getMethodList() {
@@ -233,7 +236,7 @@ public class SM_Type extends SM_SourceItem {
         parseMethods();
 
 
-        System.out.println("eeeeeeeee:" + name.replace("Type=", ""));
+//        System.out.println("eeeeeeeee:" + name.replace("Type=", ""));
         if(!CreatorPrincipleService.contains(name.replace("Type=", ""))) {
             CreatorPrinciple creatorPrinciple = new CreatorPrinciple(name.replace("Type=", ""));
 
@@ -255,9 +258,9 @@ public class SM_Type extends SM_SourceItem {
 //				System.out.println(creatorPrinciple);
         }
 
-        System.out.println("SM_TYPE: name " + name);
-        System.out.println(name + " = " + getFieldList().stream().map(SM_Field::getName).toList());
-        System.out.println(name + " = " + getMethodList().stream().map(SM_Method::getName).toList());
+//        System.out.println("SM_TYPE: name " + name);
+//        System.out.println(name + " = " + getFieldList().stream().map(SM_Field::getName).toList());
+//        System.out.println(name + " = " + getMethodList().stream().map(SM_Method::getName).toList());
 
     }
 

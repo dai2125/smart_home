@@ -1,7 +1,7 @@
  1. **Information Expert**
         Lose Kopplung und hohe Kohäsion
 
-2. **Creator**
+--2. **Creator**
         Neue Objekte der Klasse B sollten von A erzeugt werden, wenn:
             A eine Aggregation von B ist
             A B-Objekte enthält
@@ -18,13 +18,13 @@
         Hier wird ein einziger Controller (MessageHandler) definiert, der alle Ereignisse abfängt.
         Hierzu wird mit dem Command Pattern gearbeitet.
 
-4. **Low Coupling**
+--4. **Low Coupling**
         Leichte Anpassbarkeit, da Änderungen in einer Klasse keine Änderungen in anderen Klassen nach sich ziehen
         Verständlichkeit der Klasse, da der Kontext nicht betrachtet werden muss
         Gute Testbarkeit
         Hohe Wiederverwendbarkeit
 
-5. **High Cohesion**
+--5. **High Cohesion**
         Hohe Kohäsion ist vor allem wichtig, um die Komplexität von Gesamtsystemen zu begrenzen,
         indem man Klassen gut überschaubar organisiert.
         Die Kohäsion ist ein Maß für den inneren Zusammenhalt einer Klasse.
@@ -56,7 +56,7 @@
         die zwischen dem Datenmodell (Model) und dessen Präsentation (View)
         im Model-View-Controller-Architekturmuster vermittelt.
 
-9. **Protected Variations**
+--9. **Protected Variations**
         Interfaces sollen immer verschiedene konkrete Implementierungen verstecken.
         Man nutzt also Polymorphismus und Delegation, um zwischen den Implementierungen zu wechseln.
         Dadurch kann das restliche System vor den Auswirkungen eines Wechsels der Implementierung geschützt werden.

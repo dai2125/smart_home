@@ -39,4 +39,8 @@ public class BankPayment implements Payment {
     public void initiateRePayment() {
         throw new UnsupportedOperationException("Repayment is not applicable for bank payment");
     }
+
+    public int getNumber() {
+        return -1;
+    }
 }

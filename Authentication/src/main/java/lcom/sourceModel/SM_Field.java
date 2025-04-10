@@ -31,14 +31,14 @@ public class SM_Field extends SM_EntitiesWithType implements Vertex {
 
 //		System.out.println("SM_FIELD");
 	// TODO hierher zurück  cccccccccc
-		System.out.println("xxxxxxxxxx:" + parentType.name + ":xxxxxxxxxx");
+//		System.out.println("xxxxxxxxxx:" + parentType.name + ":xxxxxxxxxx");
 		if(!CreatorPrincipleService.contains(parentType.name)) {
-			System.out.println("cccccccccc:" + parentType.name + ":cccccccccc");
+//			System.out.println("cccccccccc:" + parentType.name + ":cccccccccc");
 
 			CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
-			System.out.println("bbbbbbb:" + fieldDeclaration);
-			System.out.println("bbbbbbb:" + fieldDeclaration.getType());
-			System.out.println("bbbbbbb:" + fieldDeclaration.getType().toString());
+//			System.out.println("bbbbbbb:" + fieldDeclaration);
+//			System.out.println("bbbbbbb:" + fieldDeclaration.getType());
+//			System.out.println("bbbbbbb:" + fieldDeclaration.getType().toString());
 
 			// TODO hier kommenatr rückgängig machen
 //			creatorPrinciple.addToFieldList(fieldDeclaration + ", " + fieldDeclaration.getType().toString());
@@ -61,16 +61,16 @@ public class SM_Field extends SM_EntitiesWithType implements Vertex {
 
 		}
 
-		System.out.println("SM_FIELD ParentType.name " + parentType.name);
-		System.out.println("fieldDeclaration: " + fieldDeclaration);
-		System.out.println("fieldDeclaration.getType(): " + fieldDeclaration.getType());
+//		System.out.println("SM_FIELD ParentType.name " + parentType.name);
+//		System.out.println("fieldDeclaration: " + fieldDeclaration);
+//		System.out.println("fieldDeclaration.getType(): " + fieldDeclaration.getType());
 
 		for(Object fragmentObj : fieldDeclaration.fragments()) {
 			if(fragmentObj instanceof VariableDeclarationFragment fragment) {
-				System.out.println("Variablenname: " + fragment.getName());
+//				System.out.println("Variablenname: " + fragment.getName());
 
 				if(fragment.getInitializer() != null) {
-					System.out.println("Initialwert: " + fragment.getInitializer());
+//					System.out.println("Initialwert: " + fragment.getInitializer());
 				}
 			}
 		}

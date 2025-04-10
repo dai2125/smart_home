@@ -19,6 +19,8 @@ public class TypeMetrics {
 //        System.out.println("type(): " + type.toString());
 
         InspectedClass inspectedClass = ClassService.get(targetClass);
+//        System.out.println("targetClass: " + targetClass);
+//        System.out.println("inspectedClass.getName(): " + inspectedClass.getFullName());
         if(type.getName().equals(targetClass)) {
 
             ILCOM lcomAlgorithm = new YALCOM();
