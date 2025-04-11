@@ -2,10 +2,7 @@ package com.home.asm;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class InspectedClass {
 
@@ -38,6 +35,7 @@ public class InspectedClass {
     private List<String> interfaceMethodList = new ArrayList<>();
     private Set<String> allInitFields = new HashSet<>();
     private Set<String> allFieldsWithinMethods = new HashSet<>();
+    private Set<InspectedClass> orchestratorList = new HashSet<>();
 
     public InspectedClass(String name) {
         this.name = name;
@@ -285,6 +283,30 @@ public class InspectedClass {
 
     public Set<String> getAllFieldsWithinMethods() {
         return allFieldsWithinMethods;
+    }
+
+    public void addOrchestrator(InspectedClass inspectedClass) {
+        orchestratorList.add(inspectedClass);
+    }
+
+    public boolean orchestratorListContains(InspectedClass inspectedClass) {
+        if(orchestratorList.contains(inspectedClass)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean orchestratorListContainsFullName(String className) {
+//        System.out.println("InspectedClass1: "+ className);
+        Iterator<InspectedClass> itr = orchestratorList.iterator();
+        while(itr.hasNext()) {
+            if(itr.next().getName().equalsIgnoreCase(className)) {
+//                System.out.println("InspectedClass2: "+ className);
+
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

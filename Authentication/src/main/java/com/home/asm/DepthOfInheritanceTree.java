@@ -30,11 +30,6 @@ public class DepthOfInheritanceTree extends ClassVisitor {
         this.superClassName = superName;
         this.interfaces = interfaces;
         this.isInterface = (access & Opcodes.ACC_INTERFACE) != 0;
-
-//        System.out.println("\nBesuchte Klasse: " + name);
-//        System.out.println("Superklasse: " + superName);
-//        System.out.println("Schnittstellen: " + (interfaces == null ? "null" : String.join(",", interfaces)) + "\n");
-
     }
 
     public int calculateDIT() throws IOException {

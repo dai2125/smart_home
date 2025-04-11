@@ -2,8 +2,6 @@ package com.home.asm;
 
 import lcom.sourceModel.SM_Field;
 import lcom.sourceModel.SM_Method;
-import lcom.sourceModel.SM_Type;
-import org.eclipse.jdt.core.dom.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.List;
 public class CreatorPrinciple {
 
     private String name;
-//    private Type type;
     private List<CreatorPrincipleField> fieldList = new ArrayList<>();
     private List<CreatorPrincipleField> fieldInsnList = new ArrayList<>();
     private List<CreatorPrincipleMethod> methodList = new ArrayList<>();
@@ -34,7 +31,6 @@ public class CreatorPrinciple {
     }
 
     public CreatorPrinciple(String name) {
-//        System.out.println("88888:" + name);
         this.name = name;
     }
 
@@ -45,18 +41,6 @@ public class CreatorPrinciple {
     public String getName() {
         return name;
     }
-
-//    public void setType(Type type) {
-//        this.type = type;
-//    }
-
-//    public Type getType() {
-//        return type;
-//    }
-
-//    public String getTypeName() {
-//        return type.toString();
-//    }
 
     public void setFieldList(List<String> fieldList) {
 //        this.fieldList = fieldList;

@@ -10,7 +10,6 @@ public class Order {
     private int quantity;
     private int totalBillAmt;
 
-
     public Customer getCustomer() {
         return customer;
     }

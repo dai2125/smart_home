@@ -8,24 +8,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Creator4Service {
-    public static void main(String[] args) throws FileNotFoundException {
-
-//        if(args.length != 1) {
-//            System.out.println("Verwendung: java ClassFieldTracker <Pfad zur Java-Datein>");
-//            return;
-//        }
-
-//        String filePath = args[0];
-        String filePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\" +
-                            "com\\home\\creator\\InitializingData\\thirdExample\\ClassB.java";
-
-        try {
-            String sourceCode = new String(Files.readAllBytes(Paths.get(filePath)));
-//            analyzeClassFields(sourceCode);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void start(String className, String filePath) {
 //        System.out.println(className);
@@ -44,13 +26,6 @@ public class Creator4Service {
         parser.setKind(ASTParser.K_COMPILATION_UNIT);
         parser.setSource(sourceCode.toCharArray());
         parser.setResolveBindings(false);
-//        parser.setBindingsRecovery(true);
-
-//        String jdkPath = System.getProperty("java.home");
-//        String[] classpath = { jdkPath };
-//
-//        parser.setEnvironment(classpath, new String[] { "" }, null, true);
-
 
         int[] fieldCounter = {0};
         int[] paramCounter = {0};
@@ -61,7 +36,6 @@ public class Creator4Service {
         CompilationUnit compilationUnit = (CompilationUnit) parser.createAST(null);
 
         List<String> constructorParameters = new ArrayList<>();
-        List<ParameterField> parameterFieldList = new ArrayList<>();
         List<CreatorPrincipleMethod> methodList = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder(className.replaceFirst(".*/", "") + "\n");
@@ -69,8 +43,6 @@ public class Creator4Service {
         compilationUnit.accept(new ASTVisitor() {
             @Override
             public boolean visit(MethodDeclaration node) {
-
-//                parameterFieldList.clear();
 
                 int modifiers = node.getModifiers();
                 CreatorPrincipleMethod cpm = new CreatorPrincipleMethod(node.isConstructor(), node.getName().getIdentifier(), modifiers);
@@ -91,17 +63,8 @@ public class Creator4Service {
 
 //                            System.out.println("paramType: " + paramType + ", paramName: " + paramName);
 
-//                            parameterFieldList.add(new ParameterField(paramType, paramName));
-//                            System.out.println("..." + parameterFieldList.size());
-//                            System.out.println(new ParameterField(paramType, paramName).type());
-//                            System.out.println(new ParameterField(paramType, paramName).name());
-
                         }
                     }
-
-//                    CreatorPrincipleMethod cpm = new CreatorPrincipleMethod(node.isConstructor(), node.getName().getIdentifier(), modifiers, parameterFieldList);
-//                    methodList.add(cpm);
-
                 } else if(!node.isConstructor()) {
                     for(int i = 0; i < node.parameters().size(); i++) {
                         if(node.parameters().get(i) instanceof SingleVariableDeclaration) {
@@ -110,23 +73,13 @@ public class Creator4Service {
                             String paramName = variable.getName().getIdentifier();
 
                             cpm.addToParameterFieldList(paramType, paramName);
-
-//                            parameterFieldList.add(new ParameterField(paramType, paramName));
-
                         }
                     }
-//                    CreatorPrincipleMethod cpm = new CreatorPrincipleMethod(node.isConstructor(), node.getName().getIdentifier(), modifiers, parameterFieldList);
                 }
                 methodList.add(cpm);
-//                parameterFieldList.clear();
-
                 return super.visit(node);
             }
         });
-
-        for(int i = 0; i < constructorParameters.size(); i++) {
-//            System.out.println("constructor parameters: " + constructorParameters.get(i));
-        }
 
         List<String> fieldNames = new ArrayList<>();
         compilationUnit.accept(new ASTVisitor() {
@@ -147,8 +100,6 @@ public class Creator4Service {
             String methodName = "<init>";
             boolean methodIsPrivate = false;
             boolean methodIsConstructor = false;
-//            int paramCounter = 0;
-//            int fieldCounter = 0;
 
             @Override
             public boolean visit(MethodDeclaration node) {
@@ -195,10 +146,6 @@ public class Creator4Service {
                 fieldCounter[0] = 0;
                 paramCounter[0] = 0;
                 if(true) {
-
-//                    int paramCounter = 0;
-//                    int fieldCounter = 0;
-                    int localCounter = 0;
 //                    System.out.println(paramCounter+ " " + fieldCounter + " " + localCounter);
                     List<?> arguments = node.arguments();
                     objectParamCounter[0] = node.arguments().size();
@@ -212,7 +159,6 @@ public class Creator4Service {
                         for(int m = 0; m < arguments.size(); m++) {
                             if(arguments.get(m) instanceof SimpleName) {
                                 String argumentName = ((SimpleName) arguments.get(m)).getIdentifier();
-
                                 for(int n = 0; n < fieldNames.size(); n++) {
                                     if(fieldNames.get(n).equals(argumentName)) {
                                         fieldCounter[0]++;
@@ -485,10 +431,9 @@ public class Creator4Service {
 //                                        System.out.println("fieldCounter: " + fieldCounter + ":" + "paramCounter: " + paramCounter);
                             }
                         }
-
 //                            System.out.println("\targumentName: " + argumentName);
-                            }
-                        }
+                    }
+                }
 
                 if(objectParamCounter[0] == 0) {
 //                    System.out.println(node + " Object has no parameter");
@@ -533,23 +478,5 @@ public class Creator4Service {
             System.out.println(className.replaceFirst(".*/", "")
                     + " has no Objects with parameters");
         }
-//        System.out.println("CLASSFIELDTRACKER");
-//        System.out.println(sb.toString());
-//        System.out.println(fieldCounter[0] + " : " + paramCounter[0]);
-
-
-//        System.out.println("methodList");
-//        for(int i = 0; i < methodList.size(); i++) {
-//            System.out.println(methodList.get(i).initializingDataToString());
-//            for(int j = 0; j < methodList.get(i).getParameterList().size(); j++) {
-//                System.out.println(methodList.get(i).getParameterList().get(j));
-//            }
-//        }
-
-//        System.out.println("parameterFieldList " + parameterFieldList.size());
-//        for(int i = 0; i < parameterFieldList.size(); i++) {
-//            System.out.println(parameterFieldList.get(i));
-//        }
-
     }
 }

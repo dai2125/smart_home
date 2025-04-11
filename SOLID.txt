@@ -1,4 +1,4 @@
-1. **Single Responsibility Principle (SRP)**
+--1. **Single Responsibility Principle (SRP)**
    - **LCOM (Lack of Cohesion of Methods):** Hohe LCOM-Werte deuten auf mangelnde Kohäsion hin,
         was darauf hindeuten kann, dass eine Klasse mehrere Verantwortlichkeiten hat und das SRP verletzt.
         LCOM -1 Klasse kann nicht definiert werden
@@ -20,7 +20,7 @@
    - **FANIN / FANOUT:** Eine hohe Abhängigkeit von Unterklassen (Fan-In) oder eine starke Koppelung
         zu externen Klassen (Fan-Out) kann zu LSP-Verletzungen führen.
 
-4. **Interface Segregation Principle (ISP)**
+--4. **Interface Segregation Principle (ISP)**
    - **NOPM (Number of Public Methods):** Hohe NOPM-Werte können darauf hindeuten,
         dass eine Schnittstelle zu viele Methoden anbietet, was ISP widerspricht.
         Es kann sinnvoll sein, Schnittstellen mit zu vielen öffentlichen Methoden zu überdenken.
@@ -31,3 +31,4 @@
    - **FANIN / FANOUT:** Ein hoher FANOUT-Wert kann auf viele Abhängigkeiten zu anderen Klassen hinweisen,
         was ein Anzeichen dafür ist, dass das DIP verletzt wird. Insbesondere sollten hohe Abhängigkeiten
         zu konkreten Klassen vermieden und eher abstrakte Schnittstellen genutzt werden.
+        https://javatechonline.com/solid-principles-the-dependency-inversion-principle/

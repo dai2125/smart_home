@@ -1,5 +1,6 @@
 package com.home.asm;
 
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.dom.*;
 
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class SingleResponsibilityPrincipleService {
         parser.setResolveBindings(false);
 //        parser.setBindingsRecovery(true);
 
+        List<ClassInstanceCreation> objectList = new ArrayList<>();
+        int[] objectCounter = {0};
         int[] fieldCounter = {0};
         int[] paramCounter = {0};
         int[] objectParamCounter = {0};
@@ -51,6 +54,62 @@ public class SingleResponsibilityPrincipleService {
         StringBuilder sb = new StringBuilder(className.replaceFirst(".*/", "") + "\n");
 
         compilationUnit.accept(new ASTVisitor() {
+
+            @Override
+            public boolean visit(VariableDeclarationFragment node) {
+
+                if (node.getInitializer() instanceof ClassInstanceCreation) {
+                    ClassInstanceCreation creation = (ClassInstanceCreation) node.getInitializer();
+                    String varName = node.getName().toString();
+    //            Type type = ((ClassInstanceCreation) node.getInitializer()).getType();
+                    Type type = creation.getType();
+
+                    NewObject object = new NewObject(node.getName().toString(), type);
+                    System.out.println("var: " + type);
+                    System.out.println("var: " + object.getName());
+                    System.out.println("var: " + varName);
+
+    //            System.out.println(object);
+//                    newInstances.put(varName, type);
+//                    NewObjectService.put(object);
+
+                }
+                System.out.println("VariableDeclaration: " + node);
+                System.out.println("VariableDeclaration: " + node.getName().toString());
+                System.out.println("VariableDeclaration: " );
+                int type = node.getNodeType();
+                System.out.println("VariableDeclaration: " + type);
+//                System.out.println("VariableDeclaration: " + node.getInitializer().resolveTypeBinding());
+//                ITypeBinding binding = node.getType
+//
+//                if(binding != null) {
+//                    System.out.println(binding.isClass());
+//                    System.out.println(binding.getName());
+//                }
+
+                return super.visit(node);
+            }
+
+            @Override
+            public boolean visit(ClassInstanceCreation node) {
+                System.out.println("visit: " + node);
+                Type type = node.getType();
+
+                System.out.println("type: "+ type);
+                System.out.println("type: " + type.toString());
+                ITypeBinding binding = node.resolveTypeBinding();
+                if(binding != null) {
+                    System.out.println("Instance: " + binding.getQualifiedName());
+                }
+
+                binding = node.getType().resolveBinding();
+                if(binding != null) {
+                    System.out.println("Instance2:  " + binding.getQualifiedName());
+                }
+
+                return true;
+
+            }
             @Override
             public boolean visit(MethodDeclaration node) {
 
@@ -61,7 +120,7 @@ public class SingleResponsibilityPrincipleService {
 //                System.out.println("modifier: " + modifiers + ", node: " + node.getName());
 //                System.out.println("visit Method: " + node.isConstructor() + " " + node.getName());
                 if(node.isConstructor()) {
-//                    System.out.println("constructor found " + node.getName());
+                    System.out.println("constructor found " + node.getName());
 //                    System.out.println(node.parameters().size());
 
                     for(Object param : node.parameters()) {
@@ -161,6 +220,9 @@ public class SingleResponsibilityPrincipleService {
             public boolean visit(ClassInstanceCreation node) {
 //                System.out.println("visit: " + node.getType().toString());
 //                parser.setResolveBindings(true);
+                objectCounter[0]++;
+                objectList.add(node);
+
                 return super.visit(node);
             }
         });
@@ -172,7 +234,15 @@ public class SingleResponsibilityPrincipleService {
         // TODO Cyclomatic Complexity (CC)
         // TODO fanout <= 2 for example
         // TODO LCOM4 == 1
-        System.out.println("SINGLE RESPONSIBILITY PRINCIPLE");
+        // TODO how many Objects does this class create?
+
+        for(int i = 0; i < objectList.size(); i++) {
+            System.out.println("objectList(): " + objectList.get(i));
+        }
+
+
+
+        System.out.println("SINGLE RESPONSIBILITY PRINCIPLE " + objectCounter[0]);
         System.out.println(inspectedClass.getName() + ", nom="
                             + inspectedClass.getAmountOfMethods()
                             + ", fanout=" + inspectedClass.getFanout()

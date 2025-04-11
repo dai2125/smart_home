@@ -47,7 +47,7 @@
         Sollte nicht zu häufig verwendet werden, sonst existieren am Schluss nur noch Klassen,
         die einzelne Methoden kapseln.
 
-8. **Indirection**
+--8. **Indirection**
         Indirection (Umweg) kann verwendet werden, um geringe Kopplung zu erreichen.
         Sie wird erzielt, indem ein Vermittler zwischen Client und Server eingebaut wird.
         Sinnvoll wenn sich ein Serverobjekt ständig verändert.

@@ -117,27 +117,3 @@ public class CreatorPrincipleBCloselyUsesA extends ClassVisitor {
         methodPrinter.bCloselyUsesA();
     }
 }
-
-
-//            @Override
-//            public void visitMethodInsn(int opcode, String owner, String methodName, String methodDescriptor, boolean isInterface) {
-//                String operation = switch (opcode) {
-//                    case Opcodes.INVOKESPECIAL -> "ruft Konstruktor auf";
-//                    case Opcodes.INVOKEVIRTUAL -> "ruft Instanzmethode auf";
-//                    case Opcodes.INVOKESTATIC -> "ruft statische Methode auf";
-//                    default -> "unbekannter Methodeaufruf";
-//                };
-//                System.out.println("-> " + operation + ": " + owner + "." + methodName + "\n");
-//            }
-
-//        System.out.println("Methode gefunden: " + name);
-//        System.out.println("\tDescriptor: " + descriptor);
-//        System.out.println("\tZugriff: " + access);
-//        if(exceptions != null && exceptions.length > 0) {
-//            System.out.println("\tExceptions: ");
-//            for(String ex : exceptions) {
-//                System.out.println("\t- " + ex);
-//            }
-//        }
-//        System.out.println();
-//        return super.visitMethod(access, name, descriptor, signature, exceptions);

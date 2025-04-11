@@ -23,6 +23,10 @@ public class CreatorPrincipleService {
         }
     }
 
+    public static ArrayList<CreatorPrinciple> getCreatorPrincipleList() {
+        return creatorPrincipleList;
+    }
+
     public static CreatorPrinciple get(String className) {
 //        System.out.println("1: ");
         for(CreatorPrinciple creatorPrinciple : creatorPrincipleList) {
@@ -617,41 +621,79 @@ public class CreatorPrincipleService {
         }
     }
 
-    public static void aaa(int a) {
+    public static String singleResponsibilityPrinciple(InspectedClass inspectedClass) {
+        StringBuilder sb = new StringBuilder();
+        HashSet<String> hashSet = new HashSet<>();
+        sb.append("SINGLE RESPONSIBILITY PRINCIPLE " + inspectedClass.getName() + "\n");
+        sb.append(inspectedClass.getName() + " ");
+        sb.append("has " + inspectedClass.getAmountOfMethods() + " methods");
+        sb.append(", fanout = " + inspectedClass.getFanout());
+        sb.append(", wmc = " + inspectedClass.getWmc());
+        sb.append(", yalcom = " + String.format("%.2f", inspectedClass.getYalcom()));
+        sb.append(", LCOM4 = " + inspectedClass.getLcom4());
+
         for (int i = 0; i < creatorPrincipleList.size(); i++) {
-            CreatorPrinciple principle = creatorPrincipleList.get(i);
+            if (creatorPrincipleList.get(i).getName().replaceFirst(".*/", "").equals(inspectedClass.getName())) {
+                CreatorPrinciple principle = creatorPrincipleList.get(i);
 
-            List<CreatorPrincipleField> fields = principle.getFieldList();
-            List<CreatorPrincipleMethod> functions = principle.getFunctionList();
-
-            for (int j = 0; j < fields.size(); j++) {
-                CreatorPrincipleField field = fields.get(j);
-
-                for (int k = 0; k < functions.size(); k++) {
-                    CreatorPrincipleMethod function = functions.get(k);
-                    List<CreatorPrincipleMethod> subMethods = function.getSubMethodList();
-
-                    for (int m = 0; m < subMethods.size(); m++) {
-                        CreatorPrincipleMethod subMethod = subMethods.get(m);
-//                        System.out.println("aaaa: " + field.getName());
-//                        System.out.println("bbbb: " + field.getOwner());
-//                        System.out.println("rrrr: " + field.getType());
-//
-//                        System.out.println("wwww: " + subMethod.getName());
-//                        System.out.println("gggg: " + subMethod.getOperation());
-//                        System.out.println("kkkk: " + subMethod.getModifier());
-//                        System.out.println("qqqq: " + subMethod.getType());
-
-//                        if(field.getType().contains(subMethod.getType())) {
-                        if (field.getType().replaceFirst("L", "").replace(";", "").equals(subMethod.getType())) {
-                            System.out.println("xxxxxxxxxxxxxxxxxxxxx");
-                            System.out.println(field.getType());
-                            System.out.println(subMethod.getType());
+                List<CreatorPrincipleField> fieldInsn = principle.getFieldInsnList();
+                for(int y = 0; y < fieldInsn.size(); y++) {
+                    if(fieldInsn.get(y).getOwnerMethod().equals("<init>")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("I")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("D")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("L")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("S")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("Z")
+//                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/lang/String;")
+//                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/io/PrintStream;")
+//                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/util/Random;")
+//                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/util/List;")
+//                            && !fieldInsn.get(y).getFieldReturnType().equals("[Ljava/lang/String;")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("[D")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("[I")
+                    ) {
+                        if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
+                            if(inspectedClass.getAmountOfMethods() == 0) {
+                                sb.append("\nHat keine Methoden\n");
+                            } else if(inspectedClass.getAmountOfMethods() == case3(fieldInsn.get(y).getName(), fieldInsn)) {
+                                sb.append("\nErstellt das Objekt "
+                                        + fieldInsn.get(y).getName()
+                                        + " im Konstruktor und verwendet es in ("
+                                        + case3(fieldInsn.get(y).getName(), fieldInsn)
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") --Methoden, Prinzip wird erfüllt--\n");
+                            } else {
+                                sb.append("\nErstellt das Objekt "
+                                        + fieldInsn.get(y).getName()
+                                        + " im Konstruktor und verwendet es in ("
+                                        + case3(fieldInsn.get(y).getName(), fieldInsn)
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") --Methoden, Prinzip wird verletzt--");
+                            }
                         }
+                        hashSet.add(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod());
                     }
                 }
             }
         }
+
+        if(inspectedClass.getAmountOfMethods() > 5 && inspectedClass.getLcom4() > 2) {
+            sb.append("\nClass has " + inspectedClass.getAmountOfMethods() + " methods and they arent cohesive ");
+        }
+        if(inspectedClass.getFanout() > 3) {
+            sb.append("\nFanout is greater than 3, should be lower");
+        }
+        if(inspectedClass.getWmc() > (inspectedClass.getAmountOfConstructors() + inspectedClass.getAmountOfMethods()) * 2) {
+            sb.append("\nWmc is very high, functions should be less complex");
+        }
+        if(inspectedClass.getLcom4() > 2) {
+            sb.append("\nLCOM4 is very high, refactor the cohesion");
+        }
+        if(inspectedClass.getYalcom() > 0.5) {
+            sb.append("\nYalcom is very high, refactor the cohesion");
+        }
+        if(sb.length() == 0) {
+            sb.append("\nErstellt keine Objekte im Konstruktor--");
+        }
+        return sb.toString();
     }
 
 }
