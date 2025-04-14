@@ -23,9 +23,13 @@ public class NumberOfChildrenService {
 
     public int calculateNOC(String basePackage) {
         try {
+            System.out.println("NoC: " + basePackage);
+//            System.out.println("NoC: " + basePackage.replace('.', '/'));
             String baseDir = basePackage.replace('.', '/');
-            String resourcePath = classLoader.getResource(baseDir).getPath();
-            File packageDir = new File(resourcePath);
+            baseDir = basePackage.replaceAll("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
+            System.out.println("Noc: " + baseDir);
+//            String resourcePath = classLoader.getResource(baseDir).getPath();
+            File packageDir = new File(basePackage);
 
             scanPackageForChildren(packageDir, basePackage);
 
@@ -61,6 +65,7 @@ public class NumberOfChildrenService {
     private void checkIfChildClass(String className) {
         try {
             String internalClassName = className.replace('.', '/');
+            System.out.println("NoC2: " + internalClassName);
             FileInputStream fis = new FileInputStream(classLoader.getResource(internalClassName + ".class").getPath());
             ClassReader reader = new ClassReader(fis);
 

@@ -85,10 +85,11 @@ public class FanInService {
 //                System.out.println("file.getName().endsWith(.class): " + file.getName());
             } else if (file.getName().endsWith(".java")) {
 
+//                System.out.println("String fileName: " + file.getPath());
                 String fileName = file.getPath().replace(".java", "")
                         .replaceAll("\\\\", "/")
-                        .replace("C:/Users/aigne/IdeaProjects/smart_home/Authentication/src/main/java/", "");
-
+                        .replace("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
+//                System.out.println("String fileName: "+ fileName);
                 ClassReader classReader = new ClassReader(fileName);
                 isInterface = false;
 

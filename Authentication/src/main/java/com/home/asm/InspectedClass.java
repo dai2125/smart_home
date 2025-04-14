@@ -38,6 +38,7 @@ public class InspectedClass {
     private Set<InspectedClass> orchestratorList = new HashSet<>();
 
     public InspectedClass(String name) {
+//        System.out.println("InspectedClass: " + name);
         this.name = name;
     }
 
@@ -338,6 +339,37 @@ public class InspectedClass {
                 "\tmethods=" + methods.stream().map(MethodModel::toString).toList() + "\n" +
                 "\tsubFields=" + subFields.stream().map(SubField::toString).toList() + "\n" +
                 "\t"/*"methodInformation="*/ + methodInformationList.stream().map(MethodInformation::toString).toList() + "\n" +
+                '}';
+    }
+
+    public String metricToString() {
+        return "InspectedClass{" + "\n" +
+                "\tname=\t\t\t\t\t" + name + '\n' +
+                "\tfullName=\t\t\t\t" + fullName + '\n' +
+                "\twmc=\t\t\t\t\t" + wmc + '\n' +
+                "\tfanin=\t\t\t\t\t" + fanin + '\n' +
+                "\tfanout=\t\t\t\t\t" + fanout + '\n' +
+                "\tamountOfMethods=\t\t" + amountOfMethods + "\n" +
+                "\tamountOfFields=\t\t\t" + amountOfFields + "\n" +
+                "\tamountOfConstructors=\t" + amountOfConstructors + '\n' +
+                "\tnumberOfChildren=\t\t" + numberOfChildren + '\n' +
+                "\tdit=\t\t\t\t\t" + dit + '\n' +
+                "\tyalcom=\t\t\t\t\t" + yalcom + '\n' +
+//                ", lcom1=" + lcom1 +
+//                ", lcom2=" + lcom2 +
+//                ", lcom3=" + lcom3 +
+                "\tlcom4=\t\t\t\t\t" + lcom4 + '\n' +
+//                ", lcom5=" + lcom5 +
+//                ", lcom4v1=" + lcom4v1 +
+//                ", numberOfIndirectConnections=" + numberOfIndirectConnections +
+//                ", numberOfDirectConnections=" + numberOfDirectConnections +
+//                ", numberOfPossibleConnections=" + numberOfPossibleConnections +
+//                "\tmethods size=" + methods.size() + "\n" +
+//                "\tfields size=" + subFields.size() + "\n" +
+
+//                "\tmethods=" + methods.stream().map(MethodModel::toString).toList() + "\n" +
+//                "\tsubFields=" + subFields.stream().map(SubField::toString).toList() + "\n" +
+//                "\t"/*"methodInformation="*/ + methodInformationList.stream().map(MethodInformation::toString).toList() + "\n" +
                 '}';
     }
 }

@@ -5,11 +5,14 @@ import org.objectweb.asm.ClassReader;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Start {
 
-    String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
+    String packagePath = "C:\\Users\\Authentication\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
             "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
     String analysePath = "com/home/coupling/firstAnalysis/goodExample";
     String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
@@ -31,7 +34,7 @@ public class Start {
 //        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home\\pureFabrication\\fifthExample";
 //        String analysePath = "com/home/pureFabrication/fifthExample";
 
-        String packagePath = "C:\\Users\\aigne\\IdeaProjects\\smart_home\\Authentication\\src\\main\\java\\com\\home" +
+        String packagePath = "C:\\Users\\Lenovo\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
                                 "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
         String analysePath = "com/home/singleResponsibilityPrinciple/firstAnalysis"; ///goodExample";///badExample";
         String targetClass = "com/home/pureFabrication/fifthExample/PayByCreditCard";
@@ -240,6 +243,62 @@ public class Start {
                             creator4(inspectedClassList.get(i).getFullName(), packagePath);
                         }
                     }
+                    break;
+                case "path": // CREATOR PRINCIPLE
+                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/cohesion
+//                    printAllClasses();
+                    // TODO Pfad einfügen funktioniert probiere ob es auch außerhalb des Projekts funktioniert
+                    System.out.println(print.ENTERPATH);
+                    input = scanner.nextLine().trim();
+//                    System.out.println(input);
+
+                    Path path = Paths.get(input);
+                    if(Files.exists(path)) {
+//                        System.out.println("Path: " + path);
+//                        System.out.println("Path: " + path.getFileSystem());
+//                        System.out.println("Path: " + path.getParent());
+//                        System.out.println("Path: " + path.getRoot());
+//                        System.out.println("Path: " + path.toAbsolutePath());
+//                        System.out.println("Path System.getProperty(\"user.dir\"): " + System.getProperty("user.dir"));
+                        String replace = System.getProperty("user.dir").replaceAll("\\\\", "/");
+//                        System.out.println("Path replace: " + replace);
+//                        System.out.println("Path analysePath: " + analysePath);
+
+                        String a = path.toString();
+                        a = a.replaceAll("\\\\", "/");
+                        a.replaceAll(replace, "");
+
+                        packagePath = path.toString().replaceAll("/", "\\\\");
+                        analysePath = a;
+                        directory = new File(a);
+//                        analysePath = input.replaceFirst(replace, "") + "/";
+                        inspectedClassList.clear();
+                        printAllClasses();
+                        test = packageService.allClasses(directory);
+
+//                        System.out.println("packagePath: " + packagePath);
+//                        System.out.println("analysePath: " + analysePath);
+//                        System.out.println("directory: " + directory);
+                        inspectedClassList = initializeAllClasses(analysePath, packagePath, directory, numberOfChildrenService, depthOfInheritanceTree, fanInService, fanOutService, test, wmcService, numberOfMethodsService, numberOfConstructorsService, numberOfFieldsService);
+
+                    }
+
+
+                    printAllClasses();
+                    break;
+                case "print": // CREATOR PRINCIPLE
+                    printAllClassesWithMetrics();
+
+//                    System.out.println(print.CHOOSECLASS);
+//                    input = scanner.nextLine().trim().toLowerCase();
+//
+//                    for(int i = 0; i < inspectedClassList.size(); i++) {
+//                        if(inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+////                            System.out.println(creator3(inspectedClassList.get(i).getFullName(), inspectedClassList.get(i).getAmountOfMethods()));
+//                            System.out.println(creator1(inspectedClassList.get(i).getName(), inspectedClassList.get(i).getAmountOfMethods()));
+////                            creator4(inspectedClassList.get(i).getFullName(), packagePath);
+//                        }
+//                    }
                     break;
                 default:
                     System.out.println(print.UNKNOWNINPUT + input);
@@ -517,12 +576,15 @@ public class Start {
         Iterator<String> iterator = test.iterator();
         while(iterator.hasNext()) {
             String className = iterator.next();
-
-            InspectedClass inspectedClass = new InspectedClass(className.replace(analysePath + "/", ""));
+//            System.out.println("className = " + className);
+//            System.out.println("className = " + className.replaceFirst(".*/", ""));
+//            System.out.println("className = " + className.replaceAll(".*/", ""));
+            InspectedClass inspectedClass = new InspectedClass(className.replaceAll(".*/", ""));
+//            InspectedClass inspectedClass = new InspectedClass(className.replace(analysePath + "/", ""));
             inspectedClass.setFullName(className);
 
             numberOfChildrenService = new NumberOfChildrenService(className);
-            int a = numberOfChildrenService.calculateNOC(analysePath);
+            int a = numberOfChildrenService.calculateNOC(packagePath);
 //            System.out.println(className + " has " + a + " children");
             inspectedClass.setNumberOfChildren(a);
 
@@ -608,7 +670,8 @@ public class Start {
             ClassService.put(inspectedClass);
 
 //            System.out.println("start: " + inspectedClass.getFullName());
-            String[] args2 = new String[]{"-i", packagePath, "-o", inspectedClass.getFullName().replace(analysePath + "/", "")};
+            String[] args2 = new String[]{"-i", packagePath, "-o", inspectedClass.getName()};
+//            String[] args2 = new String[]{"-i", packagePath, "-o", inspectedClass.getFullName().replace(analysePath + "/", "")};
             LCOM.startLcomProcess(args2);
 
 
@@ -635,6 +698,12 @@ public class Start {
     private void printAllClasses() {
         for(int i = 0; i < inspectedClassList.size(); i++) {
             System.out.println(print.SYSTEM + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+        }
+    }
+
+    private void printAllClassesWithMetrics() {
+        for(int i = 0; i < inspectedClassList.size(); i++) {
+            System.out.println(print.SYSTEM + inspectedClassList.get(i).metricToString()); //.replaceFirst(".*/", ""));
         }
     }
 }

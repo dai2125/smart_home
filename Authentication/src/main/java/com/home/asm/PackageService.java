@@ -23,10 +23,13 @@ public class PackageService {
 //                System.out.println("file.isDirectory: " + file.getName());
                 allClasses(file);
             } else if (file.getName().endsWith(".java")) {
+                System.out.println("file.getAbsolutePath(); "+ file.getAbsolutePath());
                 String fileName = file.getPath().replace(".java", "")
                         .replaceAll("\\\\", "/")
-                        .replace("C:/Users/aigne/IdeaProjects/smart_home/Authentication/src/main/java/", "");
-
+//                        .replace("C:/Users/aigne/IdeaProjects/smart_home/Authentication/src/main/java/", "");
+                        .replace("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
+//                fileName = fileName.replaceFirst(".*/", "");
+                System.out.println("fileName: " + fileName);
                 classes.add(fileName);
             }
         }

@@ -22,6 +22,7 @@ public class print {
                                         + SYSTEM + "11 --> Creator Principle 1\t"
                                         + SYSTEM + "12 --> Creator Principle 2\t"
                                         + SYSTEM + "13 --> Creator Principle 4\t";
+    public static final String ENTERPATH = "System:> enter path for analyze";
 
 
 

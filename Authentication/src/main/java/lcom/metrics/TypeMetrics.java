@@ -19,8 +19,8 @@ public class TypeMetrics {
 //        System.out.println("type(): " + type.toString());
 
         InspectedClass inspectedClass = ClassService.get(targetClass);
-//        System.out.println("targetClass: " + targetClass);
-//        System.out.println("inspectedClass.getName(): " + inspectedClass.getFullName());
+        System.out.println("targetClass: " + targetClass);
+        System.out.println("inspectedClass.getName(): " + inspectedClass.getFullName());
         if(type.getName().equals(targetClass)) {
 
             ILCOM lcomAlgorithm = new YALCOM();
@@ -58,6 +58,7 @@ public class TypeMetrics {
                     lcom5 = lcomAlgorithm.compute(type);
                     inspectedClass.setLcom5(lcom5);
 
+
 //                    inspectedClass.setLcom1(yalcom);
 //                    inspectedClass.setLcom2(yalcom);
 //                    inspectedClass.setLcom3(yalcom);
@@ -88,6 +89,7 @@ public class TypeMetrics {
                     lcom5 = lcomAlgorithm.compute(type);
                     inspectedClass.setLcom5(lcom5);
 //                    System.out.println("TTTinspectedClass: " + inspectedClass + " has LCOM4 of " + lcom4);
+                    System.out.println("TypeMetrics inspectedClass: " + inspectedClass.getLcom1() + ", " + inspectedClass.getLcom2() + ", "+ inspectedClass.getLcom4() + ", " + inspectedClass.getLcom5());
 
                 }
             }
