@@ -86,9 +86,13 @@ public class FanInService {
             } else if (file.getName().endsWith(".java")) {
 
 //                System.out.println("String fileName: " + file.getPath());
+
+                // AuWo Path
+                String basePath = System.getProperty("user.dir").replaceAll("\\\\", "/") + "/Authentication/src/main/java/";
                 String fileName = file.getPath().replace(".java", "")
                         .replaceAll("\\\\", "/")
-                        .replace("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
+                        .replace(basePath, "");
+                //.replace("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
 //                System.out.println("String fileName: "+ fileName);
                 ClassReader classReader = new ClassReader(fileName);
                 isInterface = false;

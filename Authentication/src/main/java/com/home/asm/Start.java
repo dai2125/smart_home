@@ -3,6 +3,7 @@ package com.home.asm;
 import lcom.LCOM;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
+import oshi.util.LsofUtil;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -17,8 +18,12 @@ import java.util.*;
 
 public class Start {
 
-    String packagePath = "C:\\Users\\Authentication\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
-            "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
+    //String packagePath = "C:\\Users\\Authentication\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
+    //        "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
+    // AuWo Path
+    String basePath = System.getProperty("user.dir");
+    String packagePath = basePath + "\\Authentication\\src\\main\\java\\com\\home\\cohesion";
+
 
     List<InspectedClass> inspectedClassList = new ArrayList<>();
     PackageService packageService = new PackageService();
@@ -33,13 +38,26 @@ public class Start {
         app.run();
     }
 
+    private static boolean backEquals(String input) {
+        if(input.equalsIgnoreCase("back") || input.equalsIgnoreCase("b")) {
+            return true;
+        }
+        return false;
+    }
+
     public void run() throws IOException {
-        String packagePath = "C:\\Users\\Lenovo\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
-                "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
-        String analysePath = "com/home/singleResponsibilityPrinciple/firstAnalysis"; ///goodExample";///badExample";
+        //String packagePath = "C:\\Users\\Lenovo\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
+        //        "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
+        // AuWo Path
+        String analysePath = "Authentication\\src\\main\\java\\com\\home\\cohesion"; ///goodExample";///badExample";
+        String packagePath = basePath + "\\" + analysePath;
+        // System.out.println("1: " + analysePath);
+        // System.out.println("2: " + basePath);
+        // System.out.println("3: " + packagePath);
+
+        File directory = new File(packagePath);
 
         PackageService packageService = new PackageService();
-        File directory = new File(packagePath);
         NumberOfChildrenService numberOfChildrenService = null;
         DepthOfInheritanceTree depthOfInheritanceTree = null;
         FanInService fanInService = null;
@@ -63,7 +81,6 @@ public class Start {
 
             String input = scanner.nextLine().trim().toLowerCase();
 
-
             if (quitEquals(input)) {
                 screenShutDown();
                 break;
@@ -71,55 +88,55 @@ public class Start {
 
             switch (input.toLowerCase()) {
                 case "1": // INDIRECTION PRINCIPLE
-                    printAllClasses();
-                    screenChooseClass();
-//                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
-
-                    screenChooseOrchestrator();
-                    screenIndirection();
-//                    System.out.println(print.CHOOSEORCHESTRATOR);
-//                    System.out.println(print.ENTERSTART);
-//                    System.out.println(print.SYSTEM);
-
-                    String orchestrator = "";
-                    orchestrator = scanner.nextLine().trim().toLowerCase();
-
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/indirection/firstAnalysis/goodExample
+                    while(true) {
+                        printAllClasses(1);
+                        screenChooseClass(1);
+                        //                    System.out.println(print.CHOOSECLASS);
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    if(classEquals(input) && classEquals(orchestrator)) {
-                        doIndirectionBetween(input, orchestrator);
+                        if(backEquals(input)) {
+                            break;
+                        }
 
-                    } else if(classEquals(input) && startEquals(orchestrator)) {
-                        doIndirection(input, orchestrator);
-                    } else {
-                        screenClassDoesntExist(input);
+                        screenChooseOrchestrator();
+                        screenIndirection();
+                        //                    System.out.println(print.CHOOSEORCHESTRATOR);
+                        //                    System.out.println(print.ENTERSTART);
+                        //                    System.out.println(print.SYSTEM);
+
+                        String orchestrator = "";
+                        orchestrator = scanner.nextLine().trim().toLowerCase();
+
+                        if(backEquals(orchestrator)) {
+                            break;
+                        }
+
+                        if(classEquals(input) && classEquals(orchestrator)) {
+                            doIndirectionBetween(input, orchestrator);
+
+                        } else if(classEquals(input) && startEquals(orchestrator)) {
+                            doIndirection(input, orchestrator);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
                     }
-//                    if (orchestrator.equalsIgnoreCase("start")) {
-//                        for (int i = 0; i < inspectedClassList.size(); i++) {
-//                            if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//                                System.out.println(indirectionService.start(inspectedClassList.get(i), inspectedClassList));
-//                            }
-//                        }
-//                    } else {
-//                        for (int i = 0; i < inspectedClassList.size(); i++) {
-//                            for (int j = 0; j < inspectedClassList.size(); j++) {
-//                                if (inspectedClassList.get(i).getName().equalsIgnoreCase(input) && inspectedClassList.get(j).getName().equalsIgnoreCase(orchestrator)) {
-//                                    indirectionService.setIndirectionBetween(inspectedClassList.get(i), inspectedClassList.get(j));
-//                                }
-//                            }
-//                        }
-//                    }
-
                     break;
                 case "2": // LOOSE COUPLING
-                    printAllClasses();
-                    screenCoupling();
+                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/coupling/fourthAnalysis/goodExample
+                    while(true) {
+                        // System.out.println("\u001B[31m" + "some test");
+                        printAllClasses(2);
+                        screenCoupling();
 
-//                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
+    //                    System.out.println(print.CHOOSECLASS);
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    doCoupling(input);
+                        if(backEquals(input)) {
+                            break;
+                        }
+
+                        doCoupling(input);
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
@@ -130,21 +147,26 @@ public class Start {
 //                                    inspectedClassList.get(i).getFanout(),
 //                                    inspectedClassList.get(i).getIsInterface()));
 //                        }
-//                    }
+                    }
                     break;
                 case "3": // INTERFACE SEGREGATION PRINCIPLE
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/InterfaceSegregationPrinciple/firstAnalysis/goodExample
-                    printAllClasses();
+                    while(true) {
 
-                    screenChooseClass();
+                        printAllClasses(3);
+
+                        screenChooseClass(3);
 //                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    if(classEquals(input)) {
-                        doInterfaceSegregation(input);
-                    } else {
-                        screenClassDoesntExist(input);
-                    }
+                        if(backEquals(input)) {
+                            break;
+
+                        } else if(classEquals(input)) {
+                            doInterfaceSegregation(input);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
@@ -152,20 +174,25 @@ public class Start {
 //                            System.out.println(InterfaceSegregationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
 //                        }
 //                    }
+                    }
                     break;
                 case "4": // COHESION
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/cohesion
-                    printAllClasses();
+                    while(true) {
 
-                    screenChooseClass();
+                        printAllClasses(4);
+
+                        screenChooseClass(4);
 //                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    if(classEquals(input)) {
-                        doCohesion(input);
-                    } else {
-                        screenClassDoesntExist(input);
-                    }
+                        if(backEquals(input)) {
+                            break;
+                        } else if(classEquals(input)) {
+                            doCohesion(input);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
@@ -178,20 +205,25 @@ public class Start {
 //                                    inspectedClassList.get(i).getLcom4()));
 //                        }
 //                    }
+                    }
                     break;
                 case "5": // PROTECTED VARIATION
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/protectedVariations/firstAnalysis/goodExample
-                    printAllClasses();
+                    while(true) {
 
-                    screenChooseClass();
+                        printAllClasses(5);
+
+                        screenChooseClass(5);
 //                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    if(classEquals(input)) {
-                        doProtectedVariation(input);
-                    } else {
-                        screenClassDoesntExist(input);
-                    }
+                        if(backEquals(input)) {
+                            break;
+                        } else if(classEquals(input)) {
+                            doProtectedVariation(input);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
@@ -201,20 +233,25 @@ public class Start {
 //                            System.out.println(ProtectedVariationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
 //                        }
 //                    }
+                    }
                     break;
                 case "6": // SINGLE RESPONSIBILTY PRINCIPLE
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/singleResponsibilityPrinciple/firstAnalysis
-                    printAllClasses();
+                    while(true) {
 
-                    screenChooseClass();
+                        printAllClasses(6);
+
+                        screenChooseClass(6);
 //                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    if(classEquals(input)) {
-                        doSingleResponsibility(input);
-                    } else {
-                        screenClassDoesntExist(input);
-                    }
+                        if(backEquals(input)) {
+                            break;
+                        } else if(classEquals(input)) {
+                            doSingleResponsibility(input);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
@@ -223,20 +260,25 @@ public class Start {
 //                            System.out.println(CreatorPrincipleService.singleResponsibilityPrinciple(inspectedClassList.get(i)));
 //                        }
 //                    }
+                    }
                     break;
                 case "11": // CREATOR PRINCIPLE B CLOSELY USES A
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/principle1/goodExample
-                    printAllClasses();
+                    while(true) {
 
-                    screenChooseClass();
+                        printAllClasses(11);
+
+                        screenChooseClass(11);
 //                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
+                        input = scanner.nextLine().trim().toLowerCase();
 
-                    if(classEquals(input)) {
-                        doCreator1(input);
-                    } else {
-                        screenClassDoesntExist(input);
-                    }
+                        if(backEquals(input)) {
+                            break;
+                        } else if(classEquals(input)) {
+                            doCreator1(input);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
@@ -244,46 +286,59 @@ public class Start {
 //                            System.out.println(creator1(inspectedClassList.get(i).getName(), inspectedClassList.get(i).getAmountOfMethods()));
 //                        }
 //                    }
-                    break;
-                case "12": // CREATOR PRINCIPLE B CONTAINS OR COMPOSETILY AGGREGATES A
-                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/principle3/goodExample
-                    printAllClasses();
-                    screenChooseClass();
-//                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
-
-                    if(classEquals(input)) {
-                        doCreator3(input);
-                    } else {
-                        screenClassDoesntExist(input);
                     }
+                    break;
+                case "12": // CREATOR PRINCIPLE B RECORDS A
+                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/principle3/goodExample
+                    while(true) {
+
+                        printAllClasses(12);
+                        screenChooseClass(12);
+//                    System.out.println(print.CHOOSECLASS);
+                        input = scanner.nextLine().trim().toLowerCase();
+
+                        if(backEquals(input)) {
+                            break;
+                        } else if(classEquals(input)) {
+                            doCreator3(input);
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
 //                            System.out.println(creator3(inspectedClassList.get(i).getFullName(), inspectedClassList.get(i).getAmountOfMethods()));
 //                        }
 //                    }
-                    break;
-                case "13": // CREATOR PRINCIPLE B RECORDS A
-                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/principle3/goodExample
-
-                    printAllClasses();
-
-                    screenChooseClass();
-//                    System.out.println(print.CHOOSECLASS);
-                    input = scanner.nextLine().trim().toLowerCase();
-
-                    if(classEquals(input)) {
-                        doCreator4(input);
-                    } else {
-                        screenClassDoesntExist(input);
                     }
+                    break;
+                case "13": // CREATOR PRINCIPLE B CONTAINS OR COMPOSETILY AGGREGATES A
+                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/principle2/goodExample
+                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/InitializingData/goodExample
+                    // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/creator/InitializingData/thirdExample
+
+                    while (true) {
+
+                        printAllClasses(13);
+
+                        screenChooseClass(13);
+//                    System.out.println(print.CHOOSECLASS);
+                        input = scanner.nextLine().trim().toLowerCase();
+
+                        if(backEquals(input)) {
+                            break;
+                        } else if(classEquals(input)) {
+                            System.out.println(doCreator4(input));
+                        } else {
+                            screenClassDoesntExist(input);
+                        }
 
 //                    for (int i = 0; i < inspectedClassList.size(); i++) {
 //                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
 //                            creator4(inspectedClassList.get(i).getFullName(), packagePath);
 //                        }
 //                    }
+                    }
                     break;
                 case "path": // CHANGE PATH
                     // C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/com/home/cohesion
@@ -328,6 +383,12 @@ public class Start {
                 case "test":
                     ClassService.printAllClasses();
                     break;
+                case "metrics":
+                    printMetrics();
+                    break;
+                case "dir":
+                    printDirectory();
+                    break;
                 default:
                     screenDefault(input);
 //                    System.out.println(print.UNKNOWNINPUT + input);
@@ -335,6 +396,10 @@ public class Start {
             }
         }
         scanner.close();
+    }
+
+    private static void changePathInCategory() {
+
     }
 
     private static List<InspectedClass> initializeAllClasses(String analysePath, String packagePath, File directory, NumberOfChildrenService numberOfChildrenService, DepthOfInheritanceTree depthOfInheritanceTree, FanInService fanInService, FanOutService fanOutService, HashSet<String> test, WMCService wmcService, NumberOfMethodsService numberOfMethodsService, NumberOfConstructorsService numberOfConstructorsService, NumberOfFieldsService numberOfFieldsService) throws IOException {
@@ -474,8 +539,41 @@ public class Start {
         return CreatorPrincipleService.thirdPrinciple(className, nom);
     }
 
-    private static void creator4(String className, String packagePath) {
-        Creator4Service.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
+    private static String creator4(String className, String packagePath) {
+        return Creator4Service.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
+    }
+
+    private String terminalCategory(int num) {
+        if(num == 1) {
+            return print.INDIRECTION;
+        } else if(num == 2) {
+            return print.COUPLING;
+        } else if(num == 3) {
+            return print.ISP;
+        } else if(num == 4) {
+            return print.COHESION;
+        } else if(num == 5) {
+            return print.PROTECTEDVARIATIONS;
+        } else if(num == 6) {
+            return print.SRP;
+        } else if(num == 11) {
+            return print.CREATOR1;
+        } else if(num == 12) {
+            return print.CREATOR2;
+        } else if(num == 13) {
+            return print.CREATOR3;
+        } else if(num == 14) {
+            return print.CREATOR4;
+        } else {
+            return print.SYSTEM;
+        }
+    }
+
+    private void printAllClasses(int num) {
+        String category = terminalCategory(num);
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            System.out.println(category + inspectedClassList.get(i).getName()); //.replaceFirst(".*/", ""));
+        }
     }
 
     private void printAllClasses() {
@@ -493,7 +591,8 @@ public class Start {
     private void screenWelcome() {
         System.out.println(print.SYSTEM);
         System.out.println(print.OPTIONS);
-        System.out.println(print.GREATERTHAN);
+        System.out.print(print.SYSTEM);
+        // System.out.println(print.GREATERTHAN);
     }
 
     private boolean quitEquals(String input) {
@@ -550,19 +649,21 @@ public class Start {
 
     private void screenIndirection() {
         System.out.println(print.ENTERSTART);
-        System.out.println(print.SYSTEM);
+        System.out.print(print.INDIRECTION);
     }
 
     private void screenIndirectionIsSet(String owner, String mediator) {
         System.out.println(print.indirectionSetBetween(owner, mediator));
     }
 
-    private void screenChooseClass() {
-        System.out.println(print.CHOOSECLASS);
+    private void screenChooseClass(int num) {
+        String category = terminalCategory(num);
+        System.out.println(category + print.CHOOSECLASS);
+        System.out.print(category);
     }
 
     private void screenChooseOrchestrator() {
-        System.out.println(print.CHOOSEORCHESTRATOR);
+        System.out.println(print.INDIRECTION + print.CHOOSEORCHESTRATOR);
     }
 
     private void doInidirection() {
@@ -570,8 +671,9 @@ public class Start {
     }
 
     private void screenCoupling() {
-        printAllClasses();
-        System.out.println(print.CHOOSECLASS);
+        // printAllClasses();
+        System.out.println(print.COUPLING + print.CHOOSECLASS);
+        System.out.print(print.COUPLING);
     }
 
     private void doCoupling(String input) throws IOException {
@@ -579,7 +681,7 @@ public class Start {
         if (classEquals(input)) {
             for (int i = 0; i < inspectedClassList.size(); i++) {
                 if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                    System.out.println(LooseCouplingService.analyzeLooseCouplingOfClass(inspectedClassList.get(i).getFullName(),
+                    System.out.println(print.COUPLINGRESULT + LooseCouplingService.analyzeLooseCouplingOfClass(inspectedClassList.get(i).getFullName(),
                             numberOfMethodsService.getAllMethodsList(inspectedClassList.get(i).getFullName()),
                             numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()),
                             inspectedClassList.get(i).getDit(),
@@ -597,7 +699,7 @@ public class Start {
         for (int i = 0; i < inspectedClassList.size(); i++) {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
                 inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-                System.out.println(InterfaceSegregationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
+                System.out.println(print.ISPRESULT + InterfaceSegregationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
             }
         }
     }
@@ -605,7 +707,7 @@ public class Start {
     private void doCohesion(String input) {
         for (int i = 0; i < inspectedClassList.size(); i++) {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                System.out.println(CohesionService.analyzeCohesionOfClass(
+                System.out.println(print.COHESIONRESULT + CohesionService.analyzeCohesionOfClass(
                         inspectedClassList.get(i).getName(),
                         inspectedClassList.get(i).getAllInitFields().size(),
                         inspectedClassList.get(i).getAllFieldsWithinMethods().size(),
@@ -620,7 +722,7 @@ public class Start {
         for (int i = 0; i < inspectedClassList.size(); i++) {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
                 inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-                System.out.println(ProtectedVariationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
+                System.out.println(print.PROTECTEDVARIATIONSRESULT + ProtectedVariationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
             }
         }
     }
@@ -631,7 +733,7 @@ public class Start {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
 
                 inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-                System.out.println(CreatorPrincipleService.singleResponsibilityPrinciple(inspectedClassList.get(i)));
+                System.out.println(print.SRPRESULT + CreatorPrincipleService.singleResponsibilityPrinciple(inspectedClassList.get(i)));
             }
         }
     }
@@ -639,7 +741,7 @@ public class Start {
     private void doCreator1(String input) {
         for (int i = 0; i < inspectedClassList.size(); i++) {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                System.out.println(creator1(inspectedClassList.get(i)));
+                System.out.println(print.CREATOR1RESULT + creator1(inspectedClassList.get(i)));
 //                System.out.println(creator1(inspectedClassList.get(i).getName(), inspectedClassList.get(i).getAmountOfMethods()));
             }
         }
@@ -648,7 +750,7 @@ public class Start {
     private void doCreator3(String input) {
         for (int i = 0; i < inspectedClassList.size(); i++) {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                System.out.println(creator3(inspectedClassList.get(i)));
+                System.out.println(print.CREATOR3RESULT + creator3(inspectedClassList.get(i)));
             }
         }
     }
@@ -661,12 +763,13 @@ public class Start {
 //        }
 //    }
 
-    private void doCreator4(String input) {
+    private String doCreator4(String input) {
         for (int i = 0; i < inspectedClassList.size(); i++) {
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-                creator4(inspectedClassList.get(i).getFullName(), packagePath);
+                return creator4(print.CREATOR4RESULT + inspectedClassList.get(i).getFullName(), packagePath);
             }
         }
+        return null;
     }
 
     private void screenPathWelcome() {
@@ -678,7 +781,7 @@ public class Start {
     }
 
     private void screenPathInvalid() {
-        System.out.println(print.PATHINVALID);
+        System.out.println(print.SYSTEM + print.PATHINVALID);
     }
 
     private void changePath(String input) throws IOException {
@@ -728,5 +831,16 @@ public class Start {
 
     private void screenClassDoesntExist(String input) {
         System.out.println(print.CLASSDOESNTEXIST + input);
+    }
+
+    private void printMetrics() {
+        //System.out.println(print.SYSTEM + " Metrics");
+        for(int i = 0; i < inspectedClassList.size(); i++) {
+            System.out.println(print.METRICS + inspectedClassList.get(i).metricToString());
+        }
+    }
+
+    private void printDirectory() {
+        System.out.println(print.SYSTEM + packagePath);
     }
 }

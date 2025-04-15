@@ -20,7 +20,7 @@ public class ClassB {
 
     public ClassB(String message, int num) {
         int f = 200;
-        this.a = new ClassA(bString, 900); // TODO
+        this.a = new ClassA(bString, 900);
         this.c2 = new ClassC(message, 100);
         System.out.println(a.toString());
         int g = 300;

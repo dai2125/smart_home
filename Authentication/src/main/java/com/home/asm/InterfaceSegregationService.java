@@ -76,8 +76,8 @@ public class InterfaceSegregationService {
         });
 
         StringBuilder sb = new StringBuilder();
-        sb.append("INTERFACE SEGREGATION PRINCIPLE\n");
-        sb.append(inspectedClass.getName() + " ");
+        sb.append(print.ISPRESULT + "INTERFACE SEGREGATION PRINCIPLE\n");
+        sb.append(print.ISPRESULT + inspectedClass.getName() + " ");
 
         if(inspectedClass.getIsInterface()) {
             sb.append("is an Interface");
@@ -93,7 +93,7 @@ public class InterfaceSegregationService {
                         + ") methods not all from Interfaces");
             return sb.toString();
         } else if(inspectedClass.getDit() >= 3) {
-            sb.append("\nhas an DIT greater than 2 and the methods from interfaces tracking wont work");
+            sb.append("\n" + print.ISPRESULT + "has an DIT greater than 2 and the methods from interfaces tracking wont work");
         }
 
 //        sb.append("\n");
@@ -104,7 +104,7 @@ public class InterfaceSegregationService {
                 if (modifier.isAnnotation()) {
                     Annotation annotation = (Annotation) modifier;
                     if(!annotation.getTypeName().getFullyQualifiedName().equals("Override") || annotation.getTypeName().getFullyQualifiedName().equals("@Override")) {
-                        sb.append("\nFunction" + inspectedClass.getMethodList().get(i).getName() + " doesnt start with an @Override, Principle violation");
+                        sb.append("\n" + print.ISPRESULT + "Function" + inspectedClass.getMethodList().get(i).getName() + " doesnt start with an @Override, Principle violation");
                         fullFilled[0] = false;
                     }
                 }
@@ -112,18 +112,18 @@ public class InterfaceSegregationService {
 
             for(int j = 0; j < inspectedClass.getMethodList().get(i).getBody().statements().size(); j++) {
                 if(inspectedClass.getMethodList().get(i).getBody().statements().get(j).toString().contains("UnsupportedOperationException")) {
-                    sb.append("\nFunction" + inspectedClass.getMethodList().get(i).getName() + " contains an UnsupportedOperationException, Principle violation");
+                    sb.append("\n" + print.ISPRESULT + "Function" + inspectedClass.getMethodList().get(i).getName() + " contains an UnsupportedOperationException, Principle violation");
                     fullFilled[0] = false;
                 }
 
                 if(inspectedClass.getMethodList().get(i).getBody().getLength() < 100 && inspectedClass.getMethodList().get(i).getBody().statements().get(j).toString().contains("return null;")) {
-                    sb.append("\nFunction" + inspectedClass.getMethodList().get(i).getName() + " has less than 100 characters and returns null, Principle violation");
+                    sb.append("\n" + print.ISPRESULT + "Function" + inspectedClass.getMethodList().get(i).getName() + " has less than 100 characters and returns null, Principle violation");
                     fullFilled[0] = false;
                 }
             }
         }
 
-        sb.append("\n" + inspectedClass.getName() + (fullFilled[0] ? " full fills the Interface Segregation Principle" : " violates the Interface Segregation Principle"));
+        sb.append("\n" + print.ISPRESULT + inspectedClass.getName() + (fullFilled[0] ? " full fills the Interface Segregation Principle" : " violates the Interface Segregation Principle"));
 
 
 

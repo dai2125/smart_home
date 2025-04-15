@@ -343,9 +343,9 @@ public class InspectedClass {
     }
 
     public String metricToString() {
-        return "InspectedClass{" + "\n" +
-                "\tname=\t\t\t\t\t" + name + '\n' +
-                "\tfullName=\t\t\t\t" + fullName + '\n' +
+        return "Metrics of: " + name + "\n" +
+                //"\tname=\t\t\t\t\t" + name + '\n' +
+                //"\tfullName=\t\t\t\t" + fullName + '\n' +
                 "\twmc=\t\t\t\t\t" + wmc + '\n' +
                 "\tfanin=\t\t\t\t\t" + fanin + '\n' +
                 "\tfanout=\t\t\t\t\t" + fanout + '\n' +

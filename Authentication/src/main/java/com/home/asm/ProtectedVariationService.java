@@ -12,6 +12,15 @@ import java.util.List;
 public class ProtectedVariationService {
 
     // TODO funktioniert nur für Interfaces
+    // TODO ProtectedVariations - Interfaces sollen konkrekte Implementierungen verstecken, beim Wechsel wird die Implementierung geschützt
+
+    /* AuWo
+    *
+    * ProtectedVariations - Interfaces sollen konkrekte Implementierungen verstecken, beim Wechsel wird die Implementierung geschützt
+    * ProtectedVariations funktioniert aktuell nur für Interfaces nicht für Abstract Classes
+    * überprüft DIT, Anzahl der Methoden und die Anzahl der Methoden die von Interfaces stammen.
+    *
+    * */
     List<MethodDeclaration> listOfAllParentMethods = new ArrayList<>();
 
     public static String start(InspectedClass inspectedClass, String className, String filePath) {
@@ -109,9 +118,9 @@ public class ProtectedVariationService {
             }
         });
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("PROTECTED VARIATION PRINCIPLE\n");
-        sb.append(inspectedClass.getName() + " ");
+        StringBuilder sb = new StringBuilder(print.PROTECTEDVARIATIONSRESULT + print.PROTECTEDVARIATIONS);
+        //sb.append("PROTECTED VARIATION PRINCIPLE\n");
+        sb.append(print.PROTECTEDVARIATIONSRESULT + inspectedClass.getName() + " ");
 
         if(inspectedClass.getIsInterface()) {
             sb.append("is an Interface");
@@ -127,7 +136,7 @@ public class ProtectedVariationService {
                     + ") methods not all from Interfaces");
             return sb.toString();
         } else if(inspectedClass.getDit() >= 3) {
-            sb.append("\nhas an DIT greater than 2 and the methods from interfaces tracking wont work");
+            sb.append("\n" + print.PROTECTEDVARIATIONSRESULT + "has an DIT greater than 2 and the methods from interfaces tracking wont work");
         } else if(inspectedClass.getDit() == 2 && inspectedClass.getMethodList().size() == inspectedClass.getInterfaceMethodList().size()) {
             for(int i = 0; i < inspectedClass.getMethodList().size(); i++) {
                 List<IExtendedModifier> modifiers = inspectedClass.getMethodList().get(i).modifiers();
@@ -135,7 +144,7 @@ public class ProtectedVariationService {
                     if (modifier.isAnnotation()) {
                         Annotation annotation = (Annotation) modifier;
                         if(!annotation.getTypeName().getFullyQualifiedName().equals("Override") || annotation.getTypeName().getFullyQualifiedName().equals("@Override")) {
-                            sb.append("\nFunction" + inspectedClass.getMethodList().get(i).getName() + " doesnt start with an @Override, Principle violation");
+                            sb.append("\n" + print.PROTECTEDVARIATIONSRESULT + "Function" + inspectedClass.getMethodList().get(i).getName() + " doesnt start with an @Override, Principle violation");
                             fullFilled[0] = false;
                         }
                     }
@@ -153,14 +162,14 @@ public class ProtectedVariationService {
                     }
                     if(!found) {
                         fullFilled[0] = false;
-                        sb.append("\nFunction " + inspectedClass.getMethodList().get(i) + " not in the interface list");
+                        sb.append("\n" + print.PROTECTEDVARIATIONSRESULT + "Function " + inspectedClass.getMethodList().get(i) + " not in the interface list");
                     }
                 }
             }
         }
 //        sb.append("\n");
 
-        sb.append("\n" + inspectedClass.getName() + (fullFilled[0] ? " full fills the Protected Variation Principle" : " violates the Protected Variation Principle"));
+        sb.append("\n" + print.PROTECTEDVARIATIONSRESULT + inspectedClass.getName() + (fullFilled[0] ? " full fills the Protected Variation Principle" : " violates the Protected Variation Principle"));
 
         return sb.toString();
     }

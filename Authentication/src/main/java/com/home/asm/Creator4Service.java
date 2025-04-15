@@ -9,19 +9,30 @@ import java.util.*;
 
 public class Creator4Service {
 
-    public static void start(String className, String filePath) {
+    private static final String CREATORPRINCIPLE = "CREATOR PRINCIPLE 4 ";
+
+    // TODO überprüfung ob die Funktion public ist und die Parameter von außen kommen für das Objekt
+
+    /* AuWo Service
+     *
+     * Creator Principle - Class B has the initializing Data for Class A
+     * analyzeClassFields() werden Objekte erstellt? Wenn diese Objekte Parameter haben, dann wird überprüft ob die Creator Klasse alle Informationen hat um das Objekt zu erstellen,
+     * hat das Objekt keine Parameter kann keine Überprüfung stattfinden
+     * */
+
+    public static String start(String className, String filePath) {
 //        System.out.println(className);
 //        System.out.println(filePath);
 
         try {
             String sourceCode = new String(Files.readAllBytes(Paths.get(filePath)));
-            analyzeClassFields(className, sourceCode);
+            return analyzeClassFields(className, sourceCode);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void analyzeClassFields(String className, String sourceCode) {
+    public static String analyzeClassFields(String className, String sourceCode) {
         ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setKind(ASTParser.K_COMPILATION_UNIT);
         parser.setSource(sourceCode.toCharArray());
@@ -38,7 +49,9 @@ public class Creator4Service {
         List<String> constructorParameters = new ArrayList<>();
         List<CreatorPrincipleMethod> methodList = new ArrayList<>();
 
-        StringBuilder sb = new StringBuilder(className.replaceFirst(".*/", "") + "\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append(print.CREATOR4RESULT + CREATORPRINCIPLE + "\n");
+        sb.append(className.replaceFirst(".*/", "") + "\n");
 
         compilationUnit.accept(new ASTVisitor() {
             @Override
@@ -168,7 +181,7 @@ public class Creator4Service {
                         }
 
                         if(fieldCounter[0] == arguments.size()) {
-                            sb.append(node.getType().toString()
+                            sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                     + " in the function "
                                     + methodName
                                     + " got ("
@@ -177,7 +190,7 @@ public class Creator4Service {
                                     + arguments.size()
                                     + ") of their parameters are from the <init> Fields\n");
                         } else if(fieldCounter[0] == 0) {
-                            sb.append(node.getType().toString()
+                            sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                     + " in the function "
                                     + methodName
                                     + " ("
@@ -192,7 +205,7 @@ public class Creator4Service {
                                     + arguments.size()
                                     + ") of the Parameters must be local\n");
                         } else {
-                            sb.append(node.getType().toString()
+                            sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                     + " only ("
                                     + fieldCounter[0]
                                     + "/"
@@ -219,7 +232,7 @@ public class Creator4Service {
                                         }
                                     }
                                 }
-                                sb.append(node.getType().toString()
+                                sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                         + " in the constructor "
                                         + methodName
                                         + " ("
@@ -277,7 +290,7 @@ public class Creator4Service {
 
                                     if(paramCounter[0] == arguments.size()) {
 //                                                System.out.println("paramCounter == arguments.size() = " + paramCounter + ":" +  arguments.size());
-                                        sb.append(node.getType().toString()
+                                        sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                     + " in the constructor "
                                                     + methodName
                                                     + " ("
@@ -286,7 +299,7 @@ public class Creator4Service {
                                                     + arguments.size()
                                                     + ") parameters are from the constructor parameters\n");
                                     } else if(paramCounter[0] == 0) {
-                                        sb.append(node.getType().toString()
+                                        sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                     + " in the constructor "
                                                     + methodName
                                                     + " ("
@@ -305,7 +318,7 @@ public class Creator4Service {
                                                     + arguments.size()
                                                     + ") of the Parameters must be local\n");
                                     } else if(paramCounter[0] != 0 && paramCounter[0] != arguments.size()) {
-                                        sb.append(node.getType().toString()
+                                        sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                 + " in the constructor "
                                                 + methodName
                                                 + " ("
@@ -325,7 +338,7 @@ public class Creator4Service {
                                                 + arguments.size()
                                                 + ") of the Parameters must be local\n");
                                     } else {
-                                        sb.append(node.getType().toString()
+                                        sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                     + " all of the ("
                                                     + paramCounter[0]
                                                     + "/"
@@ -367,7 +380,7 @@ public class Creator4Service {
                                 }
 
                                 if(paramCounter[0] == arguments.size()) {
-                                    sb.append(node.getType().toString()
+                                    sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                 + " in the function "
                                                 + methodName
                                                 + " ("
@@ -378,7 +391,7 @@ public class Creator4Service {
                                                 + methodName
                                                 + " parameters \n");
                                 } else if(fieldCounter[0] == arguments.size()) {
-                                    sb.append(node.getType().toString()
+                                    sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                 + " in the function "
                                                 + methodName
                                                 + " ("
@@ -387,7 +400,7 @@ public class Creator4Service {
                                                 + arguments.size()
                                                 + ") of their parameters are from the <init> Fields\n");
                                 } else if(paramCounter[0] == 0 && fieldCounter[0] == 0) {
-                                    sb.append(node.getType().toString()
+                                    sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                 + " in the function "
                                                 + methodName
                                                 + " ("
@@ -407,7 +420,7 @@ public class Creator4Service {
                                                 + arguments.size()
                                                 + ") of the Parameters must be local\n");
                                 } else {
-                                    sb.append(node.getType().toString()
+                                    sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "") + " - " + node.getType().toString()
                                                 + " in the function "
                                                 + methodName
                                                 + " ("
@@ -470,13 +483,25 @@ public class Creator4Service {
             }
         });
 
-        if(hasObjectsWithParameters[0]) {
-            System.out.println(className.replaceFirst(".*/", "")
-                    + " "
-                    + (fullFilled[0] ? " full fills the Creator 4 principle" : "violates the Creator 4 principle\n" + sb.toString()));
+        if(hasObjectsWithParameters[0]) { // className.replaceFirst(".*/", "") + " - " +
+                sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "")
+                            + " "
+                            + (fullFilled[0]
+                            ? " full fills the Creator 4 principle"
+                            : "violates the Creator 4 principle\n"));
+                            // + sb.toString()));
+
+//                System.out.println(className.replaceFirst(".*/", "")
+//                    + " "
+//                    + (fullFilled[0] ? " full fills the Creator 4 principle" : "violates the Creator 4 principle\n" + sb.toString()));
         } else {
-            System.out.println(className.replaceFirst(".*/", "")
+            sb.append(print.CREATOR4RESULT + className.replaceFirst(".*/", "")
                     + " has no Objects with parameters");
+
+//            System.out.println(className.replaceFirst(".*/", "")
+//                    + " has no Objects with parameters");
         }
+        return sb.toString();
+//        System.out.println(sb.toString());
     }
 }

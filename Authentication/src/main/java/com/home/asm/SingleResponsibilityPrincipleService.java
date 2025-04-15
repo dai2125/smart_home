@@ -18,6 +18,8 @@ public class SingleResponsibilityPrincipleService {
     // TODO Methodennamen mit mehreren Verantwortlichkeiten
     // TODO Cyclomatic Complexity (CC)
 
+
+
     public static void start(InspectedClass inspectedClass, String className, String filePath) {
 //        System.out.println(className);
 //        System.out.println(filePath);

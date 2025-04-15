@@ -7,6 +7,14 @@ import java.util.List;
 
 public class CreatorPrincipleService {
 
+    /* AuWo Service
+    *
+    * Erstellt die ausgewählte Klasse Objekte, wenn ja dann überprüfe ob diese Objekte auch verwendet werden.
+    * firstPrinciple() überprüft ob die ausgwählte Klasse ein Objekt innerhalb des Konstruktor oder als Feld erstellt und dieses Objekt in den Methoden nutzt (2 von 4 Methoden) = Prinzip Verletztung
+    * thirdPrinciple() überprüft ob eine Liste(Set, Queue, Map) mit Objekten existiert und diese Liste verwendet wird (wieviel Methoden nutzten die Liste, wird die Liste genutzt)
+    * singleResponsibilityPrinciple() erstellt die Klasse Objekte, LCOM4, FanOut, Yalcom, Anzahl der Methoden
+    * */
+
     private static final ArrayList<CreatorPrinciple> creatorPrincipleList = new ArrayList<CreatorPrinciple>();
     private static final String INIT = "<init>";
     private static final String ARRAYLIST = "Ljava/util/List<";
@@ -313,7 +321,7 @@ public class CreatorPrincipleService {
 
     public static String firstPrinciple(InspectedClass inspectedClass) {
         StringBuilder sb = new StringBuilder();
-        sb.append(CREATORPRINCIPLE1 + "\n");
+        sb.append(print.CREATOR1RESULT + CREATORPRINCIPLE1 + "\n");
 
         HashSet<String> hashSet = new HashSet<>();
 //        System.out.println("creatorPrincipleList: " + creatorPrincipleList.size()  + ", search class: " + className + ", " + numberOfMethods);
@@ -321,7 +329,7 @@ public class CreatorPrincipleService {
         for (int i = 0; i < creatorPrincipleList.size(); i++) {
 //            System.out.println("creatorPrincipleList: " + creatorPrincipleList.get(i).getName() + ", inspectedClass.getName(): " + inspectedClass.getName());
             if (creatorPrincipleList.get(i).getName().equals(inspectedClass.getFullName())) {
-            System.out.println("creatorPrincipleList: " + creatorPrincipleList.get(i).getName() + ", inspectedClass.getName(): " + inspectedClass.getFullName());
+            //System.out.println("creatorPrincipleList: " + creatorPrincipleList.get(i).getName() + ", inspectedClass.getName(): " + inspectedClass.getFullName());
 
 //            if (creatorPrincipleList.get(i).getName().replaceFirst(".*/", "").equals(inspectedClass.getName())) {
 //                System.out.println("FOUND class");
@@ -348,15 +356,15 @@ public class CreatorPrincipleService {
                     ) {
                         if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
                             if(inspectedClass.getAmountOfMethods() == 0) {
-                                sb.append(inspectedClass.getName() + " has no methods\n");
+                                sb.append(print.CREATOR1RESULT + inspectedClass.getName() + " has no methods\n");
                             } else if(inspectedClass.getAmountOfMethods() == case3(fieldInsn.get(y).getName(), fieldInsn)) {
-                                sb.append(inspectedClass.getName() + " creates the object "
+                                sb.append(print.CREATOR1RESULT + inspectedClass.getName() + " creates the object "
                                         + fieldInsn.get(y).getName()
                                         + " in the constructor and uses it in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
                                         + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle full filled\n");
                             } else {
-                                sb.append(inspectedClass.getName() + " creates the object "
+                                sb.append(print.CREATOR1RESULT + inspectedClass.getName() + " creates the object "
                                         + fieldInsn.get(y).getName()
                                         + " in the constructor and uses it in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
@@ -368,15 +376,16 @@ public class CreatorPrincipleService {
                 }
             }
         }
+        // repair ausbessern
         if(sb.length() == 0) {
-            sb.append(inspectedClass.getName() + " doesnt creates any object\n");
+            sb.append(print.CREATOR1RESULT + inspectedClass.getName() + " doesnt creates any object\n");
         }
         return sb.toString();
     }
 
     public static String firstPrinciple(String className, int numberOfMethods) {
         StringBuilder sb = new StringBuilder();
-        sb.append(CREATORPRINCIPLE1 + "\n");
+        sb.append(print.CREATOR1RESULT + CREATORPRINCIPLE1 + "\n");
 
         HashSet<String> hashSet = new HashSet<>();
 //        System.out.println("creatorPrincipleList: " + creatorPrincipleList.size()  + ", search class: " + className + ", " + numberOfMethods);
@@ -408,15 +417,15 @@ public class CreatorPrincipleService {
                     ) {
                         if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
                             if(numberOfMethods == 0) {
-                                sb.append(className.replaceFirst(".*/", "") + " hat keine Methoden\n");
+                                sb.append(print.CREATOR1RESULT + className.replaceFirst(".*/", "") + " hat keine Methoden\n");
                             } else if(numberOfMethods == case3(fieldInsn.get(y).getName(), fieldInsn)) {
-                                sb.append(className.replaceFirst(".*/", "") + " erstellt das Objekt "
+                                sb.append(print.CREATOR1RESULT + className.replaceFirst(".*/", "") + " erstellt das Objekt "
                                         + fieldInsn.get(y).getName()
                                         + " im Konstruktor und verwendet es in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
                                         + "/" + numberOfMethods + ") Methoden, Prinzip wird erfüllt\n");
                             } else {
-                                sb.append(className.replaceFirst(".*/", "") + " erstellt das Objekt "
+                                sb.append(print.CREATOR1RESULT + className.replaceFirst(".*/", "") + " erstellt das Objekt "
                                         + fieldInsn.get(y).getName()
                                         + " im Konstruktor und verwendet es in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
@@ -429,17 +438,17 @@ public class CreatorPrincipleService {
             }
         }
         if(sb.length() == 0) {
-            sb.append(className.replaceFirst(".*/", "") + " erstellt keine Objekte im Konstruktor");
+            sb.append(print.CREATOR1RESULT + className.replaceFirst(".*/", "") + " erstellt keine Objekte im Konstruktor");
         }
         return sb.toString();
     }
 
     public static String thirdPrinciple(InspectedClass inspectedClass) {
         StringBuilder sb = new StringBuilder();
-        sb.append(CREATORPRINCIPLE3 + "\n");
+        sb.append(print.CREATOR3RESULT + CREATORPRINCIPLE3 + "\n");
 
         if(inspectedClass.getAmountOfMethods() == 0) {
-            return inspectedClass.getName() + " doesnt own any methods\n";
+            return print.CREATOR3RESULT + inspectedClass.getName() + " doesnt own any methods\n";
 //            return className.replaceFirst(".*/", "") + " doesnt owns any methods\n";
         }
 
@@ -454,7 +463,7 @@ public class CreatorPrincipleService {
                 boolean found = false;
 
                 if(fields.size() == 0) {
-                    sb.append(inspectedClass.getName() + " - no fields\n");
+                    sb.append(print.CREATOR3RESULT + inspectedClass.getName() + " - no fields\n");
                 }
 
                 for (int j = 0; j < fields.size(); j++) {
@@ -503,11 +512,11 @@ public class CreatorPrincipleService {
 //                            System.out.println(fields.get(j).getSignature());
 //                            System.out.println("999");
                             if(countArrayList(fields.get(j).getName(), fields, fieldsInsn) == 0) {
-                                sb.append(inspectedClass.getName()
+                                sb.append(print.CREATOR3RESULT + inspectedClass.getName()
                                         + " - List " + fields.get(j).getName() + " is unused\n");
                                 found = true;
                             } else if(countArrayList(fields.get(j).getName(), fields, fieldsInsn) == inspectedClass.getAmountOfMethods()) {
-                                sb.append(inspectedClass.getName()
+                                sb.append(print.CREATOR3RESULT + inspectedClass.getName()
                                         + " - List "
                                         + fields.get(j).getName()
                                         + " of the Type "
@@ -517,7 +526,7 @@ public class CreatorPrincipleService {
                                         + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle full filled\n");
                                 found = true;
                             } else {
-                                sb.append(inspectedClass.getName()
+                                sb.append(print.CREATOR3RESULT + inspectedClass.getName()
                                         + " - List "
                                         + fields.get(j).getName()
                                         + " of the Type "
@@ -528,14 +537,14 @@ public class CreatorPrincipleService {
                                 found = true;
                             }
                         } else {
-                            sb.append(inspectedClass.getName()
+                            sb.append(print.CREATOR3RESULT + inspectedClass.getName()
                                     + " - List " + fields.get(j).getName() + " doesnt contain any Objects \n");
                             found = true;
                         }
                     }
 
                     if(!found) {
-                        sb.append(inspectedClass.getName() + " - no Lists\n");
+                        sb.append(print.CREATOR3RESULT + inspectedClass.getName() + " - no Lists\n");
                     }
 
                 }
@@ -802,8 +811,8 @@ public class CreatorPrincipleService {
         HashSet<String> hashSet = new HashSet<>();
         boolean createsObject = false;
 
-        sb.append("SINGLE RESPONSIBILITY PRINCIPLE\n");
-        sb.append(inspectedClass.getName() + " ");
+        sb.append("Srp Result: SINGLE RESPONSIBILITY PRINCIPLE\n");
+        sb.append("Srp Result:> " + inspectedClass.getName() + " ");
         sb.append("has " + inspectedClass.getAmountOfMethods() + " methods");
         sb.append(", fanout = " + inspectedClass.getFanout());
         sb.append(", wmc = " + inspectedClass.getWmc());
@@ -833,16 +842,16 @@ public class CreatorPrincipleService {
                     ) {
                         if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
                             if(inspectedClass.getAmountOfMethods() == 0) {
-                                sb.append(inspectedClass.getName() + " has no methods\n");
+                                sb.append("Srp Result:> " + inspectedClass.getName() + " has no methods\n");
                             } else if(inspectedClass.getAmountOfMethods() == case3(fieldInsn.get(y).getName(), fieldInsn)) {
-                                sb.append(inspectedClass.getName() + " creates the object "
+                                sb.append("Srp Result:> " + inspectedClass.getName() + " creates the object "
                                         + fieldInsn.get(y).getName()
                                         + " in the constructor and uses " + fieldInsn.get(y).getName() + " in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
                                         + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle full filled\n");
                                 createsObject = true;
                             } else {
-                                sb.append(inspectedClass.getName() + " creates the object "
+                                sb.append("Srp Result:> " + inspectedClass.getName() + " creates the object "
                                         + fieldInsn.get(y).getName()
                                         + " in the constructor and uses " + fieldInsn.get(y).getName() + " in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
@@ -857,7 +866,7 @@ public class CreatorPrincipleService {
         }
 
         if(!createsObject) {
-            sb.append(inspectedClass.getName() + " doesnt creates any objects in the constructor\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " doesnt creates any objects in the constructor\n");
             return sb.toString();
         } else {
 //            sb.append(inspectedClass.getName() + " ");
@@ -870,22 +879,22 @@ public class CreatorPrincipleService {
         }
 
         if(inspectedClass.getAmountOfMethods() > 5 && inspectedClass.getLcom4() > 2) {
-            sb.append(inspectedClass.getName() + " - " + inspectedClass.getAmountOfMethods() + " methods and they arent cohesive\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " - " + inspectedClass.getAmountOfMethods() + " methods and they arent cohesive\n");
         }
         if(inspectedClass.getFanout() > 3) {
-            sb.append(inspectedClass.getName() + " - Fanout is greater than 3, should be lower\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " - Fanout is greater than 3, should be lower\n");
         }
         if(inspectedClass.getWmc() > (inspectedClass.getAmountOfConstructors() + inspectedClass.getAmountOfMethods()) * 2) {
-            sb.append(inspectedClass.getName() + " - Wmc is very high, functions should be less complex\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " - Wmc is very high, functions should be less complex\n");
         }
         if(inspectedClass.getLcom4() > 2) {
-            sb.append(inspectedClass.getName() + " - LCOM4 is very high, refactor the cohesion\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " - LCOM4 is very high, refactor the cohesion\n");
         }
         if(inspectedClass.getYalcom() > 0.5) {
-            sb.append(inspectedClass.getName() + " - Yalcom is very high, refactor the cohesion\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " - Yalcom is very high, refactor the cohesion\n");
         }
         if(sb.length() == 0) {
-            sb.append(inspectedClass.getName() + " doesnt creates any objects in the constructor\n");
+            sb.append("Srp Result:> " + inspectedClass.getName() + " doesnt creates any objects in the constructor\n");
         }
         return sb.toString();
     }

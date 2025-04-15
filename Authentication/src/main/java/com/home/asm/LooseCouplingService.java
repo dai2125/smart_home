@@ -5,6 +5,13 @@ import java.util.List;
 public class LooseCouplingService {
 
     // TODO DIT == 1 damit verlangst du das nur Klassen das Prinzip erfüllen die von einer anderen Klassen Methoden implementieren
+
+    /* AuWo Service
+    *
+    * analyzeLooseCouplingOfClass() vergleicht wieviele Methoden wurden von Interfaces implentiert, wie hoch ist der DIT, FanOut
+    * Interfaces werden nicht analysiert
+    * */
+
     public static String analyzeLooseCouplingOfClass(String className, List<String> allMethods, List<String> allInterfaceMethods, int dit, int fanout, boolean isInterface) {
         if(isInterface) {
             return className.replaceFirst(".*/", "") + " is an Interface, no loose coupling analysis";

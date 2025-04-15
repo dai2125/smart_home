@@ -4,6 +4,11 @@ import java.util.*;
 
 public class CohesionService {
 
+    /* AuWo Service
+    *
+    * CohesionService - wie gut ist die Kohäsion der Klasse
+    * */
+
     public static String analyzeCohesionOfClass(String name, int initializedFields, int fieldsUsedWithinMethods, double yalcom, double lcom4) {
         return name + " " + doesThisClassUseAllItsFields(initializedFields, fieldsUsedWithinMethods) + ", " +
                 analyzeYalcom(yalcom) + ", " +
