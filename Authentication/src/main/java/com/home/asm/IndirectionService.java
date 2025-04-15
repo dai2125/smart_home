@@ -4,6 +4,8 @@ import org.objectweb.asm.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static org.objectweb.asm.Opcodes.ASM9;
@@ -23,6 +25,10 @@ public class IndirectionService {
     private final static String PRINCIPLE = "INDIRECTION PRINCIPLE ";
     private final static String PRINCIPLEVIOLATION = "\nPrinciple is violated";
 
+
+
+
+
     public IndirectionService(String packagePath, File directory) {
         this.packagePath = packagePath;
         this.directory = directory;
@@ -34,6 +40,13 @@ public class IndirectionService {
 
     public String start(InspectedClass inspectedClass, List<InspectedClass> inspectedClassList) throws IOException {
         StringBuilder sb = new StringBuilder(PRINCIPLE + inspectedClass.getName().replaceFirst(".*/", ""));
+
+        if(inspectedClass.getFanin() == 0) {
+            sb.append("\nError class isnt used in other class in this package");
+            return sb.toString();
+        }
+
+//        System.out.println("inspectedClass.getFanin(): " + inspectedClass.getFanin());
 
         for(int i = 0; i < inspectedClassList.size(); i++) {
             if(!inspectedClassList.get(i).getName().equals(inspectedClass.getName())) {
@@ -65,10 +78,30 @@ public class IndirectionService {
                 indirectionPrinciple(file, inspectedClass, sb);
             } else if (file.getName().endsWith(".java")) {
 
+//                System.out.println("IndirectionService: " + file.getName());
+
+//                Path rootPath = Paths.get("src/main/java").toAbsolutePath();
+//                Path fullPath = file.toPath().toAbsolutePath();
+//                String fileName;
+//                try {
+//                    Path relativePath = rootPath.relativize(fullPath);
+//                    fileName = relativePath.toString()
+//                            .replace(".java", "")
+//                            .replaceAll("\\\\", "/");
+//                } catch (IllegalArgumentException e) {
+//                    System.err.println("Fehler beim Ermitteln des relativen Pfads: " + fullPath);
+//                    return;
+//                }
+
+
                 String fileName = file.getPath().replace(".java", "")
                         .replaceAll("\\\\", "/")
-                        .replace("C:/Users/aigne/IdeaProjects/smart_home/Authentication/src/main/java/", "");
+//                        .replace("C:/Users/aigne/IdeaProjects/smart_home/Authentication/src/main/java/", "");
+                        .replace("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
 
+//                fileName = fileName.replaceAll(".*java/", "");
+
+//                System.out.println("IndirectionService: " + fileName);
                 ClassReader classReader = new ClassReader(fileName);
                 isInterface = false;
                 if (!fileName.equals(inspectedClass.getFullName()) && !inspectedClass.orchestratorListContainsFullName(fileName.replaceFirst(".*/", ""))) /* && fileName.equals("com/home/indirection/fourthAnalysis/fix/BookRepository") */  {

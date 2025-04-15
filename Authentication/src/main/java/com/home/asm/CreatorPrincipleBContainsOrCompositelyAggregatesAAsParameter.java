@@ -128,7 +128,7 @@ public class CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter extend
     public static void main(String[] args) throws IOException {
 //        String className = "java.lang.String";
 //        String className = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
-        String className = "com/home/creator/BContainsOrCompositelyAggregatesA/badExample/Car";
+        String className = "com/home/creator/principle2/badExample/Car";
 
         ClassReader reader = new ClassReader(className);
         CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter methodPrinter = new CreatorPrincipleBContainsOrCompositelyAggregatesAAsParameter();

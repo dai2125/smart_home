@@ -181,14 +181,14 @@ public class SM_Type extends SM_SourceItem {
                 inferredType.addThisAsChildToSuperType(this);
             }
         }
-        System.out.println("superInterface: " + superInterface);
+//        System.out.println("superInterface: " + superInterface);
     }
 
     private void addThisAsChildToSuperType(SM_Type child) {
         if (!subTypes.contains(child)) {
             subTypes.add(child);
         }
-        System.out.println("child: "+  child.name);
+//        System.out.println("child: "+  child.name);
     }
 
     public List<SM_Method> getMethodList() {

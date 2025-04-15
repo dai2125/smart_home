@@ -16,12 +16,12 @@ public class TypeMetrics {
 
     public void extractMetrics(String targetClass) {
 //        System.out.println("type.getName(): " + type.getName() + " targetClass: " + targetClass);
-//        System.out.println("type(): " + type.toString());
+//        System.out.println("type.getName(): " + type.getName());
 
-        InspectedClass inspectedClass = ClassService.get(targetClass);
-        System.out.println("targetClass: " + targetClass);
-        System.out.println("inspectedClass.getName(): " + inspectedClass.getFullName());
-        if(type.getName().equals(targetClass)) {
+        InspectedClass inspectedClass = ClassService.get(type.getName());
+//        System.out.println("targetClass: " + targetClass);
+//        System.out.println("inspectedClass.getFullName(): " + inspectedClass.getFullName());
+        if(type.getName().equals(inspectedClass.getName())) {
 
             ILCOM lcomAlgorithm = new YALCOM();
 
@@ -64,6 +64,7 @@ public class TypeMetrics {
 //                    inspectedClass.setLcom3(yalcom);
 //                    inspectedClass.setLcom4(yalcom);
 //                    inspectedClass.setLcom5(yalcom);
+                    ClassService.put(inspectedClass);
 
                 } else {
                     yalcom = lcomAlgorithm.compute(type);
@@ -89,8 +90,8 @@ public class TypeMetrics {
                     lcom5 = lcomAlgorithm.compute(type);
                     inspectedClass.setLcom5(lcom5);
 //                    System.out.println("TTTinspectedClass: " + inspectedClass + " has LCOM4 of " + lcom4);
-                    System.out.println("TypeMetrics inspectedClass: " + inspectedClass.getLcom1() + ", " + inspectedClass.getLcom2() + ", "+ inspectedClass.getLcom4() + ", " + inspectedClass.getLcom5());
-
+//                    System.out.println("TypeMetrics inspectedClass: " + inspectedClass.getName() + " " + inspectedClass.getLcom1() + ", " + inspectedClass.getLcom2() + ", "+ inspectedClass.getLcom4() + ", " + inspectedClass.getLcom5());
+                    ClassService.put(inspectedClass);
                 }
             }
 

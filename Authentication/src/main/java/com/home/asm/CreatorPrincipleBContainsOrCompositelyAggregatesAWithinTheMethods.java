@@ -165,7 +165,7 @@ public class CreatorPrincipleBContainsOrCompositelyAggregatesAWithinTheMethods e
     }
 
     public static void main(String[] args) throws IOException {
-        String className = "com/home/creator/BContainsOrCompositelyAggregatesA/movieExample/MovieProduction";
+        String className = "com/home/creator/principle2/movieExample/MovieProduction";
 
         ClassReader reader = new ClassReader(className);
         CreatorPrincipleBContainsOrCompositelyAggregatesAWithinTheMethods methodPrinter = new CreatorPrincipleBContainsOrCompositelyAggregatesAWithinTheMethods();

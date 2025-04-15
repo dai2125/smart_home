@@ -10,7 +10,8 @@ public class CreatorPrincipleService {
     private static final ArrayList<CreatorPrinciple> creatorPrincipleList = new ArrayList<CreatorPrinciple>();
     private static final String INIT = "<init>";
     private static final String ARRAYLIST = "Ljava/util/List<";
-
+    private static final String CREATORPRINCIPLE1 = "CREATOR PRINCIPLE 1 B CLOSELY USES A";
+    private static final String CREATORPRINCIPLE3 = "CREATOR PRINCIPLE 3 B RECORDS A";
 
     private CreatorPrincipleService() {}
 
@@ -310,8 +311,73 @@ public class CreatorPrincipleService {
         return ans;
     }
 
+    public static String firstPrinciple(InspectedClass inspectedClass) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(CREATORPRINCIPLE1 + "\n");
+
+        HashSet<String> hashSet = new HashSet<>();
+//        System.out.println("creatorPrincipleList: " + creatorPrincipleList.size()  + ", search class: " + className + ", " + numberOfMethods);
+
+        for (int i = 0; i < creatorPrincipleList.size(); i++) {
+//            System.out.println("creatorPrincipleList: " + creatorPrincipleList.get(i).getName() + ", inspectedClass.getName(): " + inspectedClass.getName());
+            if (creatorPrincipleList.get(i).getName().equals(inspectedClass.getFullName())) {
+            System.out.println("creatorPrincipleList: " + creatorPrincipleList.get(i).getName() + ", inspectedClass.getName(): " + inspectedClass.getFullName());
+
+//            if (creatorPrincipleList.get(i).getName().replaceFirst(".*/", "").equals(inspectedClass.getName())) {
+//                System.out.println("FOUND class");
+                CreatorPrinciple principle = creatorPrincipleList.get(i);
+
+                List<CreatorPrincipleField> fieldInsn = principle.getFieldInsnList();
+                for(int y = 0; y < fieldInsn.size(); y++) {
+//                    System.out.println("--- " + fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod() + " " + fieldInsn.get(y).getFieldReturnType());
+                    if(fieldInsn.get(y).getOwnerMethod().equals("<init>")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("I")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("D")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("L")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("S")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("Z")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/lang/String;")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/io/PrintStream;")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/util/Random;")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("Ljava/util/List;")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("[Ljava/lang/String;")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("[D")
+                            && !fieldInsn.get(y).getFieldReturnType().equals("[I")
+
+
+                    ) {
+                        if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
+                            if(inspectedClass.getAmountOfMethods() == 0) {
+                                sb.append(inspectedClass.getName() + " has no methods\n");
+                            } else if(inspectedClass.getAmountOfMethods() == case3(fieldInsn.get(y).getName(), fieldInsn)) {
+                                sb.append(inspectedClass.getName() + " creates the object "
+                                        + fieldInsn.get(y).getName()
+                                        + " in the constructor and uses it in ("
+                                        + case3(fieldInsn.get(y).getName(), fieldInsn)
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle full filled\n");
+                            } else {
+                                sb.append(inspectedClass.getName() + " creates the object "
+                                        + fieldInsn.get(y).getName()
+                                        + " in the constructor and uses it in ("
+                                        + case3(fieldInsn.get(y).getName(), fieldInsn)
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle violated\n");
+                            }
+                        }
+                        hashSet.add(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod());
+                    }
+                }
+            }
+        }
+        if(sb.length() == 0) {
+            sb.append(inspectedClass.getName() + " doesnt creates any object\n");
+        }
+        return sb.toString();
+    }
+
     public static String firstPrinciple(String className, int numberOfMethods) {
         StringBuilder sb = new StringBuilder();
+        sb.append(CREATORPRINCIPLE1 + "\n");
+
         HashSet<String> hashSet = new HashSet<>();
 //        System.out.println("creatorPrincipleList: " + creatorPrincipleList.size()  + ", search class: " + className + ", " + numberOfMethods);
 
@@ -368,7 +434,117 @@ public class CreatorPrincipleService {
         return sb.toString();
     }
 
-    public static String fourthPrinciple(String className, int numberOfMethods) {
+    public static String thirdPrinciple(InspectedClass inspectedClass) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(CREATORPRINCIPLE3 + "\n");
+
+        if(inspectedClass.getAmountOfMethods() == 0) {
+            return inspectedClass.getName() + " doesnt own any methods\n";
+//            return className.replaceFirst(".*/", "") + " doesnt owns any methods\n";
+        }
+
+        for (int i = 0; i < creatorPrincipleList.size(); i++) {
+            if (creatorPrincipleList.get(i).getName().equals(inspectedClass.getFullName())) {
+
+                CreatorPrinciple principle = creatorPrincipleList.get(i);
+
+                List<CreatorPrincipleField> fields = principle.getFieldList();
+                List<CreatorPrincipleField> fieldsInsn = principle.getFieldInsnList();
+
+                boolean found = false;
+
+                if(fields.size() == 0) {
+                    sb.append(inspectedClass.getName() + " - no fields\n");
+                }
+
+                for (int j = 0; j < fields.size(); j++) {
+                    CreatorPrincipleField field = fields.get(j);
+
+                    // TODO, die Signature ist null
+                    /*
+                        FIELDINSN:
+	                    name: CreatorPrincipleField{opcode=181, access=-1, name='events', modifier='null', type='null', operation='null', owner='com/home/creator/BRecordsA/goodExample/EventLog', fieldReturnType='Ljava/util/List;', ownerMethod='<init>', ownerMethodReturnType='()V', signature='null'}
+	                    name: CreatorPrincipleField{opcode=180, access=-1, name='events', modifier='null', type='null', operation='null', owner='com/home/creator/BRecordsA/goodExample/EventLog', fieldReturnType='Ljava/util/List;', ownerMethod='addEvent', ownerMethodReturnType='(Lcom/home/creator/BRecordsA/goodExample/Event;)V', signature='null'}
+	                    name: CreatorPrincipleField{opcode=180, access=-1, name='events', modifier='null', type='null', operation='null', owner='com/home/creator/BRecordsA/goodExample/EventLog', fieldReturnType='Ljava/util/List;', ownerMethod='printLog', ownerMethodReturnType='()V', signature='null'}
+	                    name: CreatorPrincipleField{opcode=178, access=-1, name='out', modifier='null', type='null', operation='null', owner='java/lang/System', fieldReturnType='Ljava/io/PrintStream;', ownerMethod='printLog', ownerMethodReturnType='()V', signature='null'}
+
+                    * */
+
+//                    System.out.println("777: " + fields.get(j).toString());
+                    if (fields.get(j).getSignature() != null) {
+                        String signature = fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "");
+//                        System.out.println("555: " + field.toString());
+                        if (!fields.get(j).getSignature().equals("I")
+                                && !signature.equals("D")
+                                && !signature.equals("L")
+                                && !signature.equals("S")
+                                && !signature.equals("Z")
+                                && !signature.equals("Ljava/lang/String;")
+                                && !signature.equals("Ljava/io/PrintStream;")
+                                && !signature.equals("Ljava/util/Random;")
+                                && !signature.equals("Ljava/util/List;")
+                                && !signature.equals("[Ljava/lang/String;")
+                                && !signature.equals("Ljava/lang/Integer")
+                                && !signature.equals("[D")
+                                && !signature.equals("[I")
+//                                && !fields.get(j).getSignature().equals("D")
+//                                && !fields.get(j).getSignature().equals("L")
+//                                && !fields.get(j).getSignature().equals("S")
+//                                && !fields.get(j).getSignature().equals("Z")
+//                                && !fields.get(j).getSignature().equals("Ljava/lang/String;")
+//                                && !fields.get(j).getSignature().equals("Ljava/io/PrintStream;")
+//                                && !fields.get(j).getSignature().equals("Ljava/util/Random;")
+//                                && !fields.get(j).getSignature().equals("Ljava/util/List;")
+//                                && !fields.get(j).getSignature().equals("[Ljava/lang/String;")
+//                                && !fields.get(j).getSignature().equals("[D")
+//                                && !fields.get(j).getSignature().equals("[I")
+                        ) {
+//                            System.out.println(signature);
+//                            System.out.println(fields.get(j).getSignature());
+//                            System.out.println("999");
+                            if(countArrayList(fields.get(j).getName(), fields, fieldsInsn) == 0) {
+                                sb.append(inspectedClass.getName()
+                                        + " - List " + fields.get(j).getName() + " is unused\n");
+                                found = true;
+                            } else if(countArrayList(fields.get(j).getName(), fields, fieldsInsn) == inspectedClass.getAmountOfMethods()) {
+                                sb.append(inspectedClass.getName()
+                                        + " - List "
+                                        + fields.get(j).getName()
+                                        + " of the Type "
+                                        + fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "")
+                                        + " initialalized in the Constructor and used in ("
+                                        + countArrayList(fields.get(j).getName(), fields, fieldsInsn)
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle full filled\n");
+                                found = true;
+                            } else {
+                                sb.append(inspectedClass.getName()
+                                        + " - List "
+                                        + fields.get(j).getName()
+                                        + " of the Type "
+                                        + fields.get(j).getSignature().replace(ARRAYLIST, "").replace(";>;", "")
+                                        + " initialazied in the Constructor and used in ("
+                                        + countArrayList(fields.get(j).getName(), fields, fieldsInsn)
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle violated\n"); // TODO full filled?
+                                found = true;
+                            }
+                        } else {
+                            sb.append(inspectedClass.getName()
+                                    + " - List " + fields.get(j).getName() + " doesnt contain any Objects \n");
+                            found = true;
+                        }
+                    }
+
+                    if(!found) {
+                        sb.append(inspectedClass.getName() + " - no Lists\n");
+                    }
+
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String thirdPrinciple(String className, int numberOfMethods) {
         StringBuilder sb = new StringBuilder();
 
         if(numberOfMethods == 0) {
@@ -624,13 +800,16 @@ public class CreatorPrincipleService {
     public static String singleResponsibilityPrinciple(InspectedClass inspectedClass) {
         StringBuilder sb = new StringBuilder();
         HashSet<String> hashSet = new HashSet<>();
-        sb.append("SINGLE RESPONSIBILITY PRINCIPLE " + inspectedClass.getName() + "\n");
+        boolean createsObject = false;
+
+        sb.append("SINGLE RESPONSIBILITY PRINCIPLE\n");
         sb.append(inspectedClass.getName() + " ");
         sb.append("has " + inspectedClass.getAmountOfMethods() + " methods");
         sb.append(", fanout = " + inspectedClass.getFanout());
         sb.append(", wmc = " + inspectedClass.getWmc());
-        sb.append(", yalcom = " + String.format("%.2f", inspectedClass.getYalcom()));
+        sb.append(", yalcom = " + String.format("%,.2f", inspectedClass.getYalcom()));
         sb.append(", LCOM4 = " + inspectedClass.getLcom4());
+        sb.append("\n");
 
         for (int i = 0; i < creatorPrincipleList.size(); i++) {
             if (creatorPrincipleList.get(i).getName().replaceFirst(".*/", "").equals(inspectedClass.getName())) {
@@ -654,19 +833,21 @@ public class CreatorPrincipleService {
                     ) {
                         if(!hashSet.contains(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod())) {
                             if(inspectedClass.getAmountOfMethods() == 0) {
-                                sb.append("\nHat keine Methoden\n");
+                                sb.append(inspectedClass.getName() + " has no methods\n");
                             } else if(inspectedClass.getAmountOfMethods() == case3(fieldInsn.get(y).getName(), fieldInsn)) {
-                                sb.append("\nErstellt das Objekt "
+                                sb.append(inspectedClass.getName() + " creates the object "
                                         + fieldInsn.get(y).getName()
-                                        + " im Konstruktor und verwendet es in ("
+                                        + " in the constructor and uses " + fieldInsn.get(y).getName() + " in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
-                                        + "/" + inspectedClass.getAmountOfMethods() + ") --Methoden, Prinzip wird erfüllt--\n");
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle full filled\n");
+                                createsObject = true;
                             } else {
-                                sb.append("\nErstellt das Objekt "
+                                sb.append(inspectedClass.getName() + " creates the object "
                                         + fieldInsn.get(y).getName()
-                                        + " im Konstruktor und verwendet es in ("
+                                        + " in the constructor and uses " + fieldInsn.get(y).getName() + " in ("
                                         + case3(fieldInsn.get(y).getName(), fieldInsn)
-                                        + "/" + inspectedClass.getAmountOfMethods() + ") --Methoden, Prinzip wird verletzt--");
+                                        + "/" + inspectedClass.getAmountOfMethods() + ") methods, Principle violated\n");
+                                createsObject = true;
                             }
                         }
                         hashSet.add(fieldInsn.get(y).getName() + " " + fieldInsn.get(y).getOwnerMethod());
@@ -675,23 +856,36 @@ public class CreatorPrincipleService {
             }
         }
 
+        if(!createsObject) {
+            sb.append(inspectedClass.getName() + " doesnt creates any objects in the constructor\n");
+            return sb.toString();
+        } else {
+//            sb.append(inspectedClass.getName() + " ");
+//            sb.append("has " + inspectedClass.getAmountOfMethods() + " methods");
+//            sb.append(", fanout = " + inspectedClass.getFanout());
+//            sb.append(", wmc = " + inspectedClass.getWmc());
+//            sb.append(", yalcom = " + String.format("%,.2f", inspectedClass.getYalcom()));
+//            sb.append(", LCOM4 = " + inspectedClass.getLcom4());
+//            sb.append("\n");
+        }
+
         if(inspectedClass.getAmountOfMethods() > 5 && inspectedClass.getLcom4() > 2) {
-            sb.append("\nClass has " + inspectedClass.getAmountOfMethods() + " methods and they arent cohesive ");
+            sb.append(inspectedClass.getName() + " - " + inspectedClass.getAmountOfMethods() + " methods and they arent cohesive\n");
         }
         if(inspectedClass.getFanout() > 3) {
-            sb.append("\nFanout is greater than 3, should be lower");
+            sb.append(inspectedClass.getName() + " - Fanout is greater than 3, should be lower\n");
         }
         if(inspectedClass.getWmc() > (inspectedClass.getAmountOfConstructors() + inspectedClass.getAmountOfMethods()) * 2) {
-            sb.append("\nWmc is very high, functions should be less complex");
+            sb.append(inspectedClass.getName() + " - Wmc is very high, functions should be less complex\n");
         }
         if(inspectedClass.getLcom4() > 2) {
-            sb.append("\nLCOM4 is very high, refactor the cohesion");
+            sb.append(inspectedClass.getName() + " - LCOM4 is very high, refactor the cohesion\n");
         }
         if(inspectedClass.getYalcom() > 0.5) {
-            sb.append("\nYalcom is very high, refactor the cohesion");
+            sb.append(inspectedClass.getName() + " - Yalcom is very high, refactor the cohesion\n");
         }
         if(sb.length() == 0) {
-            sb.append("\nErstellt keine Objekte im Konstruktor--");
+            sb.append(inspectedClass.getName() + " doesnt creates any objects in the constructor\n");
         }
         return sb.toString();
     }

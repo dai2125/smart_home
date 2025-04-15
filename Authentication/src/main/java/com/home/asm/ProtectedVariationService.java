@@ -60,17 +60,13 @@ public class ProtectedVariationService {
 
 //        StringBuilder sb = new StringBuilder(className.replaceFirst(".*/", "") + "\n");
 
-
-
         compilationUnit.accept(new ASTVisitor() {
 
             @Override
             public boolean visit(TypeDeclaration node) {
 
-
-
                 inspectedClass.setIsInterface(node.isInterface());
-                System.out.println("node.getSuperClassType: "+ node.getSuperclassType());
+//                System.out.println("node.getSuperClassType: "+ node.getSuperclassType());
 
                 if(node.getSuperclassType() != null) {
 
@@ -85,14 +81,14 @@ public class ProtectedVariationService {
                 }
 
                 for(int i = 0; i < node.superInterfaceTypes().size(); i++) {
-                    System.out.println("superInterfaces: " + node.superInterfaceTypes().get(i));
+//                    System.out.println("superInterfaces: " + node.superInterfaceTypes().get(i));
                 }
                 return super.visit(node);
             }
 
             @Override
             public boolean visit(MethodDeclaration node) {
-                System.out.println("llllllllllllllllllllllllllll");
+//                System.out.println("llllllllllllllllllllllllllll");
                 IMethodBinding binding = node.resolveBinding();
                 if (binding != null) {
                     IMethodBinding overridden = binding.getMethodDeclaration().getMethodDeclaration();
@@ -111,14 +107,12 @@ public class ProtectedVariationService {
                 }
                 return true;
             }
-
-
         });
 
-
-
         StringBuilder sb = new StringBuilder();
-        sb.append(inspectedClass.getName() + " PROTECTED VARIATION PRINCIPLE ");
+        sb.append("PROTECTED VARIATION PRINCIPLE\n");
+        sb.append(inspectedClass.getName() + " ");
+
         if(inspectedClass.getIsInterface()) {
             sb.append("is an Interface");
             return sb.toString();
@@ -163,12 +157,8 @@ public class ProtectedVariationService {
                     }
                 }
             }
-
         }
-
 //        sb.append("\n");
-
-
 
         sb.append("\n" + inspectedClass.getName() + (fullFilled[0] ? " full fills the Protected Variation Principle" : " violates the Protected Variation Principle"));
 

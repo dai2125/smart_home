@@ -10,8 +10,8 @@ public class CreatorPrincipleBCloselyUsesA extends ClassVisitor {
     }
 
     private final String CLASSNAME = "Lcom/home/creator/BCloselyUsesA/badExample/Calculator;";
-    private final String FIELDNAME = "com/home/creator/BCloselyUsesA/goodExample/ReportGenerator.calculator";
-    private final String OWNERCLASSNAME = "com/home/creator/BCloselyUsesA/goodExample/ReportGenerator";
+    private final String FIELDNAME = "com/home/creator/principle1/goodExample/ReportGenerator.calculator";
+    private final String OWNERCLASSNAME = "com/home/creator/principle1/goodExample/ReportGenerator";
     Model model = new Model();
 
     @Override
@@ -107,7 +107,7 @@ public class CreatorPrincipleBCloselyUsesA extends ClassVisitor {
     public static void main(String[] args) throws IOException {
 //        String className = "java.lang.String";
 //        String className = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
-        String className = "com/home/creator/BCloselyUsesA/badExample/ReportGenerator";
+        String className = "com/home/creator/principle1/badExample/ReportGenerator";
 
         ClassReader reader = new ClassReader(className);
         CreatorPrincipleBCloselyUsesA methodPrinter = new CreatorPrincipleBCloselyUsesA();

@@ -243,6 +243,7 @@ public class FanInService {
         }
         return classCallCount;
     }
+
     public static void analyzeClass(File classFile, String basePath, String packagePrefix) throws IOException {
         // Relativen Klassenpfad ermitteln
         String classPath = packagePrefix + classFile.getName();

@@ -17,24 +17,30 @@ public class NumberOfChildrenService {
     private Set<String> childClasses = new HashSet<String>();
 
     public NumberOfChildrenService(String targetClassName) {
+
+        //        this.classLoader = getClass().getClassLoader();
         this.classLoader = getClass().getClassLoader();
         this.targetClassName = targetClassName;
     }
 
     public int calculateNOC(String basePackage) {
         try {
-            System.out.println("NoC: " + basePackage);
+//            System.out.println("NoC: " + basePackage);
 //            System.out.println("NoC: " + basePackage.replace('.', '/'));
-            String baseDir = basePackage.replace('.', '/');
-            baseDir = basePackage.replaceAll("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
-            System.out.println("Noc: " + baseDir);
+//            String baseDir = basePackage.replace('.', '/');
+            String baseDir = basePackage.replaceAll("\\\\", "/");
+
+//            baseDir = baseDir.replaceAll("\\\\", "/");
+            baseDir = basePackage.replaceAll(".*/", "");
+//            baseDir = basePackage.replaceAll("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
+//            System.out.println("Noc: " + baseDir);
 //            String resourcePath = classLoader.getResource(baseDir).getPath();
             File packageDir = new File(basePackage);
 
             scanPackageForChildren(packageDir, basePackage);
 
             for(String child : childClasses) {
-//                System.out.println(" - " + child);
+                System.out.println(" - " + child);
             }
 
             return childClasses.size();

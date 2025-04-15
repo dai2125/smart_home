@@ -76,7 +76,9 @@ public class InterfaceSegregationService {
         });
 
         StringBuilder sb = new StringBuilder();
-        sb.append(inspectedClass.getName() + " INTERFACE SEGREGATION PRINCIPLE ");
+        sb.append("INTERFACE SEGREGATION PRINCIPLE\n");
+        sb.append(inspectedClass.getName() + " ");
+
         if(inspectedClass.getIsInterface()) {
             sb.append("is an Interface");
             return sb.toString();

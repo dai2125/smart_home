@@ -34,7 +34,7 @@ public class SM_Project extends SM_SourceItem {
         compilationUnitList = new ArrayList<>();
         packageList = new ArrayList<>();
         setName(this.inputArgs.getProjectName());
-        this.targetClass = argsObj.getOutputFolder();
+//        this.targetClass = argsObj.getOutputFolder();
 
 //        TargetClass.initialize(targetClass);
 //        System.out.println("targetClass1 " + targetClass);

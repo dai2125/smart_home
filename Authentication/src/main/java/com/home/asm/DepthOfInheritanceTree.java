@@ -23,6 +23,9 @@ public class DepthOfInheritanceTree extends ClassVisitor {
         classReader.accept(this, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
         this.classLoader = getClass().getClassLoader();
         this.targetClassName = targetClassName;
+
+//        System.out.println("Classpath Root: " + classLoader.getResource("."));
+
     }
 
     @Override

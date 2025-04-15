@@ -9,7 +9,7 @@ public class print {
     public static final String CHOOSECLASS = "System:> choose a class ";
     public static final String SHUTDOWN = "System:> shut down...";
     public static final String GREATERTHAN = ">";
-    public static final String UNKNOWNINPUT = "System:> unknown input";
+    public static final String UNKNOWNINPUT = "System:> unknown input ";
     public static final String ENTERSTART =  "System:> enter start for analyze";
     public static final String CHOOSEORCHESTRATOR =  "System:> choose a orchestrator class (space seperated)";
     public static final String WELCOME = "System:> Welcome to the GRASP Analyzer";
@@ -23,9 +23,11 @@ public class print {
                                         + SYSTEM + "12 --> Creator Principle 2\t"
                                         + SYSTEM + "13 --> Creator Principle 4\t";
     public static final String ENTERPATH = "System:> enter path for analyze";
-
-
-
+    public static final String PATHCHANGED = "System:> path changed";
+    public static final String PATHINVALID = "System:> path invalid";
+    public static final String CONNECTIONSET  = "System:> connection set between ";
+    public static final String AND = "and ";
+    public static final String CLASSDOESNTEXIST = "System:> class does not exist";
 
     public static String getSystem() {
         return SYSTEM;
@@ -59,4 +61,7 @@ public class print {
         return UNKNOWNINPUT;
     }
 
+    public static String indirectionSetBetween(String owner, String mediator) {
+        return CONNECTIONSET + owner + AND + mediator;
+    }
 }
