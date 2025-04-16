@@ -4,9 +4,16 @@ import java.util.*;
 
 public class CohesionService {
 
-    /* AuWo Service
+    /* Cohesion
+    *
+    *
+    *
+    * */
+
+    /* AuWo Service - Cohesion
     *
     * CohesionService - wie gut ist die Kohäsion der Klasse
+    *
     * */
 
     public static String analyzeCohesionOfClass(String name, int initializedFields, int fieldsUsedWithinMethods, double yalcom, double lcom4) {

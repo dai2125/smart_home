@@ -7,7 +7,17 @@ import java.util.List;
 
 public class CreatorPrincipleService {
 
-    /* AuWo Service
+    /*  Creator Principle
+     *
+     *   Creator 3 - Erstellt Klasse B die Klasse A und verwendet sie auch
+     *
+     *   Creator 1 - Verwendet Klasse B die Klasse A zu erstellen
+     *
+     *   SRP - Eine Klasse sollte immer nur eine Aufgabe haben, erstellt sie Objekte, Anzahl an Methoden, Anzahl an Felder
+     *
+     * */
+
+    /* AuWo Service - B Closeley uses A - B Records A - Single Responsibility Principle
     *
     * Erstellt die ausgewählte Klasse Objekte, wenn ja dann überprüfe ob diese Objekte auch verwendet werden.
     * firstPrinciple() überprüft ob die ausgwählte Klasse ein Objekt innerhalb des Konstruktor oder als Feld erstellt und dieses Objekt in den Methoden nutzt (2 von 4 Methoden) = Prinzip Verletztung

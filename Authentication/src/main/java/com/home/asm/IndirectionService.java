@@ -13,13 +13,16 @@ import static org.objectweb.asm.Opcodes.ASM9;
 public class IndirectionService {
 
     /* INDIRECTION
+    *
+    *   Compound darf nicht direkt angesprochen werden, nur über Mediator
+    *
     *   start() gibt alle Verwendung der Klasse in anderen Klasse zurück (LocalVariable, TypeInsn, Fields,
     *                                                                       Functions, InvokeVirtual, InvokeSpecial)
     *   setIndirectionBetween() muss gesetzt werden um eine Indirection zu setzten
     *   setIndirectionBetween() zählt immer nur vom Component Richtung Orchestrator, nicht umgehkehrt
     * */
 
-    /* AuWo Service
+    /* AuWo Service - Indirection
     *
     * Indirection eine Klasse soll über eine Mediator Schnittstelle verwendet werden
     * setDirectionBetween() setzt erlaubte Verbindungen Compound zu Mediator. Standardmäßig ist keine Verbindung gesetzt

@@ -13,7 +13,13 @@ public class Creator4Service {
 
     // TODO überprüfung ob die Funktion public ist und die Parameter von außen kommen für das Objekt
 
-    /* AuWo Service
+    /*  Creator Principle
+     *
+     *   Creator 4 - Hat Klasse B alle Informationen um Klasse A zu erstellen
+     *
+     * */
+
+    /* AuWo Service - Creator Principle - Class B has the initializing Data for Class A
      *
      * Creator Principle - Class B has the initializing Data for Class A
      * analyzeClassFields() werden Objekte erstellt? Wenn diese Objekte Parameter haben, dann wird überprüft ob die Creator Klasse alle Informationen hat um das Objekt zu erstellen,
