@@ -1,7 +1,5 @@
 package com.home.pureFabrication.thirdExample;
 
-import com.home.LiskovSubstitutionPrinciple.secondAnalysis.Square;
-
 public class Demo {
 
     public static void main(String[] args) {

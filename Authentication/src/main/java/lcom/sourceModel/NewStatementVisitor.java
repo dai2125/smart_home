@@ -1,7 +1,5 @@
 package lcom.sourceModel;
 
-import com.home.asm.NewObject;
-import com.home.asm.NewObjectService;
 import org.eclipse.jdt.core.dom.*;
 
 import java.util.*;
@@ -41,10 +39,8 @@ public class NewStatementVisitor extends ASTVisitor {
 //            Type type = ((ClassInstanceCreation) node.getInitializer()).getType();
             Type type = creation.getType();
 
-            NewObject object = new NewObject(node.getName().toString(), type);
 //            System.out.println(object);
             newInstances.put(varName, type);
-            NewObjectService.put(object);
 
         }
         return super.visit(node);
@@ -62,9 +58,7 @@ public class NewStatementVisitor extends ASTVisitor {
                     String varName = varFragment.getName().toString();
                     Type type = creation.getType();
 
-                    NewObject object = new NewObject(varName, type);
                     newInstances.put(varName, type);
-                    NewObjectService.put(object);
 
 //                    System.out.println("Feld-Variable: " + varName + " - Typ: " + type);
 //                    System.out.println("instanceCreation (Feld): " + creation);

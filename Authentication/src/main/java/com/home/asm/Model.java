@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+// TODO ist das ein Feld, eine Methode? brauchst du dieses Datenmodell?
 public class Model {
 
     private String _fieldName;
@@ -25,7 +26,6 @@ public class Model {
     private Hashtable<String, Boolean> ownerMethods = new Hashtable();
     private int ownerTotalMethods;
     private String constructorParameterName;
-    private List<NewStatementModel> newStatementModels = new ArrayList();
     private String createdType;
     private String name;
     private String descriptor;
@@ -255,14 +255,6 @@ public class Model {
         return constructorParameterName;
     }
 
-    public void addNewStatementModels(NewStatementModel newStatementModel) {
-        newStatementModels.add(newStatementModel);
-    }
-
-    public List<NewStatementModel> getNewStatementModels() {
-        return newStatementModels;
-    }
-
     public void setCreatedType(String createdType) {
         this.createdType = createdType;
     }
@@ -383,10 +375,6 @@ public class Model {
         return objectCreated;
     }
 
-    public void setNewStatementModels(List<NewStatementModel> newStatementModels) {
-        this.newStatementModels = newStatementModels;
-    }
-
     public String getDescriptor() {
         return descriptor;
     }
@@ -440,7 +428,6 @@ public class Model {
 //                ", ownerMethods=" + ownerMethods +
 //                ", ownerTotalMethods=" + ownerTotalMethods +
 //                ", constructorParameterName='" + constructorParameterName + '\'' +
-//                ", newStatementModels=" + newStatementModels +
 //                ", createdType='" + createdType + '\'' +
                 ", name='" + name + '\'' +
                 ", descriptor='" + descriptor + '\'' +
@@ -476,7 +463,6 @@ public class Model {
 //                ", ownerTotalMethods=" + ownerTotalMethods +
 //                ", objectCreated=" + objectCreated +
 //                ", constructorParameterName='" + constructorParameterName + '\'' +
-//                ", newStatementModels=" + newStatementModels +
 //                ", createdType='" + createdType + '\'' +
 //                ", ownerClass='" + ownerClass + '\'' +
 //                '}';
@@ -504,7 +490,6 @@ public class Model {
 //                + "Object Created: " + objectCreated + "\n"
 //                + "Occurences in owner methods: " + getAllOccurencesInOwnerMethods() + "\n"
 //                + "CreatedType: " + createdType + "\n"
-//                + "NewStatementModels: " + newStatementModels;
 //    }
 
     private String cleanUp(String var) {

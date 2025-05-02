@@ -1,19 +1,12 @@
 package com.home.asm;
 
 import lcom.LCOM;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import oshi.util.LsofUtil;
 
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Start {
@@ -22,7 +15,7 @@ public class Start {
     //        "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
     // AuWo Path
     String basePath = System.getProperty("user.dir");
-    String packagePath = basePath + "\\Authentication\\src\\main\\java\\com\\home\\cohesion";
+    String packagePath = basePath + "\\Authentication\\src\\main\\java\\com\\home\\interfaceSegregationPrinciple\\secondAnalysis\\goodExample";
 
 
     List<InspectedClass> inspectedClassList = new ArrayList<>();
@@ -38,22 +31,15 @@ public class Start {
         app.run();
     }
 
-    private static boolean backEquals(String input) {
-        if(input.equalsIgnoreCase("back") || input.equalsIgnoreCase("b")) {
-            return true;
-        }
-        return false;
-    }
-
     public void run() throws IOException {
         //String packagePath = "C:\\Users\\Lenovo\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
         //        "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
         // AuWo Path
-        String analysePath = "Authentication\\src\\main\\java\\com\\home\\cohesion"; ///goodExample";///badExample";
+        String analysePath = "Authentication\\src\\main\\java\\com\\home\\interfaceSegregationPrinciple\\secondAnalysis\\goodExample"; ///goodExample";///badExample";
         String packagePath = basePath + "\\" + analysePath;
-        // System.out.println("1: " + analysePath);
-        // System.out.println("2: " + basePath);
-        // System.out.println("3: " + packagePath);
+        //System.out.println("1: " + analysePath);
+        //System.out.println("2: " + basePath);
+        //System.out.println("3: " + packagePath);
 
         File directory = new File(packagePath);
 
@@ -101,9 +87,6 @@ public class Start {
 
                         screenChooseOrchestrator();
                         screenIndirection();
-                        //                    System.out.println(print.CHOOSEORCHESTRATOR);
-                        //                    System.out.println(print.ENTERSTART);
-                        //                    System.out.println(print.SYSTEM);
 
                         String orchestrator = "";
                         orchestrator = scanner.nextLine().trim().toLowerCase();
@@ -138,15 +121,6 @@ public class Start {
 
                         doCoupling(input);
 
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//                            System.out.println(LooseCouplingService.analyzeLooseCouplingOfClass(inspectedClassList.get(i).getFullName(),
-//                                    numberOfMethodsService.getAllMethodsList(inspectedClassList.get(i).getFullName()),
-//                                    numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()),
-//                                    inspectedClassList.get(i).getDit(),
-//                                    inspectedClassList.get(i).getFanout(),
-//                                    inspectedClassList.get(i).getIsInterface()));
-//                        }
                     }
                     break;
                 case "3": // INTERFACE SEGREGATION PRINCIPLE
@@ -167,13 +141,6 @@ public class Start {
                         } else {
                             screenClassDoesntExist(input);
                         }
-
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//                            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-//                            System.out.println(InterfaceSegregationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
-//                        }
-//                    }
                     }
                     break;
                 case "4": // COHESION
@@ -194,17 +161,6 @@ public class Start {
                             screenClassDoesntExist(input);
                         }
 
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//
-//                            System.out.println(CohesionService.analyzeCohesionOfClass(
-//                                    inspectedClassList.get(i).getName(),
-//                                    inspectedClassList.get(i).getAllInitFields().size(),
-//                                    inspectedClassList.get(i).getAllFieldsWithinMethods().size(),
-//                                    inspectedClassList.get(i).getYalcom(),
-//                                    inspectedClassList.get(i).getLcom4()));
-//                        }
-//                    }
                     }
                     break;
                 case "5": // PROTECTED VARIATION
@@ -225,14 +181,6 @@ public class Start {
                             screenClassDoesntExist(input);
                         }
 
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//
-//                            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-//
-//                            System.out.println(ProtectedVariationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
-//                        }
-//                    }
                     }
                     break;
                 case "6": // SINGLE RESPONSIBILTY PRINCIPLE
@@ -244,22 +192,19 @@ public class Start {
                         screenChooseClass(6);
 //                    System.out.println(print.CHOOSECLASS);
                         input = scanner.nextLine().trim().toLowerCase();
+                        System.out.println(input);
+                        System.out.println(input + "1");
 
                         if(backEquals(input)) {
                             break;
                         } else if(classEquals(input)) {
                             doSingleResponsibility(input);
+                        } else if(classEquals(input.replace("1", ""))) {
+                            createChart(input.replace("1", ""), 6);
                         } else {
                             screenClassDoesntExist(input);
                         }
 
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//
-//                            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-//                            System.out.println(CreatorPrincipleService.singleResponsibilityPrinciple(inspectedClassList.get(i)));
-//                        }
-//                    }
                     }
                     break;
                 case "11": // CREATOR PRINCIPLE B CLOSELY USES A
@@ -279,13 +224,6 @@ public class Start {
                         } else {
                             screenClassDoesntExist(input);
                         }
-
-
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//                            System.out.println(creator1(inspectedClassList.get(i).getName(), inspectedClassList.get(i).getAmountOfMethods()));
-//                        }
-//                    }
                     }
                     break;
                 case "12": // CREATOR PRINCIPLE B RECORDS A
@@ -304,12 +242,6 @@ public class Start {
                         } else {
                             screenClassDoesntExist(input);
                         }
-
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//                            System.out.println(creator3(inspectedClassList.get(i).getFullName(), inspectedClassList.get(i).getAmountOfMethods()));
-//                        }
-//                    }
                     }
                     break;
                 case "13": // CREATOR PRINCIPLE B CONTAINS OR COMPOSETILY AGGREGATES A
@@ -332,12 +264,6 @@ public class Start {
                         } else {
                             screenClassDoesntExist(input);
                         }
-
-//                    for (int i = 0; i < inspectedClassList.size(); i++) {
-//                        if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
-//                            creator4(inspectedClassList.get(i).getFullName(), packagePath);
-//                        }
-//                    }
                     }
                     break;
                 case "path": // CHANGE PATH
@@ -348,40 +274,17 @@ public class Start {
 
                     changePath(input);
 
-//                    Path path = Paths.get(input);
-//                    String rootPath = System.getProperty("user.dir").replaceAll("\\\\", "/");
-//
-//                    if (Files.exists(path) && input.startsWith(rootPath)) {
-//
-//                        String replace = System.getProperty("user.dir").replaceAll("\\\\", "/");
-////                        System.out.println("Path replace: " + replace);
-////                        System.out.println("Path analysePath: " + analysePath);
-//
-//                        String a = path.toString();
-//                        a = a.replaceAll("\\\\", "/");
-//                        a.replaceAll(replace, "");
-//
-//                        packagePath = path.toString().replaceAll("/", "\\\\");
-//                        analysePath = a;
-//                        directory = new File(a);
-//
-//
-////                        analysePath = input.replaceFirst(replace, "") + "/";
-//                        inspectedClassList.clear();
-//                        printAllClasses();
-//                        test = packageService.allClasses(directory);
-//
-//                        inspectedClassList = initializeAllClasses(analysePath, packagePath, directory, numberOfChildrenService, depthOfInheritanceTree, fanInService, fanOutService, test, wmcService, numberOfMethodsService, numberOfConstructorsService, numberOfFieldsService);
-//                        System.out.println(print.PATHCHANGED);
-//                    }
-
                     printAllClasses();
                     break;
                 case "print": // PRINT ALL METRICS
                     printAllClassesWithMetrics();
                     break;
                 case "test":
-                    ClassService.printAllClasses();
+                    CreatorPrinciple1And3Service.printAllClasses();
+                    for(int i = 0; i < inspectedClassList.size(); i++) {
+                        // System.out.println(2222 + " " + inspectedClassList.get(i).getName() + "; " + inspectedClassList.get(i).getYalcom() + ", " + inspectedClassList.get(i).getLcom4());
+                    }
+                    // ClassService.printAllClasses();
                     break;
                 case "metrics":
                     printMetrics();
@@ -389,9 +292,45 @@ public class Start {
                 case "dir":
                     printDirectory();
                     break;
+                case "fields":
+                    System.out.println(print.SYSTEM + "choose a class");
+                    input = scanner.nextLine().trim().toLowerCase();
+                    printFields(input);
+                    // System.out.println(printFields(input));
+                    break;
+                case "methods":
+                    System.out.println(print.SYSTEM + "choose a class");
+                    input = scanner.nextLine().trim().toLowerCase();
+                    printMethods(input);
+                    // System.out.println(printMethods(input));
+                    break;
+                case "classes":
+                    System.out.println(print.SYSTEM + "choose a class");
+                    input = scanner.nextLine().trim().toLowerCase();
+
+                    System.out.println(printTest(input));
+                    break;
+
+                case "aaa":
+                    CreatorPrinciple1And3Service.printAllMetrics();
+                    break;
+                case "bbb":
+                    CreatorPrinciple1And3Service.printAllFields();
+                    break;
+                case "ccc":
+                    CreatorPrinciple1And3Service.printAllMethods();
+                    break;
+                case "ddd":
+                    CreatorPrinciple1And3Service.printFirstMethod();
+                    break;
+                case "e":
+                    doInterfaceSegregationChart();
+
+//                    input = "Resume";
+//                    createChart(input, 6);
+                    break;
                 default:
                     screenDefault(input);
-//                    System.out.println(print.UNKNOWNINPUT + input);
                     break;
             }
         }
@@ -405,33 +344,23 @@ public class Start {
     private static List<InspectedClass> initializeAllClasses(String analysePath, String packagePath, File directory, NumberOfChildrenService numberOfChildrenService, DepthOfInheritanceTree depthOfInheritanceTree, FanInService fanInService, FanOutService fanOutService, HashSet<String> test, WMCService wmcService, NumberOfMethodsService numberOfMethodsService, NumberOfConstructorsService numberOfConstructorsService, NumberOfFieldsService numberOfFieldsService) throws IOException {
         List<InspectedClass> ans = new ArrayList<>();
 
-        ClassService.clear();
+        CreatorPrinciple1And3Service.clear();
+        // ClassService.clear();
 
         Iterator<String> iterator = test.iterator();
         while (iterator.hasNext()) {
             String className = iterator.next();
-//            System.out.println("initial: analysePath: " + analysePath);
 //            System.out.println("initial: packagePath: " + packagePath);
 //            System.out.println("initial: directory.getAbsolutePath(): " + directory.getAbsolutePath());
-
-
 //            System.out.println("className = " + className);
-//            System.out.println("className = " + className.replaceFirst(".*/", ""));
-//            System.out.println("className = " + className.replaceAll("\\\\", "/"));
-            InspectedClass inspectedClass = new InspectedClass(className.replaceAll(".*/", ""));
-//            InspectedClass inspectedClass = new InspectedClass(className.replace(analysePath + "/", ""));
-            inspectedClass.setFullName(className);
 
             numberOfChildrenService = new NumberOfChildrenService(className);
-            int a = numberOfChildrenService.calculateNOC(inspectedClass.getFullName());
-//            System.out.println(className + " has " + a + " children");
-            inspectedClass.setNumberOfChildren(a);
+            int numberOfChildren = numberOfChildrenService.calculateNOC(test);
+            //int numberOfChildren = numberOfChildrenService.calculateNOC(analysePath);
 
             depthOfInheritanceTree = new DepthOfInheritanceTree(className);
-            int b = depthOfInheritanceTree.calculateDIT();
+            int dit = depthOfInheritanceTree.calculateDIT();
 //            System.out.println(className + " ,children: " + a + ", DIT: " + b);
-            inspectedClass.setDit(b);
-            inspectedClass.setIsInterface(depthOfInheritanceTree.checkIfClassIsInterface());
 
             fanInService = new FanInService(className, packagePath, directory);
 
@@ -441,106 +370,106 @@ public class Start {
 //                System.out.println(className + " ,call count: " + name + ", " + classCallCount.get(name));
             }
 
-            int c = classCallCount.size();
+            int fanIn = classCallCount.size();
 //            System.out.println(className + " ,children: " + a + ", DIT: " + b + ", FANIN: " + c);
-            inspectedClass.setFanin(c);
 
             fanOutService = new FanOutService(className, packagePath, directory);
 
             Iterator<String> itr = test.iterator();
-            int d = 0;
+            int fanOut = 0;
             Map<String, Integer> classUseCount;
 
             while (itr.hasNext()) {
 //                classUseCount = fanOutService.analyzePackage(directory, itr.next());
-                d = fanOutService.analyzePackage2(className, itr.next());
+                fanOut = fanOutService.analyzePackage2(className, itr.next());
             }
 
-            inspectedClass.setFanout(d);
-
             wmcService = new WMCService();
-            int e = wmcService.calculateWMC(className);
-            inspectedClass.setWmc(e);
+            int wmc = wmcService.calculateWMC(className);
 
             numberOfMethodsService = new NumberOfMethodsService();
-            int f = numberOfMethodsService.analyzePackage2(className);
-            inspectedClass.setAmountOfMethods(f);
+            int numberOfMethods = numberOfMethodsService.analyzePackage2(className);
 
             numberOfConstructorsService = new NumberOfConstructorsService();
-            int g = numberOfConstructorsService.countConstructors(className);
-            inspectedClass.setAmountOfConstructors(g);
+            int numberOfConstructors = numberOfConstructorsService.countConstructors(className);
 
             numberOfFieldsService = new NumberOfFieldsService();
-            int h = numberOfFieldsService.countPutFields(className);
-            inspectedClass.setAmountOfFields(h);
+            int numberOfFields = numberOfFieldsService.countPutFields(className);
 
-            inspectedClass.setAllInitFields(numberOfFieldsService.getAllInitFields(className));
-            inspectedClass.setAllFieldsWithinMethods(numberOfFieldsService.getAllFieldsWithinMethods(className));
-//            Set<String> iFields = numberOfFieldsService.getAllInitFields(className);
-//            Set<String> aFields = numberOfFieldsService.getAllFieldsWithinMethods(className);
-
-//            System.out.println("... " + inspectedClass.toString());
-
-//            System.out.println("INIT FIELDS");
-//            Iterator<String> iterator2 = iFields.iterator();
-//            while(iterator2.hasNext()) {
-//                System.out.print(iterator2.next() + " ");
-//            }
-//
-//            System.out.println("\nALL FIELDS");
-//            iterator2 = aFields.iterator();
-//            while(iterator2.hasNext()) {
-//                System.out.print(iterator2.next() + " ");
-//            }
-//            System.out.println();
-
-
-            List<String> allMethodsList = numberOfMethodsService.getAllMethodsList(className);
-            Set<String> allMethods = numberOfMethodsService.getAllMethods(className);
-            Set<String> allFields = numberOfFieldsService.getAllFields(className);
-            Set<String> allInitFields = numberOfFieldsService.getAllInitFields(className);
-
-            numberOfMethodsService.getListOfNewStatements(className);
+            numberOfMethodsService.getInformationOfMethodsFrom(className);
 //            numberOfFieldsService.checkField(className);
             numberOfFieldsService.visitField(className);
-            numberOfFieldsService.visitMethod(className);
+            // numberOfFieldsService.visitMethod(className);
 
-            ClassService.put(inspectedClass);
+//            System.out.println("333: " + className.replaceAll(".*/", "") + ", " + className);
+            InspectedClass inspectedClass = new InspectedClass(className.replaceAll(".*/", ""), className,
+                    numberOfChildren, dit, depthOfInheritanceTree.checkIfClassIsInterface(),
+                    fanIn, fanOut, wmc, numberOfMethods, numberOfConstructors, numberOfFields,
+                    numberOfFieldsService.getAllInitFields(className),
+                    numberOfFieldsService.getAllFieldsWithinMethods(className));
 
-//            System.out.println("start: " + inspectedClass.getFullName());
-//            String[] args2 = new String[]{"-i", packagePath, "-o", inspectedClass.getFullName().replace(analysePath + "/", "")};
-//            String[] args2 = new String[]{"-i", packagePath, "-o", inspectedClass.getName()};
-//            LCOM.startLcomProcess(args2);
+            if(CreatorPrinciple1And3Service.contains(className.replaceAll(".*/", ""))) {
+                InspectedClass inspectedClass2 = CreatorPrinciple1And3Service.get(className.replaceAll(".*/", ""));
+//                System.out.println(555 + " " + inspectedClass2.getFullName() + ", " + inspectedClass2.getName() + ", " + inspectedClass2.getLcom4());
+                inspectedClass2.setFullName(inspectedClass.getFullName());
+                inspectedClass2.setNumberOfConstructors(numberOfConstructors);
+                inspectedClass2.setNumberOfChildren(numberOfChildren);
+                inspectedClass2.setDit(dit);
+                inspectedClass2.setFanIn(fanIn);
+                inspectedClass2.setFanOut(fanOut);
+                inspectedClass2.setWmc(wmc);
+                inspectedClass2.setNumberOfMethods(numberOfMethods);
+                inspectedClass2.setNumberOfFields(numberOfFields);
+                inspectedClass2.setIsInterface(depthOfInheritanceTree.checkIfClassIsInterface());
+                inspectedClass2.setNumberOfConstructors(numberOfConstructors);
+                inspectedClass2.setAllInitFields(numberOfFieldsService.getAllInitFields(className));
+                inspectedClass2.setAllFieldsWithinMethods(numberOfFieldsService.getAllFieldsWithinMethods(className));
+                CreatorPrinciple1And3Service.put(inspectedClass2);
+            } else {
+                CreatorPrinciple1And3Service.put(inspectedClass);
+            }
 
+
+            //CreatorPrinciple1And3Service.put(inspectedClass);
+            // ClassService.put(inspectedClass);
 
             ans.add(inspectedClass);
-//            inspectedClassList.add(inspectedClass);
         }
+        //System.out.println("packagePath: " + packagePath);
         String[] args2 = new String[]{"-i", packagePath, "-o", "delete"};
         LCOM.startLcomProcess(args2);
 
-        return ans;
 
+        return CreatorPrinciple1And3Service.getCreatorPrincipleList();
+    }
+
+    private void updateInspectedClassList() {
+        CreatorPrinciple1And3Service.getCreatorPrincipleList();
+        for(int i = 0; i < CreatorPrinciple1And3Service.getCreatorPrincipleList().size(); i++) {
+            for(int j = 0; j < inspectedClassList.size(); j++) {
+               //if(CreatorPrinciple1And3Service)
+            }
+        }
     }
 
     private static String creator1(InspectedClass inspectedClass) {
-        return CreatorPrincipleService.firstPrinciple(inspectedClass);
+        return CreatorPrinciple1And3Service.firstPrinciple(inspectedClass);
     }
 
     private static String creator1(String className, int nom) {
-        return CreatorPrincipleService.firstPrinciple(className, nom);
+        return CreatorPrinciple1And3Service.firstPrinciple(className, nom);
     }
 
     private static String creator3(InspectedClass inspectedClass) {
-        return CreatorPrincipleService.thirdPrinciple(inspectedClass);
+        return CreatorPrinciple1And3Service.thirdPrinciple(inspectedClass);
     }
 
     private static String creator3(String className, int nom) {
-        return CreatorPrincipleService.thirdPrinciple(className, nom);
+        return CreatorPrinciple1And3Service.thirdPrinciple(className, nom);
     }
 
     private static String creator4(String className, String packagePath) {
-        return Creator4Service.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
+        return CreatorPrinciple4Service.start(className, packagePath + "\\" + className.replaceAll(".*/", "") + ".java");
     }
 
     private String terminalCategory(int num) {
@@ -564,6 +493,32 @@ public class Start {
             return print.CREATOR3;
         } else if(num == 14) {
             return print.CREATOR4;
+        } else {
+            return print.SYSTEM;
+        }
+    }
+
+    private String principleName(int num) {
+        if(num == 1) {
+            return print.INDIRECTIONNAME;
+        } else if(num == 2) {
+            return print.COUPLINGNAME;
+        } else if(num == 3) {
+            return print.ISPNAME;
+        } else if(num == 4) {
+            return print.COHESIONNAME;
+        } else if(num == 5) {
+            return print.PROTECTEDVARIATIONSNAME;
+        } else if(num == 6) {
+            return print.SRPNAME;
+        } else if(num == 11) {
+            return print.CREATOR1NAME;
+        } else if(num == 12) {
+            return print.CREATOR2NAME;
+        } else if(num == 13) {
+            return print.CREATOR3NAME;
+        } else if(num == 14) {
+            return print.CREATOR4NAME;
         } else {
             return print.SYSTEM;
         }
@@ -635,6 +590,7 @@ public class Start {
 
     private void doIndirectionBetween(String className, String orchestrator) {
         IndirectionService indirectionService = new IndirectionService(packagePath, directory);
+        System.out.println(4 + ". " + packagePath + " . " + directory);
         if (classEquals(className) && classEquals(orchestrator)) {
             for (int i = 0; i < inspectedClassList.size(); i++) {
                 for (int j = 0; j < inspectedClassList.size(); j++) {
@@ -685,7 +641,7 @@ public class Start {
                             numberOfMethodsService.getAllMethodsList(inspectedClassList.get(i).getFullName()),
                             numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()),
                             inspectedClassList.get(i).getDit(),
-                            inspectedClassList.get(i).getFanout(),
+                            inspectedClassList.get(i).getFanOut(),
                             inspectedClassList.get(i).getIsInterface()));
                 }
             }
@@ -702,6 +658,20 @@ public class Start {
                 System.out.println(print.ISPRESULT + InterfaceSegregationService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
             }
         }
+    }
+
+    private void doInterfaceSegregationChart() throws IOException {
+        NumberOfMethodsService numberOfMethodsService = new NumberOfMethodsService();
+        List<InspectedClass> inspectedClassList2 = new ArrayList<>();
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
+            inspectedClassList2.add(InterfaceSegregationChartService.start(inspectedClassList.get(i), inspectedClassList.get(i).getFullName(), packagePath + "\\" + inspectedClassList.get(i).getName().replaceAll(".*/", "") + ".java"));
+        }
+
+        if(inspectedClassList2 != null) {
+            PrincipleChartISP principleChartISP = new PrincipleChartISP("Interface Segreagation Principle", inspectedClassList2);
+        }
+
     }
 
     private void doCohesion(String input) {
@@ -730,10 +700,15 @@ public class Start {
     private void doSingleResponsibility(String input) throws IOException {
         NumberOfMethodsService numberOfMethodsService = new NumberOfMethodsService();
         for (int i = 0; i < inspectedClassList.size(); i++) {
+//            System.out.println("doSingleResponsibility(111): " + inspectedClassList.get(i).getName());
             if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+//                System.out.println("doSingleResponsibility(222): " + inspectedClassList.get(i).getName() + " = " + input);
+//                System.out.println("doSingleResponsibility(333): " + inspectedClassList.get(i).getFullName() + " = " + input);
+
+
 
                 inspectedClassList.get(i).setInterfaceMethodList(numberOfMethodsService.getAllInterfaceMethods(inspectedClassList.get(i).getFullName()));
-                System.out.println(print.SRPRESULT + CreatorPrincipleService.singleResponsibilityPrinciple(inspectedClassList.get(i)));
+                System.out.println(print.SRPRESULT + CreatorPrinciple1And3Service.singleResponsibilityPrinciple(inspectedClassList.get(i)));
             }
         }
     }
@@ -818,6 +793,9 @@ public class Start {
 
             inspectedClassList = initializeAllClasses(analysePath, packagePath, directory, numberOfChildrenService, depthOfInheritanceTree, fanInService, fanOutService, test, wmcService, numberOfMethodsService, numberOfConstructorsService, numberOfFieldsService);
             System.out.println(print.PATHCHANGED);
+            for(int i = 0; i < inspectedClassList.size(); i++) {
+                //System.out.println(444 + inspectedClassList.get(i).getName() + ", "  + inspectedClassList.get(i).getFullName() + ", " + inspectedClassList.get(i).getLcom4());
+            }
         } else {
             screenPathInvalid();
         }
@@ -838,9 +816,89 @@ public class Start {
         for(int i = 0; i < inspectedClassList.size(); i++) {
             System.out.println(print.METRICS + inspectedClassList.get(i).metricToString());
         }
+
+        for(int i = 0; i < CreatorPrinciple1And3Service.getCreatorPrincipleList().size(); i++) {
+            System.out.println(print.METRICS + 22 + CreatorPrinciple1And3Service.getCreatorPrincipleList().get(i).metricToString());
+        }
     }
 
     private void printDirectory() {
         System.out.println(print.SYSTEM + packagePath);
     }
+
+    // case "fields":
+    //                    printFields();
+    //                    break;
+    //                case "methods":
+    //                    printMethods();
+    //                    break;
+    //                case "classes":
+    //                    printTest();
+    //                    break;
+
+    private String printFields(String input) {
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                //System.out.println(11 + inspectedClassList.get(i).fieldInformation());
+                return inspectedClassList.get(i).fieldInformation();
+            }
+        }
+
+        /*
+        for(int i = 0; i < CreatorPrinciple1And3Service.getCreatorPrincipleList().size(); i++) {
+            if(CreatorPrinciple1And3Service.getCreatorPrincipleList().get(i).getName().equalsIgnoreCase(input)) {
+                System.out.println(22 + CreatorPrinciple1And3Service.getCreatorPrincipleList().get(i).fieldInformation());
+            }
+        }
+        */
+        return null;
+    }
+
+    private String printMethods(String input) {
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                //System.out.println(11 + inspectedClassList.get(i).methodInformation());
+                return inspectedClassList.get(i).methodInformation();
+            }
+        }
+
+        //for(int i = 0; i < CreatorPrinciple1And3Service.getCreatorPrincipleList().size(); i++) {
+        //    if(CreatorPrinciple1And3Service.getCreatorPrincipleList().get(i).getName().equalsIgnoreCase(input)) {
+        //        System.out.println(22 + CreatorPrinciple1And3Service.getCreatorPrincipleList().get(i).methodInformation());
+        //    }
+        //}
+        return null;
+    }
+
+    private String printTest(String input) {
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                return inspectedClassList.get(i).creatorPrincpleToString();
+            }
+        }
+        return null;
+    }
+
+    private static boolean backEquals(String input) {
+        if(input.equalsIgnoreCase("back") || input.equalsIgnoreCase("b")) {
+            return true;
+        }
+        return false;
+    }
+    
+    private void createChart(String input, int num) {
+        // 6
+        String principleName = principleName(num);
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                // System.out.println(222222222);
+                InspectedClass inspectedClass = inspectedClassList.get(i);
+                PrinicpleChart chart = new PrinicpleChart(principleName, inspectedClass);
+
+            }
+        }
+    }
+
+
+
 }

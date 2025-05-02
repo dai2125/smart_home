@@ -6,17 +6,18 @@ import lcom.sourceModel.SM_Method;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO DEPRECATED
 public class CreatorPrinciple {
 
     private String name;
-    private List<CreatorPrincipleField> fieldList = new ArrayList<>();
-    private List<CreatorPrincipleField> fieldInsnList = new ArrayList<>();
-    private List<CreatorPrincipleMethod> methodList = new ArrayList<>();
-    private List<String> parameterList = new ArrayList<>();
     private int counter;
+    private List<Model> modelList = new ArrayList<>();
+    private List<String> parameterList = new ArrayList<>();
     private List<SM_Field> fieldListToControl = new ArrayList<>();
     private List<SM_Method> methodListToControl = new ArrayList<>();
-    private List<Model> modelList = new ArrayList<>();
+    private List<InspectedField> fieldList = new ArrayList<>();
+    private List<InspectedField> fieldInsnList = new ArrayList<>();
+    private List<InspectedMethod> inspectedMethodList = new ArrayList<>();
 
     public void addToModelList(Model model) {
         modelList.add(model);
@@ -46,23 +47,23 @@ public class CreatorPrinciple {
 //        this.fieldList = fieldList;
     }
 
-    public void addToFieldList(CreatorPrincipleField cpf) {
-        fieldList.add(cpf);
+    public void addToFieldList(InspectedField inspectedField) {
+        fieldList.add(inspectedField);
     }
 
-    public List<CreatorPrincipleField> getFieldList() {
+    public List<InspectedField> getFieldList() {
         return fieldList;
     }
 
-    public void addToFieldInsnList(CreatorPrincipleField cpf) {
-        fieldInsnList.add(cpf);
+    public void addToFieldInsnList(InspectedField inspectedField) {
+        fieldInsnList.add(inspectedField);
     }
 
-    public List<CreatorPrincipleField> getFieldInsnList() {
+    public List<InspectedField> getFieldInsnList() {
         return fieldInsnList;
     }
 
-//    public void addToFieldList(CreatorPrincipleField field) {
+//    public void addToFieldList(InspectedField field) {
 //        if(!fieldListContains(field)) {
 //            fieldList.add(field);
 //        }
@@ -70,25 +71,25 @@ public class CreatorPrinciple {
 //        fieldList.add(field);
 //    }
 
-    public void setFunctionList(List<CreatorPrincipleMethod> functionList) {
-        methodList = functionList;
+    public void setFunctionList(List<InspectedMethod> functionList) {
+        inspectedMethodList = functionList;
     }
 
-    public List<CreatorPrincipleMethod> getFunctionList() {
-        return methodList;
+    public List<InspectedMethod> getFunctionList() {
+        return inspectedMethodList;
     }
 
     public int getFunctionListSize() {
-        return methodList.size();
+        return inspectedMethodList.size();
     }
 
-    public void addFunctionToList(CreatorPrincipleField cpf) {
+    public void addFunctionToList(InspectedField inspectedField) {
 //        if(!methodListContains(function)) {
 //            methodList.add(function);
 //        }
 
 //        if(!fieldList.contains(cpf)) {
-            fieldList.add(cpf);
+            fieldList.add(inspectedField);
 //        }
     }
 
@@ -143,8 +144,8 @@ public class CreatorPrinciple {
     }
 
     private boolean methodListContains(String value) {
-        for(int i = 0; i < methodList.size(); i++) {
-            if(methodList.get(i).getName().equals(value)) {
+        for(int i = 0; i < inspectedMethodList.size(); i++) {
+            if(inspectedMethodList.get(i).getName().equals(value)) {
                 return true;
             }
         }
@@ -160,9 +161,9 @@ public class CreatorPrinciple {
         return false;
     }
 
-    public void addMethodToList(CreatorPrincipleMethod cpm) {
-        if(!methodListContains(cpm.getName())) {
-            methodList.add(cpm);
+    public void addMethodToList(InspectedMethod inspectedMethod) {
+        if(!methodListContains(inspectedMethod.getName())) {
+            inspectedMethodList.add(inspectedMethod);
         }
     }
 
@@ -170,11 +171,11 @@ public class CreatorPrinciple {
     public String toString() {
         return "CreatorPrinciple{" + "\n" +
                 "\tname=" + name +  "\n" +
-                "\tfieldList=" + fieldList.stream().map(CreatorPrincipleField::getName).toList() +  "\n" +
+                "\tfieldList=" + fieldList.stream().map(InspectedField::getName).toList() +  "\n" +
                 "\tfieldList.size=" + fieldList.size() +  "\n" +
-                "\tmethodList=" + methodList.stream().map(CreatorPrincipleMethod::getName).toList() +  "\n" +
+                "\tmethodList=" + inspectedMethodList.stream().map(com.home.asm.InspectedMethod::getName).toList() +  "\n" +
 //                "\tmethodList=" + methodList.stream().map(String::toString).toList() +  "\n" +
-                "\tmethodList.size=" + methodList.size() +  "\n" +
+                "\tmethodList.size=" + inspectedMethodList.size() +  "\n" +
                 "\tfieldListToControl=" + fieldListToControl.stream().map(SM_Field::getName).toList() +  "\n" +
                 "\tfieldListToControl.size=" + fieldListToControl.size() +  "\n" +
                 "\tmethodListToControl=" + methodListToControl.stream().map(SM_Method::getName).toList() +  "\n" +

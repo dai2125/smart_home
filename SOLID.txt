@@ -1,4 +1,4 @@
---1. **Single Responsibility Principle (SRP)**
+    --1. **Single Responsibility Principle (SRP)**
    - **LCOM (Lack of Cohesion of Methods):** Hohe LCOM-Werte deuten auf mangelnde Kohäsion hin,
         was darauf hindeuten kann, dass eine Klasse mehrere Verantwortlichkeiten hat und das SRP verletzt.
         LCOM -1 Klasse kann nicht definiert werden

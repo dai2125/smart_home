@@ -1,16 +1,12 @@
 package lcom.sourceModel;
 
-import com.home.asm.CreatorPrinciple;
-import com.home.asm.CreatorPrincipleService;
+import com.home.asm.CreatorPrinciple1And3Service;
+import com.home.asm.InspectedClass;
 import lcom.utils.models.Vertex;
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-import java.lang.annotation.Target;
 import java.lang.reflect.Modifier;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,10 +28,10 @@ public class SM_Field extends SM_EntitiesWithType implements Vertex {
 //		System.out.println("SM_FIELD");
 	// TODO hierher zurück  cccccccccc
 //		System.out.println("xxxxxxxxxx:" + parentType.name + ":xxxxxxxxxx");
-		if(!CreatorPrincipleService.contains(parentType.name)) {
+		if(!CreatorPrinciple1And3Service.contains(parentType.name)) {
 //			System.out.println("cccccccccc:" + parentType.name + ":cccccccccc");
 
-			CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
+			InspectedClass inspectedClass = new InspectedClass(parentType.name);
 //			System.out.println("bbbbbbb:" + fieldDeclaration);
 //			System.out.println("bbbbbbb:" + fieldDeclaration.getType());
 //			System.out.println("bbbbbbb:" + fieldDeclaration.getType().toString());
@@ -43,20 +39,20 @@ public class SM_Field extends SM_EntitiesWithType implements Vertex {
 			// TODO hier kommenatr rückgängig machen
 //			creatorPrinciple.addToFieldList(fieldDeclaration + ", " + fieldDeclaration.getType().toString());
 
-			creatorPrinciple.increaseCount();
+			inspectedClass.increaseCount();
 
-			CreatorPrincipleService.put(creatorPrinciple);
+			CreatorPrinciple1And3Service.put(inspectedClass);
 //				System.out.println(creatorPrinciple);
 		} else {
-			CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(parentType.name);
+			InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(parentType.name);
 //			CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
 
 			// TODO hier kommenatr rückgängig machen
 //			creatorPrinciple.addToFieldList(fieldDeclaration + ", " + fieldDeclaration.getType().toString());
 
-			creatorPrinciple.increaseCount();
+			inspectedClass.increaseCount();
 
-			CreatorPrincipleService.put(creatorPrinciple);
+			CreatorPrinciple1And3Service.put(inspectedClass);
 //				System.out.println(creatorPrinciple);
 
 		}

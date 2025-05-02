@@ -1,5 +1,6 @@
 package com.home.asm;
 
+// TODO DEPREACTED
 public class InterfaceSegregationPrincipleService {
 
     public static String interfaceSegregationPrinciple(InspectedClass inspectedClass) {

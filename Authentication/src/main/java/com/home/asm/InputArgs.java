@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+// TODO DEPREACTED
 public class InputArgs {
     private String sourceFolder;
     private String outputFolder;

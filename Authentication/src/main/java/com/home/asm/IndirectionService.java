@@ -49,7 +49,7 @@ public class IndirectionService {
     public String start(InspectedClass inspectedClass, List<InspectedClass> inspectedClassList) throws IOException {
         StringBuilder sb = new StringBuilder(print.INDIRECTIONRESULT + PRINCIPLE + inspectedClass.getName().replaceFirst(".*/", ""));
 
-        if(inspectedClass.getFanin() == 0) {
+        if(inspectedClass.getFanIn() == 0) {
             sb.append("\n" + print.INDIRECTIONRESULT + inspectedClass.getName() + " - Error class isnt used in other class in this package");
             return sb.toString();
         }

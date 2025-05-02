@@ -1,6 +1,6 @@
 package lcom.metrics;
 
-import com.home.asm.ClassService;
+import com.home.asm.CreatorPrinciple1And3Service;
 import com.home.asm.InspectedClass;
 import lcom.metrics.algorithms.*;
 import lcom.sourceModel.SM_Type;
@@ -18,9 +18,12 @@ public class TypeMetrics {
 //        System.out.println("type.getName(): " + type.getName() + " targetClass: " + targetClass);
 //        System.out.println("type.getName(): " + type.getName());
 
-        InspectedClass inspectedClass = ClassService.get(type.getName());
+        InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(type.getName());
+        // InspectedClass inspectedClass = ClassService.get(type.getName());
+
 //        System.out.println("targetClass: " + targetClass);
 //        System.out.println("inspectedClass.getFullName(): " + inspectedClass.getFullName());
+        // System.out.println(444 + " type.getName(): " + type.getName() + ", inspectedClass.getName(): " + inspectedClass.getName() + ", targetClass: " + targetClass);
         if(type.getName().equals(inspectedClass.getName())) {
 
             ILCOM lcomAlgorithm = new YALCOM();
@@ -64,7 +67,8 @@ public class TypeMetrics {
 //                    inspectedClass.setLcom3(yalcom);
 //                    inspectedClass.setLcom4(yalcom);
 //                    inspectedClass.setLcom5(yalcom);
-                    ClassService.put(inspectedClass);
+                    CreatorPrinciple1And3Service.put(inspectedClass);
+                    // ClassService.put(inspectedClass);
 
                 } else {
                     yalcom = lcomAlgorithm.compute(type);
@@ -89,9 +93,10 @@ public class TypeMetrics {
                     lcomAlgorithm = new LCOM5();
                     lcom5 = lcomAlgorithm.compute(type);
                     inspectedClass.setLcom5(lcom5);
-//                    System.out.println("TTTinspectedClass: " + inspectedClass + " has LCOM4 of " + lcom4);
-//                    System.out.println("TypeMetrics inspectedClass: " + inspectedClass.getName() + " " + inspectedClass.getLcom1() + ", " + inspectedClass.getLcom2() + ", "+ inspectedClass.getLcom4() + ", " + inspectedClass.getLcom5());
-                    ClassService.put(inspectedClass);
+                    //System.out.println("TTTinspectedClass: " + inspectedClass + " has LCOM4 of " + lcom4);
+                    //System.out.println("TypeMetrics inspectedClass: " + inspectedClass.getName() + " " + inspectedClass.getLcom1() + ", " + inspectedClass.getLcom2() + ", "+ inspectedClass.getLcom4() + ", " + inspectedClass.getLcom5());
+                    CreatorPrinciple1And3Service.put(inspectedClass);
+                    // ClassService.put(inspectedClass);
                 }
             }
 

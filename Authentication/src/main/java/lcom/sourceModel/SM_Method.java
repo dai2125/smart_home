@@ -1,7 +1,6 @@
 package lcom.sourceModel;
 
 import com.home.asm.*;
-import com.home.asm.NewObjectService;
 import lcom.utils.models.Vertex;
 import lcom.visitors.DirectAceessFieldVisitor;
 import lcom.visitors.InstanceOfVisitor;
@@ -49,19 +48,19 @@ public class SM_Method extends SM_SourceItem implements Vertex {
 
 //        System.out.println("\nSM_METHOD: ParentType.name " + parentType.name);
 
-        if(!CreatorPrincipleService.contains(parentType.name)) {
-            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(parentType.name);
+        if(!CreatorPrinciple1And3Service.contains(parentType.name)) {
+            InspectedClass inspectedClass = new InspectedClass(parentType.name);
 
             // TODO hier Kommentar rückgängig machen
 //            creatorPrinciple.addFunctionToList(methodDeclaration.getName().toString());
 
-            CreatorPrincipleService.put(creatorPrinciple);
+            CreatorPrinciple1And3Service.put(inspectedClass);
         } else {
-            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(parentType.name);
+            InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(parentType.name);
             // TODO hier Kommentar rückgängig machen
 //            creatorPrinciple.addFunctionToList(methodDeclaration.getName().toString());
 
-            CreatorPrincipleService.put(creatorPrinciple);
+            CreatorPrinciple1And3Service.put(inspectedClass);
         }
 
 
@@ -193,12 +192,6 @@ public class SM_Method extends SM_SourceItem implements Vertex {
             if(expression instanceof SimpleName) {
                 String objectName = expression.toString();
 
-                NewObject object = NewObjectService.get(objectName);
-
-                if(object != null) {
-                    object.addFunctionToList(invocation.getName().toString());
-//                    System.out.println(object);
-                }
 
 //                System.out.println("\t\tMethodenaufruf: " + objectName + "." + invocation.getName());
                 if(newInstances.containsKey(objectName)) {
@@ -480,4 +473,35 @@ public class SM_Method extends SM_SourceItem implements Vertex {
         System.out.println("=========================================");
     }
 
+    public List<SM_Method> getCalledMethodsList() {
+        return calledMethodsList;
+    }
+
+    public List<SimpleName> getNamesInMethod() {
+        return namesInMethod;
+    }
+
+    public List<FieldAccess> getThisAccessesInMethod() {
+        return thisAccessesInMethod;
+    }
+
+    public List<SM_Field> getSuperClassFieldAccesses() {
+        return superClassFieldAccesses;
+    }
+
+    public List<Type> getTypesInInstanceOf() {
+        return typesInInstanceOf;
+    }
+
+    public List<SM_Type> getSmTypesInInstanceOf() {
+        return smTypesInInstanceOf;
+    }
+
+    public List<SM_Type> getSmTypesInNewStatements() {
+        return smTypesInNewStatements;
+    }
+
+    public List<Type> getNewStatementTypes() {
+        return newStatementTypes;
+    }
 }

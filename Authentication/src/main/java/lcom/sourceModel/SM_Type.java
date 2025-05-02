@@ -1,13 +1,9 @@
 package lcom.sourceModel;
 
-import com.home.asm.ClassService;
-import com.home.asm.CreatorPrinciple;
-import com.home.asm.CreatorPrincipleService;
+import com.home.asm.CreatorPrinciple1And3Service;
 import com.home.asm.InspectedClass;
 import lcom.metrics.MethodMetricExtractor;
 import lcom.metrics.MethodMetrics;
-import lcom.metrics.algorithms.ILCOM;
-import lcom.metrics.algorithms.YALCOM;
 import lcom.visitors.StaticFieldAccessVisitor;
 import org.eclipse.jdt.core.dom.*;
 
@@ -237,24 +233,24 @@ public class SM_Type extends SM_SourceItem {
 
 
 //        System.out.println("eeeeeeeee:" + name.replace("Type=", ""));
-        if(!CreatorPrincipleService.contains(name.replace("Type=", ""))) {
-            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(name.replace("Type=", ""));
+        if(!CreatorPrinciple1And3Service.contains(name.replace("Type=", ""))) {
+            InspectedClass inspectedClass = new InspectedClass(name.replace("Type=", ""));
 
-            creatorPrinciple.setFieldListToControl(getFieldList());
-            creatorPrinciple.setMethodListToControl(getMethodList());
+            inspectedClass.setFieldListToControl(getFieldList());
+            inspectedClass.setMethodListToControl(getMethodList());
 
-            creatorPrinciple.increaseCount();
+            inspectedClass.increaseCount();
 
-            CreatorPrincipleService.put(creatorPrinciple);
-				System.out.println(creatorPrinciple);
+            CreatorPrinciple1And3Service.put(inspectedClass);
+				System.out.println(inspectedClass);
         } else {
-            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(name.replace("Type=", ""));
-            creatorPrinciple.setFieldListToControl(getFieldList());
-            creatorPrinciple.setMethodListToControl(getMethodList());
+            InspectedClass inspectedClass = new InspectedClass(name.replace("Type=", ""));
+            inspectedClass.setFieldListToControl(getFieldList());
+            inspectedClass.setMethodListToControl(getMethodList());
 
-            creatorPrinciple.increaseCount();
+            inspectedClass.increaseCount();
 
-            CreatorPrincipleService.put(creatorPrinciple);
+            CreatorPrinciple1And3Service.put(inspectedClass);
 //				System.out.println(creatorPrinciple);
         }
 
@@ -323,9 +319,14 @@ public class SM_Type extends SM_SourceItem {
 //    }
 
     public void extractMethodMetrics(String targetClass) {
-        InspectedClass inspectedClass = ClassService.get(targetClass);
+        //System.out.println(true);
+        //System.out.println(name);
+        InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(name);
+        // InspectedClass inspectedClass = ClassService.get(targetClass);
 
-        if (name.equals(targetClass)) {
+        //System.out.println(333 + ", name: " + name + ", inspectedClass.getName(): " + inspectedClass.getName() + ", targetClass: " + targetClass);
+        //System.out.println(false);
+        if (name.equals(inspectedClass.getName())) {
 
 
             for (SM_Method method : methodList) {

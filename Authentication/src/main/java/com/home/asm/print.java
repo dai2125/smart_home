@@ -25,6 +25,17 @@ public class print {
     public static final String CREATOR4RESULT = "Creator 4 Result:> ";
     public static final String METRICS = "Metrics:> ";
 
+    public static final String INDIRECTIONNAME = "Indirection";
+    public static final String ISPNAME = "Interface Segregation";
+    public static final String COUPLINGNAME = "Coupling";
+    public static final String COHESIONNAME = "Cohesion";
+    public static final String PROTECTEDVARIATIONSNAME = "ProtectedVariations";
+    public static final String SRPNAME = "Single Responsibility";
+    public static final String CREATOR1NAME = "Creator 1";
+    public static final String CREATOR2NAME = "Creator 2";
+    public static final String CREATOR3NAME = "Creator 3";
+    public static final String CREATOR4NAME = "Creator 4";
+
     public static final String SYSTEM = "System:> ";
     public static final String GOBACK = "enter back to go back to the main menu ";
     public static final String ENTERCLASS = "enter a class ";

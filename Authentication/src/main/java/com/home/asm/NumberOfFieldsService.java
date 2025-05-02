@@ -242,15 +242,15 @@ public class NumberOfFieldsService {
     public void visitField(String className) throws IOException {
         ClassReader classReader = new ClassReader(className);
 
-        final CreatorPrincipleField[] cpf = {new CreatorPrincipleField()};
+        final InspectedField[] inspectedField = {new InspectedField()};
 
         classReader.accept(new ClassVisitor(ASM9) {
 
 
             @Override
             public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
-//                CreatorPrincipleField cpf = new CreatorPrincipleField(name, access, descriptor);
-//                cpf[0] = new CreatorPrincipleField();
+//                InspectedField cpf = new InspectedField(name, access, descriptor);
+//                cpf[0] = new InspectedField();
 
 //                cpf[0].setAccess(access);
 //                cpf[0].setName(name);
@@ -261,20 +261,22 @@ public class NumberOfFieldsService {
 //                if(signature != null) {
 //                    System.out.println("SIGNATURE: " + signature);
 //                }
-                cpf[0] = new CreatorPrincipleField(access, name, className, descriptor, signature, signature, "<init>");
+                inspectedField[0] = new InspectedField(access, name, className, descriptor, signature, signature, "<init>");
 
 //                System.out.println("visitField(): className: " + className + " " + access + ", name: " + name + ", descriptor: " + descriptor);
 
                 return new FieldVisitor(ASM9) {
 
+                    // TODO hier muss eine contains überprüfung implementiert werden
                     @Override
                     public void visitEnd() {
 //                        System.out.println("VISIT END(): " + cpf.getName());
-                        CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
+                        InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(className.replaceAll(".*/", ""));
 //                        System.out.println("cpf: " + cpf[0].getName() + " " + cpf[0].getType());
 //                        System.out.println("____cpf: " + cpf[0].getName() + " " + cpf[0].getOwner());
-                        creatorPrinciple.addToFieldList(cpf[0]);
+                        inspectedClass.addToFieldList(inspectedField[0]);
 //                        System.out.println("creatorPrinciple.addToFieldList(cpf)");
+                        CreatorPrinciple1And3Service.put(inspectedClass);
                         super.visitEnd();
                     }
                 };
@@ -294,15 +296,15 @@ public class NumberOfFieldsService {
                 return new MethodVisitor(ASM9) {
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-                        cpf[0] = new CreatorPrincipleField(opcode, name, owner, descriptor, ownerMethod, ownerMethodReturnType);
+                        inspectedField[0] = new InspectedField(opcode, name, owner, descriptor, ownerMethod, ownerMethodReturnType);
 //                        cpf[0].setAccess(access);
 //                        cpf[0].setName(name);
 //                        cpf[0].setType(descriptor);
 //                        cpf[0].setOwner(owner);
 //                        cpf[0].setOpcode(opcode);
 //                        cpf[0].setOperation(ownerMethod);
-                        CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
-                        creatorPrinciple.addToFieldInsnList(cpf[0]);
+                        InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(className.replaceAll(".*/", ""));
+                        inspectedClass.addToFieldInsnList(inspectedField[0]);
 
 //                        System.out.println("_____visitFieldInsn() methodName: " + methodName + ", methodDescriptor: " + methodDescriptor + ", opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor);
 
@@ -312,18 +314,18 @@ public class NumberOfFieldsService {
                     @Override
                     public void visitEnd() {
 //                        System.out.println(name + " FFFFENDDDIII");
-//                        CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
+//                        CreatorPrinciple creatorPrinciple = CreatorPrinciple1And3Service.get(className);
 //                        creatorPrinciple.addToFieldList(cpf[0]);
 //                        creatorPrinciple.addToFieldInsnList(cpf[0]);
 
                     }
                 };
-//                CreatorPrincipleService.put(cpf);
+//                CreatorPrinciple1And3Service.put(cpf);
             }
             @Override
             public void visitEnd() {
 //                System.out.println("ENDDD");
-//                CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
+//                CreatorPrinciple creatorPrinciple = CreatorPrinciple1And3Service.get(className);
 
             }
         }, 0);
@@ -331,29 +333,11 @@ public class NumberOfFieldsService {
 //        return cpf;
     }
 
+    // TODO kann wahrscheinlich gelöscht werden
     public void visitMethod(String className) throws IOException {
         ClassReader classReader = new ClassReader(className);
 
-        /*
-        *         final CreatorPrincipleField[] cpf = {new CreatorPrincipleField()};
-
-        classReader.accept(new ClassVisitor(ASM9) {
-
-
-            @Override
-            public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
-//                CreatorPrincipleField cpf = new CreatorPrincipleField(name, access, descriptor);
-                cpf[0] = new CreatorPrincipleField();
-
-                cpf[0].setAccess(access);
-                cpf[0].setName(name);
-                cpf[0].setType(descriptor);
-
-        * */
-
-
-
-        final CreatorPrincipleField[] cpf = {new CreatorPrincipleField()};
+        final InspectedField[] cpf = {new InspectedField()};
         final Model[] model = {new Model()};
 
         classReader.accept(new ClassVisitor(ASM9) {
@@ -372,7 +356,6 @@ public class NumberOfFieldsService {
                     public void visitTypeInsn(int opcode, String type) {
                         if(opcode == Opcodes.NEW) {
                             lastNewType = type;
-
 //                            model[0].setType(lastNewType);
 
 //                            System.out.println("000: methodName: " + methodName + ", lastNewType: " + lastNewType);
@@ -415,52 +398,19 @@ public class NumberOfFieldsService {
 
                             if(!ownerMethod.equals("<init>")) {
                                 model[0] = new Model(owner.replaceFirst(".*/", "") + "." + name, descriptor, lastNewType, className, ownerMethod, ownerMethodReturnType, true, false);
-//                                model[0].setName(name);
-//                                model[0].setObjectCreated(true);
-//                                model[0].setConstructorInitialized(false);
-//                                model[0].setOwner(methodName);
-//                                model[0].setType(lastNewType);
-//                                model[0].setOwnerClass(className);
-
-                                CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
-                                creatorPrinciple.addToModelList(model[0]);
+                                System.out.println("xxxxxxxxxxxxxxxxxx:" + model[0].toString());
+                                InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(className);
+                                //inspectedClass.addToModelList(model[0]);
                             }
                         }
-
                         super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
                     }
 
                     @Override
                     public void visitEnd() {
-
-
-
                     }
                 };
-
             }
         }, 0);
-    }
-
-    public void checkField(String className) throws IOException {
-//        CreatorPrincipleField cpf = something(className);
-
-        if(!CreatorPrincipleService.contains(className)) {
-            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
-//            if(cpf.getAccess() != -1) {
-//                creatorPrinciple.addToFieldInsnList(cpf);
-//            } else {
-//                creatorPrinciple.addToFieldList(cpf);
-//            }
-            CreatorPrincipleService.put(creatorPrinciple);
-        } else {
-            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
-//            if(cpf.getAccess() != -1) {
-//                creatorPrinciple.addToFieldInsnList(cpf);
-//            } else {
-//                creatorPrinciple.addToFieldList(cpf);
-//            }
-            CreatorPrincipleService.put(creatorPrinciple);
-        }
     }
 }

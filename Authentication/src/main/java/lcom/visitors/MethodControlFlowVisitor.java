@@ -22,11 +22,13 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 	private List<ThrowStatement> allThrowStatements = new ArrayList<>();
 
 	public boolean visit(IfStatement node) {
+		// System.out.println("IfStatement: " + node + " " + edgeCount);
 		ifStatements.add(node);
 		return true;
 	}
 	
 	public boolean visit(SwitchCase node) {
+		// System.out.println("SwitchCase " + node);
 		switchCases.add(node);
 		if (!node.isDefault()) {
 			switchCasesWitoutDefaults.add(node);
@@ -35,47 +37,83 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 	}
 	
 	public boolean visit(SwitchStatement node) {
+		// System.out.println("Switch statement " + node.getExpression());
 		switchStatements.add(node);
 		return true;
 	}
 	
 	public boolean visit(ForStatement node) {
+		// System.out.println("For statement: " + node.getExpression());
 		forStatements.add(node);
 		return true;
 	}
 	
 	public boolean visit(WhileStatement node) {
+		// System.out.println("WhileStatement " + node);
 		whileStatements.add(node);
 		return true;
 	}
 	
 	public boolean visit(DoStatement node) {
+		// System.out.println("DoStatement " + node);
+
 		doStatements.add(node);
 		return true;
 	}
 	
 	public boolean visit(EnhancedForStatement node) {
+		// System.out.println("EnhancedForStatement " + node);
+
 		foreachStatements.add(node);
 		return true;
 	}
 	
 	public boolean visit(TryStatement node) {
+		// System.out.println("TryStatement" + node);
 		tryStatements.add(node);
 		return true;
 	}
 
 	public boolean visit(ReturnStatement node) {
+		// System.out.println("ReturnStatement " + node.getExpression());
 		returnStatements.add(node);
-//		System.out.println("FOUND STATEMENT " + node.getExpression());
 		allReturnStatements.add(node);
 		return true;
 	}
 
 	public boolean visit(ThrowStatement node) {
+		// System.out.println("ThrowStatemen " + node.getExpression());
 		throwStatements.add(node);
-//		System.out.println("FOUND STATEMENT " + node.getExpression());
 		allThrowStatements.add(node);
 		return true;
+	}
+
+	private int nodeCount = 0;
+	private int edgeCount = 0;
+
+	@Override
+	public void preVisit(ASTNode node) {
+		// System.out.println("preVisit(): " + node.getParent());
+		nodeCount = 0;
+		edgeCount = 0;
+		nodeCount++;
+		for(Object propObj : node.structuralPropertiesForType()) {
+			StructuralPropertyDescriptor prop = (StructuralPropertyDescriptor) propObj;
+			Object child = node.getStructuralProperty(prop);
+
+			if(child instanceof ASTNode) {
+				// System.out.println("preVisit() child: " + child);
+				edgeCount++;
+			} else if(child instanceof List<?>) {
+				for (Object item : (List<?>) child) {
+					if(item instanceof ASTNode) {
+						// System.out.println("preVisit() item: " + item);
+
+						edgeCount++;
+					}
+				}
+			}
+		}
 	}
 
 	public List<ReturnStatement> getAllReturnStatements() {
@@ -148,5 +186,25 @@ public class MethodControlFlowVisitor extends ASTVisitor {
 
 	public int getNumOfReturnStatements() {
 		return returnStatements.size();
+	}
+
+	public List<SwitchCase> getSwitchCases() {
+		return switchCases;
+	}
+
+	public List<SwitchCase> getSwitchCasesWitoutDefaults() {
+		return switchCasesWitoutDefaults;
+	}
+
+	public List<EnhancedForStatement> getForeachStatements() {
+		return foreachStatements;
+	}
+
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public int getEdgeCount() {
+		return edgeCount;
 	}
 }

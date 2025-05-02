@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// TODO DEPRECATED wenn diese Klass gelöscht wird auch die SubField.java und SubMethod.java Klasse löschen
 public class MethodModel {
 
     private String name;

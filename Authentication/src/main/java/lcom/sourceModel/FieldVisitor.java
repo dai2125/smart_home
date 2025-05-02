@@ -1,9 +1,6 @@
 package lcom.sourceModel;
 
-import com.home.asm.CreatorPrinciple;
-import com.home.asm.CreatorPrincipleService;
-import com.home.asm.NewObject;
-import com.home.asm.NewObjectService;
+import com.home.asm.*;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
@@ -39,19 +36,19 @@ public class FieldVisitor extends ASTVisitor {
 			// Parent
 //			System.out.println("newField.getParentType(): " +newField.getParentType().toString());
 
-			if(!CreatorPrincipleService.contains(newField.getParentType().toString().replace("Type=", ""))) {
-				CreatorPrinciple creatorPrinciple = new CreatorPrinciple(newField.getParentType().toString().replace("Type=", ""));
+			if(!CreatorPrinciple1And3Service.contains(newField.getParentType().toString().replace("Type=", ""))) {
+				InspectedClass inspectedClass = new InspectedClass(newField.getParentType().toString().replace("Type=", ""));
 
 				// TODO hier Kommentar rückgängig machen
 //				creatorPrinciple.addToFieldList(newField.name + ", " + fieldDeclaration.getType().toString());
-				CreatorPrincipleService.put(creatorPrinciple);
+				CreatorPrinciple1And3Service.put(inspectedClass);
 //				System.out.println(creatorPrinciple);
 			} else {
-				CreatorPrinciple creatorPrinciple = new CreatorPrinciple(newField.getParentType().toString().replace("Type=", ""));
+				InspectedClass inspectedClass = new InspectedClass(newField.getParentType().toString().replace("Type=", ""));
 
 				// TODO hier Kommentar rückgängig machen
 //				creatorPrinciple.addToFieldList(newField.name + ", " + fieldDeclaration.getType().toString());
-				CreatorPrincipleService.put(creatorPrinciple);
+				CreatorPrinciple1And3Service.put(inspectedClass);
 //				System.out.println(creatorPrinciple);
 
 			}

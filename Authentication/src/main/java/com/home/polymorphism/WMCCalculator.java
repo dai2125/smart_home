@@ -1,5 +1,6 @@
 package com.home.polymorphism;
 
+import org.eclipse.jdt.internal.compiler.ast.IfStatement;
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.*;
 
@@ -32,11 +33,38 @@ public class WMCCalculator {
         // Für jede Methode die zyklomatische Komplexität berechnen
         for (MethodNode method : classNode.methods) {
             int complexity = calculateMethodComplexity(method);
-            System.out.println("Methode: " + method.name + method.desc + " - Komplexität: " + complexity);
+
+            System.out.println("cc0: " +  method.name + ": " + complexity);
+
+            // System.out.println("Methode: " + method.name + method.desc + " - Komplexitaet: " + complexity);
             wmc += complexity;
+
         }
 
+        for(MethodNode method : classNode.methods) {
+            int cc = test(method);
+            System.out.println("cc1: " +  method.name + ": " + cc);
+        }
+
+        for(MethodNode method : classNode.methods) {
+            int cc = test2(method);
+            System.out.println("cc2: " +  method.name + ": " + cc);
+        }
+
+
         return wmc;
+    }
+
+    private static int test(MethodNode method) {
+        int complexity = 1;
+        for(AbstractInsnNode insn : method.instructions) {
+            if(insn instanceof JumpInsnNode) {
+                complexity++;
+            } else if(insn instanceof TableSwitchInsnNode) {
+                complexity++;
+            }
+        }
+        return complexity;
     }
 
     private int calculateMethodComplexity(MethodNode method) {
@@ -48,10 +76,9 @@ public class WMCCalculator {
             return 1;
         }
 
-        System.out.println("method.instructions: " + method.instructions.size());
+        // System.out.println("method.instructions.size(): " + method.instructions.size());
         for(int i = 0; i < method.instructions.size(); i++) {
-            System.out.println("XX: " + method.instructions.get(i).toString());
-            System.out.println(method.instructions.get(i).getOpcode());
+            // System.out.println(method.instructions.get(i) + " " + method.instructions.get(i).getNext() + " " + method.instructions.get(i).getOpcode());
         }
 
         int edges = 0;
@@ -77,6 +104,12 @@ public class WMCCalculator {
                 case Opcodes.IF_ACMPNE:
                 case Opcodes.IFNULL:
                 case Opcodes.IFNONNULL:
+                case Opcodes.IOR:
+                case Opcodes.LOR:
+                case Opcodes.LAND:
+                case Opcodes.IAND:
+                case Opcodes.IXOR:
+                case Opcodes.LXOR:
                     edges += 2;
                     break;
 
@@ -117,33 +150,34 @@ public class WMCCalculator {
         return (edges - nodes) + 2;
     }
 
-//    private int calculateMethodComplexity(MethodNode method) {
-//        int complexity = 1;
-//
-//        for(AbstractInsnNode insn = method.instructions.getFirst(); insn != null; insn = insn.getNext()) {
-//            int opcode = insn.getOpcode();
-//
-//            if((opcode >= Opcodes.IFEQ && opcode <= Opcodes.IF_ACMPNE) ||
-//                opcode == Opcodes.IFNULL || opcode == Opcodes.IFNONNULL) {
-//                complexity++;
-//            }
-//
-//            else if(opcode == Opcodes.LOOKUPSWITCH) {
-//                LookupSwitchInsnNode switchInsn = (LookupSwitchInsnNode) insn;
-//                complexity += switchInsn.labels.size();
-//            }
-//
-//            else if(opcode == Opcodes.TABLESWITCH) {
-//                TableSwitchInsnNode switchInsn = (TableSwitchInsnNode) insn;
-//                complexity += switchInsn.labels.size();
-//            }
-//        }
-//
-//        if(method.tryCatchBlocks != null) {
-//            complexity += method.tryCatchBlocks.size();
-//        }
-//        return complexity;
-//    }
+    // zwei tests haben richtige ergebnisse geliefert
+    private int test2(MethodNode method) {
+        int complexity = 1;
+
+        for(AbstractInsnNode insn = method.instructions.getFirst(); insn != null; insn = insn.getNext()) {
+            int opcode = insn.getOpcode();
+
+            if((opcode >= Opcodes.IFEQ && opcode <= Opcodes.IF_ACMPNE) ||
+                opcode == Opcodes.IFNULL || opcode == Opcodes.IFNONNULL) {
+                complexity++;
+            }
+
+            else if(opcode == Opcodes.LOOKUPSWITCH) {
+                LookupSwitchInsnNode switchInsn = (LookupSwitchInsnNode) insn;
+                complexity += switchInsn.labels.size();
+            }
+
+            else if(opcode == Opcodes.TABLESWITCH) {
+                TableSwitchInsnNode switchInsn = (TableSwitchInsnNode) insn;
+                complexity += switchInsn.labels.size();
+            }
+        }
+
+        if(method.tryCatchBlocks != null) {
+            complexity += method.tryCatchBlocks.size();
+        }
+        return complexity;
+    }
 
     private ClassReader getClassReader(String className) throws IOException {
         try {
@@ -165,7 +199,7 @@ public class WMCCalculator {
     }
 
     public static void main(String[] args) throws Exception {
-        String className = "com/home/polymorphism/firstAnalysis/fix/EmailSender";
+        String className = "com/home/cohesion/Example13";
 
         try {
             WMCCalculator wmcCalculator = new WMCCalculator();

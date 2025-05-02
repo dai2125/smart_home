@@ -2,6 +2,7 @@ package com.home.asm;
 
 import java.util.ArrayList;
 
+// TODO DEPRECATED
 public class ClassService {
 
     private static final ArrayList<InspectedClass> inspectedClasses = new ArrayList<InspectedClass>();

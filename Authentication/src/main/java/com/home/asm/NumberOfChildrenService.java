@@ -7,8 +7,12 @@ import org.objectweb.asm.Opcodes;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+
+import static org.objectweb.asm.Opcodes.ASM9;
 
 public class NumberOfChildrenService {
 
@@ -23,19 +27,57 @@ public class NumberOfChildrenService {
         this.targetClassName = targetClassName;
     }
 
+    // TODO wurde neu implementiert, später wieder kontrollieren, vielleicht kannst du über superName überprüfen ob das Elternteil ein Abstract Class ist, ausprobieren
+    public int calculateNOC(HashSet<String> test) throws IOException {
+        int[] counter = {0};
+        Iterator<String> iterator = test.iterator();
+        //System.out.println("NoC targetClassName: " + targetClassName);
+
+        while(iterator.hasNext()) {
+            String className = iterator.next();
+            ClassReader classReader = new ClassReader(className);
+
+            if(!className.equals(targetClassName)) {
+
+                classReader.accept(new ClassVisitor(ASM9) {
+                    @Override
+                    public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+                        //System.out.println("NoC visit(): " + name + ", superName: " + superName + ", interfaces: " + Arrays.toString(interfaces));
+                        if(superName.equals(targetClassName)) {
+                            counter[0]++;
+                        }
+                        for(int i = 0; i < interfaces.length; i++) {
+                            //System.out.println("NoC interface1: " + targetClassName);
+                            //System.out.println("NoC interface1: " + interfaces[i]);
+                            if(interfaces[i].equalsIgnoreCase(targetClassName)) {
+                                //System.out.println("Noc interface2: " + interfaces[i]);
+                                counter[0]++;
+                            }
+                        }
+                        super.visit(version, access, name, signature, superName, interfaces);
+                    }
+                }, 0);
+            }
+        }
+        //System.out.println("NoC counter: " + counter[0]);
+        return counter[0];
+    }
+
     public int calculateNOC(String basePackage) {
         try {
-//            System.out.println("NoC: " + basePackage);
+            //System.out.println("NoC: basePackage: " + basePackage);
 //            System.out.println("NoC: " + basePackage.replace('.', '/'));
 //            String baseDir = basePackage.replace('.', '/');
             String baseDir = basePackage.replaceAll("\\\\", "/");
 
 //            baseDir = baseDir.replaceAll("\\\\", "/");
+            //System.out.println("Noc: baseDir: "+ baseDir);
             baseDir = basePackage.replaceAll(".*/", "");
 //            baseDir = basePackage.replaceAll("C:/Users/Lenovo/IdeaProjects/Authentication/Authentication/src/main/java/", "");
-//            System.out.println("Noc: " + baseDir);
+            //System.out.println("Noc: basePackage: " + basePackage);
 //            String resourcePath = classLoader.getResource(baseDir).getPath();
             File packageDir = new File(basePackage);
+            //System.out.println("NoC: packageDir: "+ packageDir + " " + packageDir.getName() + " " + packageDir.getAbsolutePath());
 
             scanPackageForChildren(packageDir, basePackage);
 
@@ -51,9 +93,10 @@ public class NumberOfChildrenService {
         }
     }
 
-    private void scanPackageForChildren(File packageDir, String packageName) {
+    private void scanPackageForChildren(File packageDir, String packageName) throws IOException {
         File[] files = packageDir.listFiles();
         if(files == null) {
+            //System.out.println("NoC scanPackageForChildren: files == null: " + packageName);
             return;
         }
 
@@ -62,8 +105,24 @@ public class NumberOfChildrenService {
                 scanPackageForChildren(file, packageName + "." + file.getName());
             } else if(file.getName().endsWith(".class")) {
 //                System.out.println("file.getName(): " + file.getName());
+                //System.out.println("NoC scanPackageForChildren(): " + file.getName());
                 String className = packageName + '.' + file.getName().substring(0, file.getName().length() - 6);
                 checkIfChildClass(className);
+            } else if(file.getName().endsWith(".java")) {
+                System.out.println("NoC scanPackageForChildren() file.getName(): " + file.getName());
+                String className = file.getName().replace(".java", "");
+                String path = file.getAbsolutePath();
+                String baseDir = System.getProperty("user.dir");
+                path = path.replace(baseDir + "\\", "");
+                path = path.replace("\\", "/");
+                path = path.replace(".java", "");
+
+                System.out.println("NoC packageName: "  +   packageName);
+
+                System.out.println("NoC scanPackageForChildren() path: " + path);
+
+                ClassReader reader = new ClassReader(className);
+
             }
         }
     }
@@ -71,7 +130,7 @@ public class NumberOfChildrenService {
     private void checkIfChildClass(String className) {
         try {
             String internalClassName = className.replace('.', '/');
-            System.out.println("NoC2: " + internalClassName);
+            System.out.println("NoC checkIfChildClass(): " + internalClassName);
             FileInputStream fis = new FileInputStream(classLoader.getResource(internalClassName + ".class").getPath());
             ClassReader reader = new ClassReader(fis);
 

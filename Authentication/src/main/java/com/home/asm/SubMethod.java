@@ -2,6 +2,7 @@ package com.home.asm;
 
 import java.util.List;
 
+// TODO DEPRECATED wenn MethodModel gelöscht wird auch diese Klass löschen
 public class SubMethod {
 
     private int opcode;

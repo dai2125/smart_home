@@ -67,7 +67,6 @@ public class LCOM {
 //        TargetClass.initialize(argsObj.getOutputFolder());
 //        String targetClass = TargetClass.getInstance().getTargetClass();
 //        System.out.println("targetClass0 " + targetClass);
-
         SM_Project project = new SM_Project(argsObj);
         project.parse();
         project.resolve();

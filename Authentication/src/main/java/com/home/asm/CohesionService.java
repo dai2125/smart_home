@@ -36,13 +36,13 @@ public class CohesionService {
 
     private static String analyzeYalcom(double yalcom) {
         if(yalcom < 0) {
-            return "YALCOM is negative = " + String.format("%.2f", yalcom);
+            return "YALCOM is negative = " + String.format(Locale.US, "%.2f", yalcom);
         } else if(yalcom == 0) {
-            return "YALCOM is perfect = " + String.format("%.2f", yalcom);
+            return "YALCOM is perfect = " + String.format(Locale.US, "%.2f", yalcom);
         } else if(yalcom < 0.5) {
-            return "YALCOM is good = " + String.format("%.2f", yalcom);
+            return "YALCOM is good = " + String.format(Locale.US, "%.2f", yalcom);
         } else if(yalcom < 0.99) {
-            return "YALCOM is very high = " + String.format("%.2f", yalcom);
+            return "YALCOM is very high = " + String.format(Locale.US, "%.2f", yalcom);
         } else {
             return "ERROR";
         }
@@ -54,9 +54,9 @@ public class CohesionService {
         } else if(lcom4 == 1) {
             return "LCOM4 is perfect = " + lcom4;
         } else if(lcom4 == 2 || lcom4 == 3) {
-            return "LCOM4 = " + lcom4 + ", " + String.format("%.1f", lcom4) + " you may re-design this class";
+            return "LCOM4 = " + lcom4 + ", " + String.format(Locale.US, "%.2f", lcom4) + " you may re-design this class";
         } else {
-            return "LCOM4 = " + lcom4 + ", " + String.format("%.1f", lcom4) + " independent components, Cohesion violation";
+            return "LCOM4 = " + lcom4 + ", " + String.format(Locale.US, "%.2f", lcom4) + " independent components, Cohesion violation";
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.home.asm;
 
-import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.dom.*;
 
 import java.io.IOException;
@@ -10,6 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProtectedVariationService {
+
+    /* TODO
+        Solution Identify points of predicted variation or instability; assign responsibilities to
+                create a stable interface around them.
+                Note: The term "interface" is used in the broadest sense of an access view; it
+                does not literally only mean something like a Java or COM interface.
+        Problem How to design objects, subsystems, and systems so that the variations or instability
+                in these elements does not have an undesirable impact on other elements?
+        Identify components that are expected to change frequently and
+                establish stable interfaces and contracts between components to protect them against changes.
+        Ensure that changes to one component do not break other components by thorough testing and validation.
+        Avoid tight coupling between components, as it can lead to a ripple effect of changes throughout the system.
+        Use Anti-Corruption layers to isolate the system from external changes.
+
+        zum analysieren verwendest du alle Felder, alle privaten Felder, alle Methoden, alle privaten Methoden,
+        alle Methoden die von einem Interface stammen, den DIT, den Fanout
+        vielleicht kann die Kohäsivität zwischen den Methoden noch überprüft werden
+    */
 
     // TODO funktioniert nur für Interfaces
     // TODO ProtectedVariations - Interfaces sollen konkrekte Implementierungen verstecken, beim Wechsel wird die Implementierung geschützt
@@ -65,7 +82,7 @@ public class ProtectedVariationService {
 
         List<String> constructorParameters = new ArrayList<>();
         List<ParameterField> parameterFieldList = new ArrayList<>();
-        List<CreatorPrincipleMethod> methodList = new ArrayList<>();
+        List<InspectedMethod> methodList = new ArrayList<>();
 
 //        StringBuilder sb = new StringBuilder(className.replaceFirst(".*/", "") + "\n");
 

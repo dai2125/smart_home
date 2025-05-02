@@ -1,5 +1,6 @@
 package com.home.asm;
 
+// TODO DEPRECATED wenn MethodModel gelöscht wird auch diese Klass löschen
 public class SubField {
 
     private int opcode;

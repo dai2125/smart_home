@@ -1,7 +1,6 @@
 package com.home.asm;
 
 import org.objectweb.asm.*;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.util.*;
@@ -13,9 +12,9 @@ public class NumberOfMethodsService {
     private boolean isInterface;
     private Set<String> classUsed = new HashSet<>();
     private Set<String> listOfAllMethods = new HashSet<>();
-    private List<MethodModel> listOfAllSubMethods = new ArrayList<>();
+    // private List<MethodModel> listOfAllSubMethods = new ArrayList<>();
     private List<String> listOfAllMethodsList = new ArrayList<>();
-    private List<CreatorPrincipleMethod> listOfAllCreatorPrincipleMethods = new ArrayList<>();
+    private List<InspectedMethod> listOfAllInspectedMethods = new ArrayList<>();
     private final Map<String, String> fieldAssignments = new HashMap<>();
 
     public NumberOfMethodsService() {
@@ -122,6 +121,7 @@ public class NumberOfMethodsService {
     }
 
     public List<String> getAllInterfaceMethods(String className) throws IOException {
+        System.out.println("getAllInterfaceMethods(): " + className);
         ClassReader classReader = new ClassReader(className);
         isInterface = false;
         HashSet<String> interfaceList = new HashSet<>();
@@ -419,7 +419,7 @@ public class NumberOfMethodsService {
 
     }
 
-    public List<CreatorPrincipleMethod> getListOfNewStatements(String className) throws IOException {
+    public List<InspectedMethod> getInformationOfMethodsFrom(String className) throws IOException {
         ClassReader classReader = new ClassReader(className);
         isInterface = false;
         int[] counter = new int[]{0};
@@ -430,7 +430,7 @@ public class NumberOfMethodsService {
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 
-                CreatorPrincipleMethod cpm = new CreatorPrincipleMethod(access, name, desc);
+                InspectedMethod inspectedMethod = new InspectedMethod(access, name, desc);
 
 //                if(!name.equals("<init>") && !name.equals("<clinit>") && !listOfAllMethodsList.contains(name)) {
 //                    listOfAllMethodsList.add(name);
@@ -523,9 +523,9 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitFieldInsn(int opcode, String owner, String name, String descriptor) {
-//                        System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", ownerMethod: " + ownerMethod + ", ownerMethodReturnType: " + ownerMethodReturnType);
+   //                     System.out.println("visitFieldInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", ownerMethod: " + ownerMethod + ", ownerMethodReturnType: " + ownerMethodReturnType);
 //                        cpm.addFieldToList(opcode, name, descriptor);
-                        cpm.addFieldToList(opcode, name, owner, descriptor, ownerMethod, ownerMethodReturnType);
+                        inspectedMethod.addFieldToList(opcode, name, owner, descriptor, ownerMethod, ownerMethodReturnType);
                         super.visitFieldInsn(opcode, owner, name, descriptor);
                     }
 
@@ -537,9 +537,9 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitMethodInsn(int opcode, String owner, String name, String descriptor, boolean isInterface) {
-//                        System.out.println("visitMethodInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", isInterface: " + isInterface);
+ //                       System.out.println("visitMethodInsn - opcode: " + opcode + ", owner: " + owner + ", name: " + name + ", descriptor: " + descriptor + ", isInterface: " + isInterface);
 //                        System.out.println("zzzzzzzzzzzzzzzzzzzz");
-                        cpm.addMethodToList(opcode, owner, name, descriptor);
+                        inspectedMethod.addMethodToList(opcode, owner, name, descriptor);
 
                         super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
                     }
@@ -629,18 +629,18 @@ public class NumberOfMethodsService {
 
                     @Override
                     public void visitEnd() {
-                        if(!CreatorPrincipleService.contains(className)) {
-                            CreatorPrinciple creatorPrinciple = new CreatorPrinciple(className);
-                            creatorPrinciple.addMethodToList(cpm);
+                        if(!CreatorPrinciple1And3Service.contains(className.replaceAll(".*/", ""))) {
+                            InspectedClass inspectedClass = new InspectedClass(className.replaceAll(".*/", ""));
+                            inspectedClass.addInspectedMethodToList(inspectedMethod);
 
 //                            System.out.println("cpm--: " + cpm.toString());
-                            CreatorPrincipleService.put(creatorPrinciple);
+                            CreatorPrinciple1And3Service.put(inspectedClass);
                         } else {
-                            CreatorPrinciple creatorPrinciple = CreatorPrincipleService.get(className);
-                            creatorPrinciple.addMethodToList(cpm);
+                            InspectedClass inspectedClass = CreatorPrinciple1And3Service.get(className.replaceAll(".*/", ""));
+                            inspectedClass.addInspectedMethodToList(inspectedMethod);
 
 //                            System.out.println("cpm++: " + cpm.toString());
-                            CreatorPrincipleService.put(creatorPrinciple);
+                            CreatorPrinciple1And3Service.put(inspectedClass);
                         }
 
                         super.visitEnd();
@@ -648,7 +648,7 @@ public class NumberOfMethodsService {
                 };
             }
         }, 0);
-        return listOfAllCreatorPrincipleMethods;
+        return listOfAllInspectedMethods;
     }
 
     public void initializingData(String className) throws IOException {

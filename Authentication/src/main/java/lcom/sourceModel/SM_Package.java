@@ -80,7 +80,14 @@ public class SM_Package extends SM_SourceItem {
     }
 
     void extractTypeMetrics() {
+        for(int i = 0; i < typeList.size(); i++) {
+            //System.out.println(888 + " " + typeList.get(i).name);
+            //System.out.println(888 + " " + typeList.get(i).getFieldList().stream().map(SM_Field::getName).toList());
+            //System.out.println(888 + " " + typeList.get(i).getMethodList().stream().map(SM_Method::getName).toList());
+
+        }
         for (SM_Type type : typeList) {
+            // System.out.println(777 + " " + type.getName() + " type: "+ type.toString() + ", type.size(): "+ typeList.size());
             type.extractMethodMetrics(targetClass);
 //            System.out.println("SM_PACKAGE: " + type.toString());
             TypeMetrics metrics = new TypeMetrics(type);

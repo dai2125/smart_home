@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class WMCService {
+    // TODO http://www.mccabe.com/pdf/McCabeCodeQualityMetrics-OutsourcedDev.pdf  It is recommended WMC does not exceed the value 14
     // TODO MCCABE.com wmc shouldnt pass the limit of 14
     /*  TODO https://lionel.kr.hs-niederrhein.de/~rethmann/sof06/sof06.pdf
     *    1 - 10 einfaches Programm, geringes Risiko

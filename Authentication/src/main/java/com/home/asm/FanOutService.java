@@ -65,6 +65,7 @@ public class FanOutService {
     }
 
     public int analyzePackage2(String className, String targetClass) throws IOException {
+        //System.out.println("className = " + className);
         ClassReader classReader = new ClassReader(className);
         isInterface = false;
 

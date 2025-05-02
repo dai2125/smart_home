@@ -1,0 +1,9 @@
+Project Name,Package Name,Type Name,Method Name,LOC,CC,PC,Line no,IsTest,Main prod class tested,Production classes tested
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.badExample,Bird,fly,3,1,0,5,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.badExample,BirdSanctuary,letBirdFly,3,1,1,5,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.badExample,Main,main,5,1,1,5,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.badExample,Penguin,fly,3,1,0,5,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.goodExample,Bird,fly,3,1,0,4,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.goodExample,BirdSanctuary,letBirdFly,3,1,1,5,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.goodExample,Main,main,5,1,1,5,0,,
+LiskovSubstitutionPrinciple,com.home.liskovSubstitutionPrinciple.goodExample,Sparrow,fly,3,1,0,5,0,,

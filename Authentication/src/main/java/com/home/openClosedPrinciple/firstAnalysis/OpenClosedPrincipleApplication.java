@@ -1,7 +1,5 @@
 package com.home.openClosedPrinciple.firstAnalysis;
 
-import com.home.openClosedPrinciple.ReadMetrics;
-
 import java.io.FileNotFoundException;
 
 public class OpenClosedPrincipleApplication {

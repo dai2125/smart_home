@@ -17,6 +17,7 @@ import org.objectweb.asm.util.TraceClassVisitor;
 
 import static org.objectweb.asm.Opcodes.*;
 
+// TODO DEPRECATED
 public class CustomClassWriter {
 
     static String className = "java.lang.Integer";

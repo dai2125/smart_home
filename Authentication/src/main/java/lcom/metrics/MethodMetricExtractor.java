@@ -49,6 +49,7 @@ public class MethodMetricExtractor implements MetricExtractor{
         methodMetrics.setNumOfThrowStatements(visitor.getNumOfThrowStatements());
         methodMetrics.setNumOfReturnStatements(visitor.getNumOfReturnStatements());
 
+        /*
         MethodInformation methodInformation = new MethodInformation(method.getName(),
                                                                     visitor.getNumOfIfStatements(),
                                                                     visitor.getNumOfSwitchCaseStatementsWitoutDefault(),
@@ -60,6 +61,39 @@ public class MethodMetricExtractor implements MetricExtractor{
                                                                     visitor.getNumOfThrowStatements(),
                                                                     visitor.getAllReturnStatements(),
                                                                     visitor.getAllThrowStatements());
+        */
+
+        MethodInformation methodInformation = new MethodInformation(method.getName(),
+                                                                    method.isAbstract(),
+                                                                    method.isFinal(),
+                                                                    method.isStatic(),
+                                                                    method.getCalledMethodsList(),
+                                                                    method.getNamesInMethod(),
+                                                                    method.getThisAccessesInMethod(),
+                                                                    method.getSuperClassFieldAccesses(),
+                                                                    method.getTypesInInstanceOf(),
+                                                                    method.getSmTypesInInstanceOf(),
+                                                                    method.getSmTypesInNewStatements(),
+                                                                    method.getNewStatementTypes(),
+                                                                    method.getDirectFieldAccesses(),
+                                                                    method.getNonStaticFieldAccesses(),
+                                                                    method.isOverridden(),
+                                                                    method.getFieldAccessesFromSuperClass(),
+                                                                    method.getMethodDeclaration(),
+                                                                    visitor.getAllReturnStatements(),
+                                                                    visitor.getAllThrowStatements(),
+                                                                    visitor.getIfStatements(),
+                                                                    visitor.getForStatements(),
+                                                                    visitor.getWhileStatements(),
+                                                                    visitor.getDoStatements(),
+                                                                    visitor.getTryStatements(),
+                                                                    visitor.getSwitchStatements(),
+                                                                    visitor.getThrowStatements(),
+                                                                    visitor.getReturnStatements(),
+                                                                    visitor.getSwitchCases(),
+                                                                    visitor.getSwitchCasesWitoutDefaults(),
+                                                                    visitor.getForeachStatements(),
+                                                                    visitor.getNumOfIfStatements() + visitor.getNumOfSwitchCaseStatementsWitoutDefault() + visitor.getNumOfForStatements() + visitor.getNumOfWhileStatements() + visitor.getNumOfDoStatements() + visitor.getNumOfForeachStatements());
 
         if (methodHasBody()) {
             String body = method.getMethodDeclaration().getBody().toString();
@@ -68,7 +102,13 @@ public class MethodMetricExtractor implements MetricExtractor{
             methodInformation.setNumOfLines(length - body.replace("\n", "").length());
         }
 
+        //System.out.println("xxx: " + methodInformation.toString());
         inspectedClass.addMethodInformation(methodInformation);
+
+//        System.out.println("calculateCyclomaticComplexity: " );
+//        System.out.println(inspectedClass.getName() + ", " + inspectedClass.getMethodInformation(method.getName()));
+//        System.out.println(method.getName() + ", "); // + method.toString());
+//        System.out.println("visitor.getNodeCount(): " + visitor.getNodeCount() + ", visitor.getEdgeCount(): " + visitor.getEdgeCount());
 
 
 
