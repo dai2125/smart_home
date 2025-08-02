@@ -33,11 +33,11 @@ public class PrincipleChartISP extends JFrame {
     double noIMMin = 0.0, noIMMax = 2.0;
     double nomMin = 0.0, nomMax = 2.0;
     double isInterfaceFalse = 0.0, isInterfaceTrue = 1.0;
-    double ncMin = 0.0, ncMax = 5.0;
-    double ditMin = 0.0, ditMax = 5.0;
-    double lcomMin = 0.0, lcomMax = 10.0;
+    double ncMin = 0.0, ncMax = 10.0;
+    double ditMin = 0.0, ditMax = 10.0;
+    double lcomMin = 0.0, lcomMax = 5.0;
     double yalcomMin = -50.0, yalcomMax = 100.0;
-    double unsupporteExceptionsMin = 0.0, unsupporteExceptionsMax = 5.0;
+    double unsupporteExceptionsMin = 0.0, unsupporteExceptionsMax = 2.0;
     double returnTypeIsNullMin = 0.0, returnTypeIsNullMax = 2.0;
     double methodBodyLengthMin = 0.0, methodBodyLengthMax = 2.0;
     Color[] colors = new Color[] { new Color(1, 31, 75), new Color(3, 57, 108), new Color(0,91, 150), new Color(100, 151, 177), new Color(179, 205, 224), new Color(228, 237, 242), new Color(205, 226,238), new Color(187, 220, 240), new Color(168, 218, 249), new Color(146, 210, 249)};
@@ -69,20 +69,17 @@ public class PrincipleChartISP extends JFrame {
         ranges.put("Yalcom", new Double[]{yalcomMin, yalcomMax});
         ranges.put("MethodBodyLength", new Double[]{methodBodyLengthMin, methodBodyLengthMax});
 
-        dataset.addValue(normalize("NoIM", 1.0), "Max", "NoIM");
-        dataset.addValue(normalize("NoM", 1.0), "Max", "NoM");
-        dataset.addValue(normalize("returnsNull", 10.0), "Max", "returnsNull");
-        dataset.addValue(normalize("NC", 5.0), "Max", "NC");
-        dataset.addValue(normalize("DIT", 1.0), "Max", "DIT");
+        // dataset.addValue(normalize("NoIM", 1.0), "Max", "NoIM");
+        dataset.addValue(normalize("Methods", 1.0), "Max", "Methods");
+        dataset.addValue(normalize("returnsNull", 1.0), "Max", "returnsNull");
+        dataset.addValue(normalize("NC", 3.0), "Max", "NC");
+        dataset.addValue(normalize("DIT", 4.0), "Max", "DIT");
         dataset.addValue(normalize("LCOM", 2.0), "Max", "LCOM");
-        dataset.addValue(normalize("Yalcom", 0.5 * 10), "Max", "Yalcom");
-        dataset.addValue(normalize("unsupportedOperationException", 3.0), "Max", "unsupportedOperationException");
-        dataset.addValue(normalize("bodyLengthLessThanOneHundred", 3.0), "Max", "bodyLengthLessThanOneHundred");
-
-
+        dataset.addValue(normalize("Yalcom", 0.75), "Max", "Yalcom");
+        dataset.addValue(normalize("unsupportedOperationException", 1.0), "Max", "unsupportedOperationException");
+        dataset.addValue(normalize("bodyLengthLessThanOneHundred", 1.0), "Max", "bodyLengthLessThanOneHundred");
 
         initDataset();
-
 
         SpiderWebPlotPatch o = new SpiderWebPlotPatch();
         o.setMetricRanges(ranges);
@@ -97,7 +94,7 @@ public class PrincipleChartISP extends JFrame {
 
         plot.setWebFilled(true);
 
-        JFreeChart chart = new JFreeChart(principle + " Principle", new Font(Font.SANS_SERIF, Font.BOLD, 22), plot, true);
+        JFreeChart chart = new JFreeChart(principle, new Font(Font.SANS_SERIF, Font.BOLD, 22), plot, true);
         //chart.setBackgroundPaint(Color.WHITE);
         chart.setBackgroundPaint(new Color(240, 240, 240));
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -136,25 +133,60 @@ public class PrincipleChartISP extends JFrame {
         chartInfoPanel.setBackground(Color.WHITE);
 
 
-        String[] columnNames = { "Class", "NoIM", "NoM", "Return Null", "NC", "DIT", "LCOM", "Yalcom", "Unsupported", "Body Length" };
+        String[] columnNames = { "Class", "Interface", "Methods", "NC", "DIT", "LCOM", "Yalcom", "Unsupported", "Return Null" };
 
         Object[][] data = new Object[inspectedClassList.size()][columnNames.length];
 
+        boolean isMainClass = false;
+
         for(int i = 0; i < inspectedClassList.size(); i++) {
-            for(int j = 0; j < columnNames.length; j++) {
-                data[i][0] = inspectedClassList.get(i).getName();
-                data[i][1] = inspectedClassList.get(i).getInterfaceMethodList().size();
-                data[i][2] = inspectedClassList.get(i).getNumberOfMethods();
-                data[i][3] = inspectedClassList.get(i).getReturnsNull();
-                data[i][4] = inspectedClassList.get(i).getNumberOfChildren();
-                data[i][5] = inspectedClassList.get(i).getDit();
-                data[i][6] = inspectedClassList.get(i).getLcom4();
-                data[i][7] = inspectedClassList.get(i).getYalcom();
-                data[i][8] = inspectedClassList.get(i).getUnsupportedExceptions();
-                data[i][9] = inspectedClassList.get(i).getBodyLengthLessThanOneHundred();
-            }
+            containsMainMethod(inspectedClassList.get(i));
         }
 
+
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            // System.out.println("1 Collections.sort(): " + inspectedClassList.get(i).getName());
+        }
+
+        Collections.sort(inspectedClassList, new BooleanComparator());
+
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            // System.out.println("2 Collections.sort(): " + inspectedClassList.get(i).getName());
+        }
+
+
+        for(int i = 0; i < inspectedClassList.size(); i++) {
+            for(int j = 0; j < columnNames.length; j++) {
+                if(inspectedClassList.get(i).getIsInterface()) {
+                    data[i][0] = inspectedClassList.get(i).getName();
+                    //data[i][1] = inspectedClassList.get(i).getInterfaceMethodList().size();
+                    data[i][1] = inspectedClassList.get(i).getIsInterface() ? "True" : "False";
+//                    data[i][2] = "(" + inspectedClassList.get(i).getNumberOfMethods() + "/" + inspectedClassList.get(i).getInterfaceMethodList().size() + ")";
+//                    data[i][3] = inspectedClassList.get(i).getReturnsNull();
+//                    data[i][4] = inspectedClassList.get(i).getNumberOfChildren();
+//                    data[i][5] = inspectedClassList.get(i).getDit();
+//                    data[i][6] = inspectedClassList.get(i).getLcom4();
+//                    data[i][7] = inspectedClassList.get(i).getYalcom();
+//                    data[i][8] = inspectedClassList.get(i).getUnsupportedExceptions();
+//                    data[i][9] = inspectedClassList.get(i).getBodyLengthLessThanOneHundred();
+                } else if(inspectedClassList.get(i).isMainClass()) {
+                    data[i][0] = inspectedClassList.get(i).getName();
+                    data[i][1] = "Main Class";
+                } else {
+                    data[i][0] = inspectedClassList.get(i).getName();
+                    //data[i][1] = inspectedClassList.get(i).getInterfaceMethodList().size();
+                    data[i][1] = inspectedClassList.get(i).getIsInterface() ? "True" : "False";// String.valueOf(inspectedClassList.get(i).getIsInterface()).toUpperCase();
+                    data[i][2] = "(" + inspectedClassList.get(i).getInterfaceMethodList().size() + "/" + inspectedClassList.get(i).getNumberOfMethods() + ")";
+                    data[i][3] = inspectedClassList.get(i).getNumberOfChildren();
+                    data[i][4] = inspectedClassList.get(i).getDit();
+                    data[i][5] = inspectedClassList.get(i).getLcom4();
+                    data[i][6] = inspectedClassList.get(i).getYalcom();
+                    data[i][7] = inspectedClassList.get(i).getUnsupportedExceptions();
+                    data[i][8] = inspectedClassList.get(i).getReturnsNull();
+                    //data[i][9] = inspectedClassList.get(i).getBodyLengthLessThanOneHundred();
+                }
+            }
+        }
 
         JTable table = new JTable(data, columnNames) {
             @Override
@@ -162,16 +194,25 @@ public class PrincipleChartISP extends JFrame {
                 Component c = super.prepareRenderer(renderer, row, column);
                 if (column == 3) {
                     Object value = getValueAt(row, column);
-                    if (value instanceof Number) {
-                        double v = ((Number) value).doubleValue();
-                        InspectedClass ic = (InspectedClass) inspectedClassList.get(row);
-                        // InspectedClass ic = inspectedClasses.get(row);
-                        c.setBackground(heatmapColor2(ic));
+                    if(value == null) {
+                        c.setBackground(Color.WHITE);
+                    } else {
+                        if (value instanceof Number) {
+                            double v = ((Number) value).doubleValue();
+                            System.out.println("value: " + value);
+                            InspectedClass ic = (InspectedClass) inspectedClassList.get(row);
+                            // InspectedClass ic = inspectedClasses.get(row);
+                            c.setBackground(heatmapColor2(ic));
+                        }
                     }
                 } else if (column >= 1 && column <= 10) {
                     Object value = getValueAt(row, column);
-                    if (value instanceof Number) {
+                    System.out.println("value: " + value);
+                    if(value == null || value == "Main Class") {
+                        c.setBackground(Color.WHITE);
+                    } else if (value instanceof Number) {
                         double v = ((Number) value).doubleValue();
+                        // System.out.println(1 + " : " + v + " : " + inspectedClassList.get(row).getName() + " : " + row + " : " + column);
                         c.setBackground(heatmapColor(column, v));
                     }
                 } else {
@@ -268,20 +309,13 @@ public class PrincipleChartISP extends JFrame {
 
     }
 
-    // Beispielhafte Heatmap-Farbskala
-    private Color heatmapColor(double value) {
-        // Erwartete Werte: 0.0 (gut) bis 1.0 (schlecht)
-        float normalized = (float) Math.max(0.0, Math.min(1.0, value));
-        return new Color(1.0f - normalized, normalized, 0.0f); // grün → gelb → rot
-    }
-
     private Color heatmapColor2(InspectedClass inspectedClass) {
         // inspectedClass.getWmc() > (inspectedClass.getNumberOfConstructors() + inspectedClass.getNumberOfMethods()) * 2
         double wmc = inspectedClass.getWmc();
         int noc = inspectedClass.getNumberOfConstructors();
         int nom = inspectedClass.getNumberOfMethods();
 
-        System.out.println(1 + " wmc = " + wmc + ", noc = " + noc + ", nom = " + nom);
+        // System.out.println(1 + " wmc = " + wmc + ", noc = " + noc + ", nom = " + nom);
 
         if(wmc == 0) {
             return new Color(255,255,255);
@@ -321,58 +355,64 @@ public class PrincipleChartISP extends JFrame {
         switch(principle) {
             case "Single Responsibilty Principle":
                 return srpMax;
-            case "Cohesion":
-                return cohesionMax;
-            case "Coopling":
-                return cooplingMax;
-            case "Creator":
-                return creatorMax;
-            case "Indirection":
-                return indirectionMax;
             default:
                 return srpMax;
         }
-    }
-
-    private JPanel createLegendPanel() {
-        JPanel legendPanel = new JPanel();
-        legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.Y_AXIS));
-        legendPanel.setBackground(Color.WHITE);
-
-        JTextArea legendText = new JTextArea("Legend:\n1. Class 1\nClass 2\nMax Value");
-        legendText.setFont(new Font("Arial", Font.PLAIN, 16));
-        legendText.setBackground(Color.RED);
-        legendText.setEditable(false);
-        legendPanel.add(legendText);
-
-        return legendPanel;
     }
 
     double normalize(String s, double value) {
         //System.out.print("s: " + s + ", value: " + value + ", ");
         switch (s) {
             case "NoM":     return clamp(value / nomMax);      // max 10
-            case "isInterface": if(value == 0) {
-                                    return clamp(value / isInterfaceTrue);      // max 50
+            case "isInterface": if(value <= 1.0) {
+                                    return 1.0;
                                 } else {
-                                    return clamp(2 / isInterfaceTrue);
+                                    return 2.0;
                                 }
-            case "NC":      return clamp(value / ncMax);      // max 10
-            case "DIT":     return clamp(value / ditMax);       // max 5
+            case "NC":
+//                System.out.println("NC: " + value + " - " + ncMax);
+//                System.out.println("NC: " + (value / ncMax));
+//                System.out.println("NC: " + clamp3(value));
+
+                // return clamp3(value);      // max 10
+
+                return normalizeNc(value);
+                //return clamp(value / ncMax);      // max 10
+            case "DIT":
+//                System.out.println("DIT: " + value + " - " + ditMax);
+//                System.out.println("DIT: " + clamp3(value));
+//                System.out.println("DIT: " + clamp3(value/ ditMax));
+
+                return normalizeDit(value);
+                //return clamp3(value);      // max 10
+
+                // return clamp(value / ditMax);       // max 5
             case "LCOM":    return clamp(value / lcomMax);      // max 10
-            case "unsupportedOperationException":   if(value < 1.0) {
-                                                        return clamp(1 / unsupporteExceptionsMax);      // max 10
+            case "unsupportedOperationException":   if(value <= 1.0) {
+                                                        return 1.0;
                                                     } else {
-                                                        return clamp(2 / unsupporteExceptionsMax);
+                                                        return 2.0;
                                                     }
-            case "returnsNull":  if(value < 1.0) return clamp(1 / returnTypeIsNullMax); //return clamp(value / returnTypeIsNullMax);      // max 10
-            case "Yalcom":  return clamp((value * 10) / (yalcomMax - 15.0)); // -1.0 → 0.0, 0.9 → 1.0 // TODO für die Darstellung - 15.0 irgendwo wird falsch skaliert
-            case "bodyLengthLessThanOneHundred":    if(value < 1.0) {
-                                                        return clamp(1 / methodBodyLengthMax);
+            case "returnsNull": if(value <= 1.0) {
+                                    return 1.0;
+                                } else {
+                                    return 2.0;
+                                }
+            case "Yalcom":
+//                System.out.println("clamp(): " + value + " " + (value * 10) + " " + (yalcomMax - 15.0));
+//                System.out.println("clamp(): " + clamp2((value * 10) / (yalcomMax - 15.0)));
+                //return clamp((value * 10) / (yalcomMax - 15.0)); // -1.0 → 0.0, 0.9 → 1.0 // TODO für die Darstellung - 15.0 irgendwo wird falsch skaliert
+
+                System.out.println("\nYalcom: " + value  + ", " + (value * 10) + ", " + ((value * 10) / (yalcomMax)));
+                return normalizeYalcom((value * 10) / (yalcomMax - 15.0) );
+            case "bodyLengthLessThanOneHundred":    if(value <= 1.0) {
+                                                        //System.out.println(clamp(0 / methodBodyLengthMax));
+                                                        return 1.0;
                                                     } else {
-                                                        return clamp(2 / methodBodyLengthMin);
+                                                        //System.out.println(clamp(1 / methodBodyLengthMax));
+                                                        return 2.0;
                                                     }
-            default:        return 0.0;
+            default: return 0.0;
         }
     }
 
@@ -391,6 +431,23 @@ public class PrincipleChartISP extends JFrame {
     double clamp(double v) {
         //System.out.println("v: " + v);
         return Math.max(0.0, Math.min(1.0, v));
+    }
+
+
+    // TODO skalierung von Yalcom stimmt nicht
+    // TODO Number of children stimmt auch nicht
+    double normalizeYalcom(double v) {
+        //System.out.println("v: " + v);
+        if(v < 0.0) {
+            return 0.4;
+        }
+        if(v == 0.0) {
+            return 0.2;
+        }
+        // System.out.println("clamp2(): " + v);
+        // System.out.println("clamp2(): " + (v + 1.0));
+        return (v + 1.0);
+        //return Math.max(-5.0, Math.min(1.0, v));
     }
 
     void initDataset() {
@@ -425,86 +482,86 @@ public class PrincipleChartISP extends JFrame {
             double unsupportedOperationException = (double) inspectedClassList.get(i).getUnsupportedExceptions();
             double bodyLengthLessThanOneHundred = (double) inspectedClassList.get(i).getBodyLengthLessThanOneHundred();
 
+            boolean hasMainMethod = containsMainMethod(inspectedClassList.get(i));
 
-            dataset.addValue(normalize("NoIM", noim, nom), inspectedClassList.get(i).getName(), "NoIM");
-            dataset.addValue(normalize("NoM", nom), inspectedClassList.get(i).getName(), "NoM");
-            dataset.addValue(normalize("returnsNull", returnsNull), inspectedClassList.get(i).getName(), "returnsNull");
-            dataset.addValue(normalize("NC", nc), inspectedClassList.get(i).getName(), "NC");
-            dataset.addValue(normalize("DIT", dit), inspectedClassList.get(i).getName(), "DIT");
-            dataset.addValue(normalize("LCOM", inspectedClassList.get(i).getLcom4()), inspectedClassList.get(i).getName(), "LCOM");
-            dataset.addValue(normalize("Yalcom", inspectedClassList.get(i).getYalcom() * 10), inspectedClassList.get(i).getName(), "Yalcom");
-            dataset.addValue(normalize("unsupportedOperationException", unsupportedOperationException), inspectedClassList.get(i).getName(), "unsupportedOperationException");
-            dataset.addValue(normalize("bodyLengthLessThanOneHundred", bodyLengthLessThanOneHundred), inspectedClassList.get(i).getName(), "bodyLengthLessThanOneHundred");
-
-
+            if(!inspectedClassList.get(i).getIsInterface() && !hasMainMethod) {
+                //System.out.println("initDataset(): " + inspectedClassList.get(i).getName());
+                //dataset.addValue(normalize("NoIM", noim, nom), inspectedClassList.get(i).getName(), "NoIM");
+                dataset.addValue(numberOfMethodsEqualsNumberOfInterfaceMethodes(inspectedClassList.get(i)), inspectedClassList.get(i).getName(), "Methods");
+                dataset.addValue(normalize("returnsNull", returnsNull), inspectedClassList.get(i).getName(), "returnsNull");
+                dataset.addValue(normalize("NC", nc), inspectedClassList.get(i).getName(), "NC");
+                dataset.addValue(normalize("DIT", dit), inspectedClassList.get(i).getName(), "DIT");
+                dataset.addValue(normalize("LCOM", inspectedClassList.get(i).getLcom4()), inspectedClassList.get(i).getName(), "LCOM");
+                dataset.addValue(normalize("Yalcom", inspectedClassList.get(i).getYalcom() * 10), inspectedClassList.get(i).getName(), "Yalcom");
+                dataset.addValue(normalize("unsupportedOperationException", unsupportedOperationException), inspectedClassList.get(i).getName(), "unsupportedOperationException");
+                dataset.addValue(normalize("bodyLengthLessThanOneHundred", bodyLengthLessThanOneHundred), inspectedClassList.get(i).getName(), "bodyLengthLessThanOneHundred");
+            }
         }
-
-
-
     }
-
-
 
     double[] srpMax = {
             0.0,    // Dummy Value
-            10.0,   // NoF
-            5.0,   // NoM
-            50.0,   // WMC
+            0.0,   // Interface
+            0.0,   // MEthods
             5.0,    // NC
             5.0,    // DIT
-            2.0,    // LCOM
+            20.0,    // LCOM
             0.5,    // YALCOM
-            5.0,    // FANIN
-            3.0     // FANOUT
+            0.0,    // Unsupported
+            0.0,   // Return null
+
     };
 
-    double[] cohesionMax = {
-            0.0,    // Dummy Value
-            10.0,   // NoF
-            10.0,   // NoM
-            50.0,   // WMC
-            5.0,    // NC
-            5.0,    // DIT
-            2.0,    // LCOM
-            0.5,    // YALCOM
-            5.0,    // FANIN
-            5.0     // FANOUT
-    };
 
-    double[] cooplingMax = {
-            10.0,   // NoF
-            10.0,   // NoM
-            50.0,   // WMC
-            5.0,    // NC
-            5.0,    // DIT
-            2.0,    // LCOM
-            0.5,    // YALCOM
-            5.0,    // FANIN
-            5.0     // FANOUT
-    };
+    // dataset.addValue(normalize("Methods", 1.0), "Max", "Methods");
+//        dataset.addValue(normalize("returnsNull", 1.0), "Max", "returnsNull");
+//        dataset.addValue(normalize("NC", 3.0), "Max", "NC");
+//        dataset.addValue(normalize("DIT", 4.0), "Max", "DIT");
+//        dataset.addValue(normalize("LCOM", 2.0), "Max", "LCOM");
+//        dataset.addValue(normalize("Yalcom", 0.75), "Max", "Yalcom");
+//        dataset.addValue(normalize("unsupportedOperationException", 1.0), "Max", "unsupportedOperationException");
+//        dataset.addValue(normalize("bodyLengthLessThanOneHundred", 1.0), "Max", "bodyLengthLessThanOneHundred");
 
-    double[] creatorMax = {
-            10.0,   // NoF
-            10.0,   // NoM
-            50.0,   // WMC
-            5.0,    // NC
-            5.0,    // DIT
-            2.0,    // LCOM
-            0.5,    // YALCOM
-            5.0,    // FANIN
-            5.0     // FANOUT
-    };
+    double numberOfMethodsEqualsNumberOfInterfaceMethodes(InspectedClass inspectedClass) {
+        if(inspectedClass.getNumberOfMethods() > 0 &&  inspectedClass.getInterfaceMethodList().size() > 0) {
+            if (inspectedClass.getNumberOfMethods() == inspectedClass.getInterfaceMethodList().size()) {
+                return 1.0;
+            }
+        }
+        return 2.0;
+    }
 
-    double[] indirectionMax = {
-            10.0,   // NoF
-            10.0,   // NoM
-            50.0,   // WMC
-            5.0,    // NC
-            5.0,    // DIT
-            2.0,    // LCOM
-            0.5,    // YALCOM
-            5.0,    // FANIN
-            5.0     // FANOUT
-    };
+    boolean containsMainMethod(InspectedClass inspectedClass) {
+
+        for(int i = 0; i < inspectedClass.getMethodList().size(); i++) {
+            //System.out.println("containsMainMethod(): " + inspectedClass.getMethodList().get(i).getName());
+            if(inspectedClass.getMethodList().get(i).getName().toString().equals("main")) {
+                // System.out.println("containsMainMethod(): " + inspectedClass.getName() + " - " + inspectedClass.isMainClass());
+                inspectedClass.setIsMainClass(true);
+                // System.out.println("containsMainMethod(): " + inspectedClass.getName() + " - " + inspectedClass.isMainClass());
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    double normalizeNC(double v) {
+        return 1.0;
+    }
+
+    double normalizeDit(double v) {
+        double[] values = new double[] { 0.0, 0.117, 0.234, 0.351, 0.468, 0.6, 1.2, 1.4, 1.5, 1.8, 2.1, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.2 };
+        int index = (int) v;
+        //System.out.println("index: " + index);
+        return values[index];
+    }
+
+    double normalizeNc(double v) {
+        double[] values = new double[] { 0.0, 0.117, 0.234, 0.351, 0.468, 0.6, 1.8, 2.1, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.2 };
+        int index = (int) v;
+        //System.out.println("index: " + index);
+        return values[index];
+    }
 }
 

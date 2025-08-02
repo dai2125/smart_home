@@ -15,7 +15,7 @@ public class Start {
     //        "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
     // AuWo Path
     String basePath = System.getProperty("user.dir");
-    String packagePath = basePath + "\\Authentication\\src\\main\\java\\com\\home\\interfaceSegregationPrinciple\\secondAnalysis\\goodExample";
+    String packagePath = basePath + "\\Authentication\\src\\main\\java\\com\\home\\cohesion"; // \\secondAnalysis\\badExample";
 
 
     List<InspectedClass> inspectedClassList = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Start {
         //String packagePath = "C:\\Users\\Lenovo\\IdeaProjects\\Authentication\\Authentication\\src\\main\\java\\com\\home" +
         //        "\\singleResponsibilityPrinciple\\firstAnalysis"; //\\goodExample"; //\\badExample";
         // AuWo Path
-        String analysePath = "Authentication\\src\\main\\java\\com\\home\\interfaceSegregationPrinciple\\secondAnalysis\\goodExample"; ///goodExample";///badExample";
+        String analysePath = "Authentication\\src\\main\\java\\com\\home\\cohesion"; //\\secondAnalysis\\badExample"; ///goodExample";///badExample";
         String packagePath = basePath + "\\" + analysePath;
         //System.out.println("1: " + analysePath);
         //System.out.println("2: " + basePath);
@@ -289,6 +289,8 @@ public class Start {
                 case "metrics":
                     printMetrics();
                     break;
+                case "lcom":
+                    printCohesionValues();
                 case "dir":
                     printDirectory();
                     break;
@@ -324,10 +326,15 @@ public class Start {
                     CreatorPrinciple1And3Service.printFirstMethod();
                     break;
                 case "e":
-                    doInterfaceSegregationChart();
+                    //doInterfaceSegregationChart();
 
-//                    input = "Resume";
-//                    createChart(input, 6);
+                    input = "ReportGenerator";
+                    createChartCreator(input, 11);
+
+
+                    //input = "ReportGenerator";
+                    //createChart(input, 6);
+
                     break;
                 default:
                     screenDefault(input);
@@ -669,7 +676,7 @@ public class Start {
         }
 
         if(inspectedClassList2 != null) {
-            PrincipleChartISP principleChartISP = new PrincipleChartISP("Interface Segreagation Principle", inspectedClassList2);
+            PrincipleChartISP principleChartISP = new PrincipleChartISP("Interface Segregation Principle", inspectedClassList2);
         }
 
     }
@@ -812,13 +819,14 @@ public class Start {
     }
 
     private void printMetrics() {
-        //System.out.println(print.SYSTEM + " Metrics");
         for(int i = 0; i < inspectedClassList.size(); i++) {
             System.out.println(print.METRICS + inspectedClassList.get(i).metricToString());
         }
+    }
 
-        for(int i = 0; i < CreatorPrinciple1And3Service.getCreatorPrincipleList().size(); i++) {
-            System.out.println(print.METRICS + 22 + CreatorPrinciple1And3Service.getCreatorPrincipleList().get(i).metricToString());
+    private void printCohesionValues() {
+        for(int i = 0; i < inspectedClassList.size(); i++) {
+            System.out.println(print.COHESION + inspectedClassList.get(i).something());
         }
     }
 
@@ -897,8 +905,18 @@ public class Start {
 
             }
         }
+    } // createChartCreator
+
+    private void createChartCreator(String input, int num) {
+        // 11
+        String principleName = principleName(num);
+        for (int i = 0; i < inspectedClassList.size(); i++) {
+            if (inspectedClassList.get(i).getName().equalsIgnoreCase(input)) {
+                // System.out.println(222222222);
+                InspectedClass inspectedClass = inspectedClassList.get(i);
+                PrincipleChartCreator chart = new PrincipleChartCreator();
+
+            }
+        }
     }
-
-
-
 }

@@ -8,7 +8,9 @@ public class Example12 {
         secondFunction();
         thirdFunction();
 
-        LiskovSubstitutionPrincipleService.deleteMeAfterwards(fourthFunction());
+        fourthFunction();
+
+        //LiskovSubstitutionPrincipleService.deleteMeAfterwards(fourthFunction());
     }
 
     private void secondFunction() {

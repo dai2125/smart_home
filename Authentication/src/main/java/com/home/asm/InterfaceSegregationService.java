@@ -148,7 +148,7 @@ public class InterfaceSegregationService {
             inspectedClass.setReturnsNull(returnsNull[0]);
             inspectedClass.setUnsupportedExceptions(unsupportedExceptions[0]);
 
-            inspectedClassList.add(inspectedClass);
+            // inspectedClassList.add(inspectedClass);
 
         }
 

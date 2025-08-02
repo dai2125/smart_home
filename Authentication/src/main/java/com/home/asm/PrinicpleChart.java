@@ -84,7 +84,7 @@ public class PrinicpleChart extends JFrame {
         dataset.addValue(normalize("FanIn",fanin), inspectedClass.getName(), "FanIn");
         dataset.addValue(normalize("FanOut",fanout), inspectedClass.getName(), "FanOut");
 
-        InspectedClass inspectedClass1 = CreatorPrinciple1And3Service.get("Resume2");
+        InspectedClass inspectedClass1 = CreatorPrinciple1And3Service.get("Calculator");
 
         dataset.addValue(normalize("NoF",inspectedClass1.getNumberOfFields()), inspectedClass1.getName(), "NoF");
         dataset.addValue(normalize("NoM",inspectedClass1.getNumberOfMethods()), inspectedClass1.getName(), "NoM");
@@ -594,4 +594,6 @@ public class PrinicpleChart extends JFrame {
             5.0,    // FANIN
             5.0     // FANOUT
     };
+
+
 }

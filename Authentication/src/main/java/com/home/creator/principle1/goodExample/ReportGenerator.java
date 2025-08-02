@@ -4,51 +4,47 @@ import com.home.creator.principle3.goodExample.Event;
 
 public class ReportGenerator {
 
-    private Event event;
+    private Event event1;
     private Event event4 = new Event("new Event4");
     public String something = "something";
     private Calculator calculator;
-    private Calculator waschmaschine;
-    private int esel = 222;
-    private int tiger = 333;
+    private Calculator calculator2;
+    private int num3 = 222;
+    private int num4 = 333;
 
     public ReportGenerator() {
         this.calculator = new Calculator();
-        this.event = new Event("description");
+        this.event1 = new Event("description");
     }
 
-    public void generateReport(int x, int y) {
+    public void one(int x, int y) {
         int sum = calculator.add(x, y);
         int difference = calculator.subtract(x, y);
         System.out.println("Report:");
         System.out.println("Sum: " + sum);
         System.out.println("Difference: " + difference);
 
-        int AAAAA = calculator.tiger + calculator.esel;
-        //calculator.setWolf(calculator.esel - calculator.tiger);
-        //calculator.tiger = calculator.wolf;
+        int num5 = calculator.num1 + calculator.num2;
     }
 
-    int BBBBB = calculator.tiger + calculator.esel;
-    int CCCCC = calculator.tiger - calculator.esel;
+    int num6 = calculator.num1 + calculator.num2;
+    int num7 = calculator.num1 - calculator.num2;
 
-    public void somethingToTest(int x, int y) {
+    public void two(int x, int y) {
         int sum = calculator.add(x, y);
         int difference = calculator.subtract(x, y);
         System.out.println("Report:");
         System.out.println("Sum: " + sum);
         System.out.println("Difference: " + difference);
 
-        int AAAAA = calculator.tiger + calculator.esel;
-        //calculator.setWolf(calculator.esel - calculator.tiger);
-        //calculator.tiger = calculator.wolf;
+        int num8 = calculator.num1 + calculator.num2;
     }
 
-    private static String something() {
-        return "TEST";
+    private static String three() {
+        return "Test";
     }
 
-    protected Event createEvent(Event event) {
+    protected Event four(Event event) {
         event = new Event("new Event");
         Event event1 = new Event("new Event1");
         event.getDescription();
@@ -62,15 +58,13 @@ public class ReportGenerator {
         return event;
     }
 
-    private int addition(int a, int b, int c, int d, int e, int f) {
+    private int five(int a, int b, int c, int d, int e, int f) {
         return a + b + c - (d + e + f);
     }
 
-    public void subtraction(int a, int b) {
+    public void six(int a, int b) {
         event4.returnTrue();
     }
 
-    int DDDDD = 200 * 5000;
-
-
+    int num9 = 200 * 5000;
 }

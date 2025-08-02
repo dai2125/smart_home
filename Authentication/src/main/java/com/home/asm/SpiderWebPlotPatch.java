@@ -82,6 +82,9 @@ public class SpiderWebPlotPatch {
                     case "FanOut":
                         axisTicks = 5;
                         break;
+                    case "InterfaceMethods":
+                        axisTicks = 3;
+                        break;
 
                 }
 
@@ -153,6 +156,27 @@ public class SpiderWebPlotPatch {
                             labelY = result[1] + deltaY;
 
                             // Optional: Tickmark zeichnen wie bisher
+                            // Tick marker (line)
+                            tickTrans = AffineTransform.getScaleInstance(scale + TICK_SCALE, scale + TICK_SCALE);
+                            tickTrans.transform(pt, 0, result, 0, 1);
+                            tickX = result[0] + deltaX;
+                            tickY = result[1] + deltaY;
+                            rotated = PERPENDICULAR;
+                            rotate = AffineTransform.getRotateInstance(Math.toRadians(rotated), labelX, labelY);
+                            tickPt = new double[]{tickX, tickY};
+                            rotate.transform(tickPt, 0, result, 0, 1);
+                            x1 = result[0];
+                            y1 = result[1];
+
+                            rotated = -PERPENDICULAR;
+                            rotate = AffineTransform.getRotateInstance(Math.toRadians(rotated), labelX, labelY);
+                            rotate.transform(tickPt, 0, result, 0, 1);
+                            x2 = result[0];
+                            y2 = result[1];
+
+                            oldComposite = g2.getComposite();
+                            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+                            g2.draw(new Line2D.Double(x1, y1, x2, y2));
 
                             // Label zeichnen
                             final String label = format.format(yVal);

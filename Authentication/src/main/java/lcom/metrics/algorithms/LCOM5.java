@@ -1,5 +1,6 @@
 package lcom.metrics.algorithms;
 
+import lcom.sourceModel.SM_Field;
 import lcom.sourceModel.SM_Method;
 import lcom.sourceModel.SM_Type;
 
@@ -9,14 +10,26 @@ public class LCOM5 implements ILCOM {
         int m = type.getMethodList().size();
         int a = type.getFieldList().size();
         int sumMu = 0;
-        for(SM_Method method : type.getMethodList()){
-            sumMu += method.getDirectFieldAccesses().size();
+//        for(SM_Method method : type.getMethodList()){
+//            sumMu += method.getDirectFieldAccesses().size();
+//        }
+//        if(a==0)
+//            return 0; //avoid divide by zero
+//        if(m==1)
+//            return 0; //avoid divide by zero
+//        double lcom = (((double)sumMu/(double)a) - m)/(double)(1-m);
+//        return lcom;
+
+        for (SM_Field field : type.getFieldList()) {
+            int mu = 0;
+            for (SM_Method method : type.getMethodList()) {
+                if (method.getDirectFieldAccesses().contains(field)) {
+                    mu++;
+                }
+            }
+            sumMu += mu;
         }
-        if(a==0)
-            return 0; //avoid divide by zero
-        if(m==1)
-            return 0; //avoid divide by zero
-        double lcom = (((double)sumMu/(double)a) - m)/(double)(1-m);
-        return lcom;
+
+        return (double) sumMu / (a * m);
     }
 }

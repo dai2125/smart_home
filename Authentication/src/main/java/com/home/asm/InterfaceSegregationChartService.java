@@ -87,7 +87,11 @@ public class InterfaceSegregationChartService {
                         fullFilled[0] = false;
                     }
 
-                    if (inspectedClass.getMethodList().get(i).getBody().getLength() < 100) {
+                    if (inspectedClass.getMethodList().get(i).getBody().getLength() > 100) {
+//                        System.out.println("BodyLength: " + inspectedClass.getMethodList().get(i).getBody().getLength());
+//                        System.out.println(inspectedClass.getMethodList().get(i).getBody());
+//                        System.out.println("BodyLength: " + inspectedClass.getMethodList().get(i).getBody().getLength());
+
                         bodyLenghtLessThanOneHundred[0]++;
                     }
                     if (inspectedClass.getMethodList().get(i).getBody().statements().get(j).toString().contains("return null;")) {

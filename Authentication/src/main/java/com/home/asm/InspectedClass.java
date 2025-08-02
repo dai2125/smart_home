@@ -52,6 +52,7 @@ public class InspectedClass {
     private int bodyLengthLessThanOneHundred;
     private int unsupportedExceptions;
     private int returnsNull;
+    private boolean isMainClass;
 
     public InspectedClass(String name) {
 //        System.out.println("InspectedClass: " + name);
@@ -502,6 +503,14 @@ public class InspectedClass {
         return unsupportedExceptions;
     }
 
+    public void setIsMainClass(boolean flag) {
+        this.isMainClass = flag;
+    }
+
+    public boolean isMainClass() {
+        return isMainClass;
+    }
+
     @Override
     public String toString() {
         return "InspectedClass{" +
@@ -554,6 +563,28 @@ public class InspectedClass {
                 "\tdit=\t\t\t\t\t" + dit + '\n' +
                 "\tLCOM4=\t\t\t\t\t" + lcom4 + '\n' +
                 "\tYALCOM=\t\t\t\t\t" + yalcom + '\n'
+                ;
+    }
+
+    public String cohesionToString() {
+        return "Metrics of: " + name + "\n" +
+                "\tLCOM1=\t" + lcom1 + '\n' +
+                "\tLCOM2=\t" + lcom2 + '\n' +
+                "\tLCOM3=\t" + lcom3 + '\n' +
+                "\tLCOM4=\t" + lcom4 + '\n' +
+                "\tLCOM5=\t" + lcom5 + '\n' +
+                "\tYALCOM=\t" + yalcom + '\n'
+                ;
+    }
+
+    public String something() {
+        return "Metrics of: " + name + "\n" +
+                "\t" + lcom1 + ",\n" +
+                "\t" + lcom2 + ",\n" +
+                "\t" + lcom3 + ",\n" +
+                "\t" + lcom4 + ",\n" +
+                "\t" + lcom5 + ",\n" +
+                "\t" + yalcom + ",\n"
                 ;
     }
 

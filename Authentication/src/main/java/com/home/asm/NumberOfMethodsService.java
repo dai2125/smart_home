@@ -121,7 +121,7 @@ public class NumberOfMethodsService {
     }
 
     public List<String> getAllInterfaceMethods(String className) throws IOException {
-        System.out.println("getAllInterfaceMethods(): " + className);
+        //System.out.println("getAllInterfaceMethods(): " + className);
         ClassReader classReader = new ClassReader(className);
         isInterface = false;
         HashSet<String> interfaceList = new HashSet<>();
